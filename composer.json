@@ -2,11 +2,16 @@
     "name": "xinc/core",
     "type": "xinc-application-package",
     "description": "Core of every xinc system",
-    "homepage": "http://code.google.com/p/xinc/",
+    "homepage": "https://github.com/xinc-develop/xinc-core",
     "license": "LGPL-3.0+",
-    "version": "2.3.90",
+    "authors": [
+        { "name": "David Ellis" },
+	{ "name": "Alexander Opitz", "email": "opitz.alexander@googlemail.com" },
+	{ "name": "Arno Schneider" },
+	{ "name": "Gavin Foster" }
+    ],
     "require": {
-        "xinc/packager": "*",
+        "xinc/packager": "3.0.0",
         "php": ">=5.4.4"
     },
     "autoload": {
