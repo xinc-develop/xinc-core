@@ -1,0 +1,6 @@
+*~
+*.bak
+vendor/
+composer.lock
+phpunit
+
