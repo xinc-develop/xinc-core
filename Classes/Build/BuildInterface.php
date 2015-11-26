@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Job interface
+ * Build interface
  *
  * Used by the engines to process a build
  *
@@ -29,9 +29,9 @@
  * @link      http://code.google.com/p/xinc/
  */
 
-namespace Xinc\Core\Job;
+namespace Xinc\Core\Build;
 
-interface JobInterface
+interface BuildInterface
 {
     const INITIALIZED = -2;
     const FAILED = 0;
