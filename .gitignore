@@ -1,6 +1,7 @@
 *~
 *.bak
 vendor/
+composer
 composer.lock
 phpunit
 
