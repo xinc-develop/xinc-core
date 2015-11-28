@@ -1,11 +1,9 @@
 <?php
 /**
- * Test Class for the Xinc Build Properties
+ * Test Class for Xinc Properties
  * 
- * @package Xinc.Build
- * @author Arno Schneider
- * @version 2.0
- * @copyright 2007 Arno Schneider, Barcelona
+ * @version 3.0
+ * @copyright 2015 Xinc developers, Leipzig
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *    This file is part of Xinc.
  *    Xinc is free software; you can redistribute it and/or modify
@@ -88,4 +86,15 @@ class Xinc_Build_TestProperties extends Xinc\Core\Test\BaseTest
 			$this->assertTrue(true,'Write access is a mistake for properties');
 		}
     }
+    
+    public function testSetArray()
+    {
+	    $test = array(
+	       'test1' => 13, 'test2' => 12
+	    );
+	    $properties = new Properties();
+	    $properties->set($test);
+	    $this->assertEquals(13,$properties['test1']);	
+	    $this->assertEquals(12,$properties['test2']);
+	}
 }

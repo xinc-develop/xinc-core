@@ -70,7 +70,14 @@ class Properties implements ArrayAccess
      */
     public function set($name, $value)
     {
-        $this->properties[$name] = $value;
+		if(is_array($value)) {
+			foreach($value as $k => $v) {
+				$this->properties[$k] = $v;
+			}
+		}
+		else {
+            $this->properties[$name] = $value;
+        }
     }
     
     /**
