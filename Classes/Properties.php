@@ -68,10 +68,10 @@ class Properties implements ArrayAccess
      * @param string $name
      * @param mixed $value
      */
-    public function set($name, $value)
+    public function set($name, $value = null)
     {
-		if(is_array($value)) {
-			foreach($value as $k => $v) {
+		if(is_array($name)) {
+			foreach($name as $k => $v) {
 				$this->properties[$k] = $v;
 			}
 		}
