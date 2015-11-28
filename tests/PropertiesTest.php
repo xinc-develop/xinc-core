@@ -67,6 +67,25 @@ class Xinc_Build_TestProperties extends Xinc\Core\Test\BaseTest
         $this->assertEquals($allProperties, $propertiesArr, 'Arrays should match');
     }
 
-   
-   
+    public function testArrayAccess()
+    {
+		$properties = new Properties();
+		$properties->set('test-option','XYZ');
+		$properties->set('unset-option','123');
+		
+		$this->assertTrue(isset($properties['test-option']));
+		$this->assertFalse(isset($properties['XYZ']));
+		
+		$this->assertEquals('123',$properties['unset-option']);
+		unset($properties['unset-option']);
+		$this->assertFalse(isset($properties['unset-option']));
+		
+		try {
+			$properties['grrh'] = true;
+			$this->assertTrue(false,'Write access is not allowed.');
+		}
+		catch(\Xinc\Core\Exception\Mistake $e) {
+			$this->assertTrue(true,'Write access is a mistake for properties');
+		}
+    }
 }

@@ -30,15 +30,37 @@
 
 namespace Xinc\Core;
 
-class Properties
-{
-    
+use ArrayAccess;
+use Xinc\Core\Exception\Mistake;
+
+class Properties implements ArrayAccess
+{   
     /**
      * Associative Array holding the nvp for the build properties
      *
      * @var array
      */
-    private $_properties = array();
+    private $properties = array();
+
+    public function offsetExists ( $offset)
+    {
+        return array_key_exists($offset, $this->properties);		
+	}
+
+    public function offsetGet ( $offset )
+    {
+		return $this->properties[$offset];
+	}
+
+    public function offsetSet ( $offset , $value )
+    {
+		throw new Mistake("Properties should not be written as arrays!");
+	}
+	
+    public function offsetUnset ( $offset )
+    {
+        unset($this->properties[$offset]);
+	}
     
     /**
      * set a property
@@ -48,7 +70,7 @@ class Properties
      */
     public function set($name, $value)
     {
-        $this->_properties[$name] = $value;
+        $this->properties[$name] = $value;
     }
     
     /**
@@ -59,8 +81,8 @@ class Properties
      */
     public function get($name)
     {
-        if (isset($this->_properties[$name])) {
-            return $this->_properties[$name];
+        if (isset($this->properties[$name])) {
+            return $this->properties[$name];
         } else {
             return null;
         }
@@ -73,7 +95,7 @@ class Properties
      */
     public function getAllProperties()
     {
-        return $this->_properties;
+        return $this->properties;
     }
     /**
      * Parses a string and substitutes ${name} with $value
@@ -85,7 +107,7 @@ class Properties
     {
         $string = (string) $string;
         $string = preg_replace_callback("/\\$\{(.*?)\}/", 
-            function ($k) { return $this->_properties[$k[1]]; }, $string);
+            function ($k) { return $this->properties[$k[1]]; }, $string);
         return $string;
     }
 }
