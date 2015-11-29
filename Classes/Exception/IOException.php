@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category   Development
- * @package    Xinc.Core
  * @subpackage Exception
  * @author     Alexander Opitz <opitz.alexander@gmail.com>
  * @copyright  2012 Alexander Opitz, Leipzig

@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Core
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Developers, Leipzig

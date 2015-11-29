@@ -6,8 +6,6 @@
  *
  * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Core
  * @author    Alexander Opitz <opitz.alexander@googlemail.com>
  * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php

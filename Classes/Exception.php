@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Core
  * @author    Alexander Opitz <opitz.alexander@gmail.com>
  * @copyright 2007 David Ellis, One Degree Square
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php

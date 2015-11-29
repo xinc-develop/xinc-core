@@ -2,7 +2,6 @@
 /**
  * Parses an array of SimpleXMLElements and generates Projects out of it
  *
- * @package   Xinc.Core
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php

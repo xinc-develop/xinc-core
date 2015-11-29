@@ -2,7 +2,6 @@
 /**
  * Iterator over an array of SimpleXMLElement objects defining Projects
  *
- * @package   Xinc.Core
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php

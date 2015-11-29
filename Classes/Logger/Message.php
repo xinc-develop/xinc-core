@@ -5,8 +5,6 @@
  *
  * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Core
  * @author    David Ellis <username@example.org>
  * @author    Gavin Foster <username@example.org>
  * @author    Arno Schneider <username@example.org>
