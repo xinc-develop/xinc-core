@@ -29,7 +29,7 @@
  
 namespace Xinc\Core\Build;
 
-class Queue implements BuildQueueInterface
+class BuildQueue implements BuildQueueInterface
 {
     /**
      * @var Xinc_Build_Iterator
