@@ -26,6 +26,8 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @link      http://xincplus.sourceforge.net
  */
+ 
+namespace Xinc\Core\Build;
 
 /**
  * A Build queue holds all Build Jobs queued for execution
@@ -34,7 +36,7 @@
  * executed at a certain time
  *
  */
-interface Xinc_Build_Queue_Interface
+interface BuildQueueInterface
 {
     /**
      * adds a build to the queue

@@ -26,12 +26,12 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @link      http://xincplus.sourceforge.net
  */
+ 
+namespace Xinc\Core\Build;
 
-require_once 'Xinc/Iterator.php';
-require_once 'Xinc/Build/Exception/Invalid.php';
+use Xinc\Core\Iterator;
 
-
-class Xinc_Build_Iterator extends Xinc_Iterator
+class BuildIterator extends Iterator
 {
   
     /**
