@@ -3,7 +3,6 @@
  * Xinc - Continuous Integration.
  * Engine to build projects
  *
- * PHP version 5
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -22,10 +21,13 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Engine;
+
+use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Models\Project;
 
 interface EngineInterface
 {
@@ -42,7 +44,7 @@ interface EngineInterface
      *
      * @param Xinc_Build_Interface $build
      */
-    public function build(Xinc_Build_Interface $build);
+    public function build(BuildInterface $build);
 
     /**
      * Adds a project to the engine.
@@ -51,7 +53,7 @@ interface EngineInterface
      *
      * @return void
      */
-    public function addProject(\Xinc\Core\Models\Project $project);
+    public function addProject(Project $project);
 
     /**
      * returns the interval in seconds in which the engine checks for new builds

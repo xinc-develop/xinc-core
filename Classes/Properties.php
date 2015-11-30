@@ -3,7 +3,6 @@
  * Xinc - Continuous Integration.
  * Build Properties carry additional information about a build
  *
- * PHP version 5
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona

@@ -1,11 +1,10 @@
 <?php
 /**
- * Test Class for the Xinc Build Properties
- * 
- * @package Xinc.Project
+ * @version 3.0
  * @author Arno Schneider
- * @version 2.0
+ * @author Sebastian Knapp
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *    This file is part of Xinc.
  *    Xinc is free software; you can redistribute it and/or modify
@@ -29,6 +28,9 @@ use Xinc\Core\Project\Status as ProjectStatus;
 
 use Xinc\Core\Test\BaseTest;
 
+/**
+ * @test Test Class for Xinc\Core\Model\Project
+ */
 class TestProject extends BaseTest
 {  
     public function testSetters()

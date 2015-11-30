@@ -4,7 +4,6 @@
  * This exception is thrown when there is a problem found parsing the config
  * file.
  *
- * PHP version 5
  *
  * @author    David Ellis <username@example.org>
  * @author    Gavin Foster <username@example.org>
@@ -24,7 +23,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link       http://code.google.com/p/xinc/
+ * @link       https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Exception;

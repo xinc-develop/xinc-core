@@ -375,35 +375,15 @@ WARN_IF_UNDOCUMENTED   = YES
 # don't exist or using markup commands wrongly.
 
 WARN_IF_DOC_ERROR      = YES
-
-# The WARN_NO_PARAMDOC option can be enabled to get warnings for
-# functions that are documented, but have no documentation for their parameters
-# or return value. If set to NO (the default) doxygen will only warn about
-# wrong or incomplete parameter documentation, but not about the absence of
-# documentation.
-
 WARN_NO_PARAMDOC       = NO
-
-# The WARN_FORMAT tag determines the format of the warning messages that
-# doxygen can produce. The string should contain the $file, $line, and $text
-# tags, which will be replaced by the file and line number from which the
-# warning originated and the warning text. Optionally the format may contain
-# $version, which will be replaced by the version of the file (if it could
-# be obtained via FILE_VERSION_FILTER)
-
 WARN_FORMAT            = "$file:$line: $text"
-
-# The WARN_LOGFILE tag can be used to specify a file to which warning
-# and error messages should be written. If left blank the output is written
-# to stderr.
-
 WARN_LOGFILE           =
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = Classes
+INPUT                  = Classes tests
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          =
 RECURSIVE              = YES
@@ -411,74 +391,14 @@ EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        =
-
-# The EXAMPLE_PATH tag can be used to specify one or more files or
-# directories that contain example code fragments that are included (see
-# the \include command).
-
 EXAMPLE_PATH           =
-
-# If the value of the EXAMPLE_PATH tag contains directories, you can use the
-# EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp
-# and *.h) to filter out the source-files in the directories. If left
-# blank all files are included.
-
 EXAMPLE_PATTERNS       =
-
-# If the EXAMPLE_RECURSIVE tag is set to YES then subdirectories will be
-# searched for input files to be used with the \include or \dontinclude
-# commands irrespective of the value of the RECURSIVE tag.
-# Possible values are YES and NO. If left blank NO is used.
-
 EXAMPLE_RECURSIVE      = NO
-
-# The IMAGE_PATH tag can be used to specify one or more files or
-# directories that contain image that are included in the documentation (see
-# the \image command).
-
 IMAGE_PATH             =
-
-# The INPUT_FILTER tag can be used to specify a program that doxygen should
-# invoke to filter for each input file. Doxygen will invoke the filter program
-# by executing (via popen()) the command <filter> <input-file>, where <filter>
-# is the value of the INPUT_FILTER tag, and <input-file> is the name of an
-# input file. Doxygen will then use the output that the filter program writes
-# to standard output.
-# If FILTER_PATTERNS is specified, this tag will be
-# ignored.
-
 INPUT_FILTER           = "php php_filter.php"
-
-# The FILTER_PATTERNS tag can be used to specify filters on a per file pattern
-# basis.
-# Doxygen will compare the file name with each pattern and apply the
-# filter if there is a match.
-# The filters are a list of the form:
-# pattern=filter (like *.cpp=my_cpp_filter). See INPUT_FILTER for further
-# info on how filters are used. If FILTER_PATTERNS is empty or if
-# non of the patterns match the file name, INPUT_FILTER is applied.
-
 FILTER_PATTERNS        =
-
-# If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
-# INPUT_FILTER) will be used to filter the input files when producing source
-# files to browse (i.e. when SOURCE_BROWSER is set to YES).
-
 FILTER_SOURCE_FILES    = NO
-
-# The FILTER_SOURCE_PATTERNS tag can be used to specify source filters per file
-# pattern. A pattern will override the setting for FILTER_PATTERN (if any)
-# and it is also possible to disable source filtering for a specific pattern
-# using *.ext= (so without naming a filter). This option only has effect when
-# FILTER_SOURCE_FILES is enabled.
-
 FILTER_SOURCE_PATTERNS =
-
-# If the USE_MD_FILE_AS_MAINPAGE tag refers to the name of a markdown file that
-# is part of the input, its contents will be placed on the main page (index.html).
-# This can be useful if you have a project on for instance GitHub and want reuse
-# the introduction page also for the doxygen output.
-
 USE_MDFILE_AS_MAINPAGE =
 
 #---------------------------------------------------------------------------

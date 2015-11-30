@@ -3,7 +3,6 @@
  * Xinc - Continuous Integration.
  * This is the base exception.
  *
- * PHP version 5
  *
  * @author    Alexander Opitz <opitz.alexander@gmail.com>
  * @copyright 2007 David Ellis, One Degree Square
@@ -22,7 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link       http://code.google.com/p/xinc/
+ * @link       https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core;

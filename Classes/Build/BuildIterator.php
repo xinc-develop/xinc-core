@@ -3,7 +3,6 @@
  * Xinc - Continuous Integration.
  * Iterator over an array of Xinc_Build's
  *
- * PHP version 5
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -22,7 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://xincplus.sourceforge.net
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
  
 namespace Xinc\Core\Build;
