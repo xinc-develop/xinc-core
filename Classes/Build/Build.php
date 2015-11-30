@@ -1,10 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This class represents the build that is going to be run with Xinc
- *
  *
  * @author    Arno Schneider <username@example.org>
+ * @author    Sebastian Knapp
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -24,45 +23,40 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc;
+namespace Xinc\Core\Build;
 
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Engine\EngineInterface;
+use Xinc\Core\Models\Project;
 
 use Xinc\Core\Project\Status as ProjectStatus;
-use Xinc\Core\Properties;
+use Xinc\Core\Properties as BuildProperties;
 
 use Xinc\Core\Build\Exception\NotRun;
 use Xinc\Core\Build\Exception\NotFound;
 use Xinc\Core\Build\Exception\Serialization;
 
-/*
-require_once 'Xinc/Build/Labeler/Default.php';
-require_once 'Xinc/Build/Scheduler/Default.php';
-require_once 'Xinc/Project/Status.php';
-require_once 'Xinc/Build/Statistics.php';
-require_once 'Xinc/Build/History.php';
-require_once 'Xinc/Timezone.php';
-*/
-
+/**
+ * This class represents the build that is going to be run with Xinc
+ */
 class Build implements BuildInterface
 {
-    
     /**
      * Are we queued?
      *
      * @var boolean
      */
-    private $_isQueued=false;
+    private $isQueued=false;
     
     /**
-     * @var Xinc_Engine_Interface
+     * @var Xincengine_Interface
      */
-    private $_engine;
+    private $engine;
     
     /**
-     * @var Xinc_Project
+     * @var Xincproject
      */
-    private $_project;
+    private $project;
     
     /**
      * @var Xinc_Build_Properties
@@ -151,30 +145,30 @@ class Build implements BuildInterface
      * sets the project, engine
      * and timestamp for the build
      *
-     * @param Xinc_Engine_Interface $engine
-     * @param Xinc_Project          $project
+     * @param Xincengine_Interface $engine
+     * @param Xincproject          $project
      * @param integer               $buildTimestamp
      */
-    public function __construct(Xinc_Engine_Interface &$engine,
-                                Xinc_Project &$project,
+    public function __construct(EngineInterface $engine,
+                                Project $project,
                                 $buildTimestamp = null
     ) {
-        $this->_engine = $engine;
-        $this->_project = $project;
+        $this->engine = $engine;
+        $this->project = $project;
         
-        if (ProjectStatus::MISCONFIGURED == $this->_project->getStatus()) {
+        if (ProjectStatus::MISCONFIGURED == $this->project->getStatus()) {
             $this->setStatus(BuildInterface::MISCONFIGURED);
         }
         
         $this->_buildTimestamp = $buildTimestamp;
-        $this->_properties = new Xinc_Build_Properties();
-        $this->_internalProperties = new Xinc_Build_Properties();
-        $this->_statistics = new Xinc_Build_Statistics();
-        $this->setLabeler(new Xinc_Build_Labeler_Default());
-        $this->setScheduler(new Xinc_Build_Scheduler_Default());
+        $this->_properties = new BuildProperties();
+        $this->_internalProperties = new BuildProperties();
+        $this->_statistics = new Statistics();
+        $this->setLabeler(new Labeler\DefaultLabeler());
+        $this->setScheduler(new Scheduler\DefaultScheduler());
     }
 
-    public function setLabeler(Xinc_Build_Labeler_Interface &$labeler)
+    public function setLabeler(Labeler\LabelerInterface $labeler)
     {
         $this->_labeler = $labeler;
     }
@@ -251,20 +245,20 @@ class Build implements BuildInterface
 
     /**
      * 
-     * @return Xinc_Project
+     * @return Xincproject
      */
     public function &getProject()
     {
-        return $this->_project;
+        return $this->project;
     }
     
     /**
      * 
-     * @return Xinc_Engine_Interface
+     * @return Xincengine_Interface
      */
     public function &getEngine()
     {
-        return $this->_engine;
+        return $this->engine;
     }
     
     public function setLastBuild()
@@ -342,14 +336,14 @@ class Build implements BuildInterface
     /**
      * Unserialize a build by its project and buildtimestamp
      *
-     * @param Xinc_Project $project
+     * @param Xincproject $project
      * @param integer $buildTimestamp
      *
      * @return Xinc_Build
      * @throws Xinc_Build_Exception_Unserialization
      * @throws Xinc_Build_Exception_NotFound
      */
-    public static function &unserialize(Xinc_Project &$project, $buildTimestamp = null, $statusDir = null)
+    public static function unserialize(Project $project, $buildTimestamp = null, $statusDir = null)
     {
         if ($statusDir == null) {
             $statusDir = Xinc::getInstance()->getStatusDir();
@@ -426,9 +420,9 @@ class Build implements BuildInterface
          * minimizing the storage for the project,
          * we just want the name
          */
-        $project = new Xinc_Project();
+        $project = new Project();
         $project->setName($this->getProject()->getName());
-        $this->_project = $project;
+        $this->project = $project;
         if (!isset($this->_config['timezone'])) {
             /**
              * if no timezone was configured in the project xml, we store the
@@ -440,9 +434,9 @@ class Build implements BuildInterface
             $this->_config['timezone.reporting'] = true;
         }
         
-        return array('_no','_project', '_buildTimestamp',
+        return array('_no','project', '_buildTimestamp',
                      '_properties', '_status', '_lastBuild',
-                     '_labeler', '_engine', '_statistics', '_config',
+                     '_labeler', 'engine', '_statistics', '_config',
                      '_internalProperties');
     }
     
@@ -732,7 +726,7 @@ class Build implements BuildInterface
     
     public function enqueue()
     {
-        $this->_isQueued = true;
+        $this->isQueued = true;
     }
     
     /**
@@ -741,7 +735,7 @@ class Build implements BuildInterface
      */
     public function isQueued()
     {
-        return $this->_isQueued;
+        return $this->isQueued;
     }
     
     /**
@@ -750,7 +744,7 @@ class Build implements BuildInterface
      */
     public function dequeue()
     {
-        $this->_isQueued = false;
+        $this->isQueued = false;
     }
     
     /**

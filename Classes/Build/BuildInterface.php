@@ -1,10 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Build interface
- *
- * Used by the engines to process a build
- *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -28,6 +24,14 @@
 
 namespace Xinc\Core\Build;
 
+use Xinc\Core\Engine\EngineInterface;
+use Xinc\Core\Models\Project;
+
+/**
+ * Build interface
+ *
+ * Used by the engines to process a build
+ */
 interface BuildInterface
 {
     const INITIALIZED = -2;
@@ -43,10 +47,12 @@ interface BuildInterface
      * @param Xinc_Engine_Interface $engine
      * @param Xinc_Project $project
      * @param integer $buildTimestamp
+     * 
+     * @todo Decouple engine from build
      */
     public function __construct(
-        Xinc\Server\Engine\EngineInterface $engine, // @TODO Decouple
-        \Xinc\Core\Models\Project $project,
+        EngineInterface $engine, 
+        Project $project,
         $buildTimestamp = null
     );
 
@@ -88,7 +94,7 @@ interface BuildInterface
      *
      * @return Xinc_Build_Statistics
      */
-    public function &getStatistics();
+    public function getStatistics();
 
     /**
      * sets the build time for this build
@@ -114,7 +120,11 @@ interface BuildInterface
      * loads the build information
      *
      */
-    public static function unserialize(Xinc_Project &$project, $buildTimestamp = null, $statusDir = null);
+    public static function unserialize(
+         Project $project, 
+         $buildTimestamp = null, 
+         $statusDir = null
+    );
 
     /**
      * returns the label of this build

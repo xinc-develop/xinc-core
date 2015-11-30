@@ -1,9 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This model represents one project with its processes.
- * It is loaded from the configuration.
- *
  *
  * @author    Alexander Opitz <opitz.alexander@googlemail.com>
  * @copyright 2014 Alexander Opitz, Leipzig
@@ -27,6 +24,10 @@
 
 namespace Xinc\Core\Models;
 
+/**
+ * This model represents one project with its processes.
+ * It is loaded from the configuration.
+ */
 class Project
 {
     /**

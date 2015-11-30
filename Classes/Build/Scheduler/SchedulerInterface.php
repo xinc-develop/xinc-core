@@ -1,6 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
+ * Interface for a Build-Scheduler which will calculate the next buildtime
+ * based on customizable factors.
+ *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -22,20 +25,14 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Build\Labeler;
-
-use Xinc\Core\Build\BuildInterface;
-
-/**
- * Interface for a Build-Labeler.
- */
-interface LabelerInterface
+interface Xinc_Build_Scheduler_Interface
 {
     /**
-     * Returns a label for the build
+     * Calculates the next build timestamp.
      *
      * @param Xinc_Build_Interface $build
+     *
+     * @return integer next build timestamp
      */
-    public function getLabel(BuildInterface $build);
-
+    public function getNextBuildTime(Xinc_Build_Interface $build);
 }

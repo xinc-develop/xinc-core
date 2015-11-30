@@ -25,17 +25,44 @@
 namespace Xinc\Core\Build\Labeler;
 
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Build\Labeler\LabelerInterface;
 
 /**
- * Interface for a Build-Labeler.
+ * The default Build Labeler.
  */
-interface LabelerInterface
+class DefaultLabeler implements LabelerInterface
 {
     /**
-     * Returns a label for the build
+     *
+     * @var integer
+     */
+    private $_firstBuild = 1;
+
+    /**
+     * Prefix for the build
+     *
+     * @var string
+     */
+    private $_prefix = 'BUILD.';
+
+    /**
+     * Return the label for this build
      *
      * @param Xinc_Build_Interface $build
+     *
+     * @return string
      */
-    public function getLabel(BuildInterface $build);
+    public function getLabel(BuildInterface $build)
+    {
+        $buildNo = $build->getNumber();
+        
+        if ($buildNo == null) {
+            $buildNo = $this->_firstBuild;
+        }
+       
+        $buildLabel = $this->_prefix . $buildNo;
+        $build->getProperties()->set('build.label', $buildLabel);
 
+        return $buildLabel;
+    }
 }

@@ -23,7 +23,7 @@
 use Xinc\Core\Properties;
 
 /**
- * @test Test Class for Xinc\Core\Properties
+ * @test Test Class for Xinc::Core::Properties
  */
 class TestProperties extends Xinc\Core\Test\BaseTest
 {

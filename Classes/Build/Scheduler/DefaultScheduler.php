@@ -1,7 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This interface represents a publishing mechanism to publish build results
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -23,45 +22,34 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+namespace Xinc\Core\Build\Scheduler;
 
-namespace Xinc\Core\Build\Labeler;
+use Xinc\Core\BuildInterface;
 
-use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Build\Labeler\LabelerInterface;
-
-class Default implements LabelerInterface
+/**
+ * Build-Scheduler, will only build once if not built yet
+ */
+class DefaultScheduler implements SchedulerInterface
 {
-    /**
-     *
-     * @var integer
-     */
-    private $_firstBuild = 1;
+    private $_nextBuildTime = null;
 
     /**
-     * Prefix for the build
+     * Calculates the next build timestamp
+     * this is a build once scheduler
      *
-     * @var string
+     * @return integer
      */
-    private $_prefix = 'BUILD.';
-
-    /**
-     * Return the label for this build
-     *
-     * @param Xinc_Build_Interface $build
-     *
-     * @return string
-     */
-    public function getLabel(BuildInterface $build)
+    public function getNextBuildTime(BuildInterface $build)
     {
-        $buildNo = $build->getNumber();
-        
-        if ($buildNo == null) {
-            $buildNo = $this->_firstBuild;
+        if ($build->getLastBuild()->getBuildTime() == null
+            && $build->getStatus() !== BuildInterface::STOPPED
+        ) {
+            if (!isset($this->_nextBuildTime)) {
+                $this->_nextBuildTime = time();
+            }
+            return $this->_nextBuildTime;
+        } else {
+            return null;
         }
-       
-        $buildLabel = $this->_prefix . $buildNo;
-        $build->getProperties()->set('build.label', $buildLabel);
-
-        return $buildLabel;
     }
 }

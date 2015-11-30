@@ -27,9 +27,8 @@ use Xinc\Core\Models\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
 
 use Xinc\Core\Test\BaseTest;
-
 /**
- * @test Test Class for Xinc\Core\Model\Project
+ * @test Test class for Xinc::Core::Models::Project
  */
 class TestProject extends BaseTest
 {  

@@ -1,6 +1,8 @@
 <?php
 /**
  * Xinc - Continuous Integration.
+ * Engine to build projects
+ *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -22,20 +24,64 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Build\Labeler;
+namespace Xinc\Core\Test;
 
+use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Models\Project;
 
-/**
- * Interface for a Build-Labeler.
- */
-interface LabelerInterface
+class Engine implements EngineInterface
 {
+
     /**
-     * Returns a label for the build
+     * get the name of the engine
+     *
+     * @return string Name of the engine.
+     */
+    public function getName()
+    {
+		return 'TestEngine';
+    }
+
+    /**
+     * process the build
      *
      * @param Xinc_Build_Interface $build
      */
-    public function getLabel(BuildInterface $build);
+    public function build(BuildInterface $build)
+    {
+    }
 
+    /**
+     * Adds a project to the engine.
+     *
+     * @param \Xinc\Core\Models\Project $project A project inside this engine.
+     *
+     * @return void
+     */
+    public function addProject(Project $project)
+    {
+    }
+
+    /**
+     * returns the interval in seconds in which the engine checks for new builds
+     *
+     * @return integer
+     */
+    public function getHeartBeat()
+    {
+		return 30;
+	}
+
+    /**
+     * Set the interval in which the engine checks for modified builds, necessary builds etc
+     *
+     * @param string $seconds
+     *
+     * @see <xinc engine="name" heartbeat="10"/>
+     */
+    public function setHeartBeat($seconds)
+    {
+		
+	}
 }
