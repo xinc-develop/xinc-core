@@ -26,6 +26,9 @@
 
 namespace Xinc\Core\Build\Exception;
 
+/**
+ * @todo Check, is this exception useful?
+ */
 class Invalid extends BuildException
 {
     /**

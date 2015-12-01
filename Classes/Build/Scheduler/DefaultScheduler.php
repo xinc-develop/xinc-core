@@ -24,7 +24,7 @@
  */
 namespace Xinc\Core\Build\Scheduler;
 
-use Xinc\Core\BuildInterface;
+use Xinc\Core\Build\BuildInterface;
 
 /**
  * Build-Scheduler, will only build once if not built yet

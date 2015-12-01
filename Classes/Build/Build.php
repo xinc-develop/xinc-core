@@ -49,12 +49,12 @@ class Build implements BuildInterface
     private $isQueued=false;
     
     /**
-     * @var Xincengine_Interface
+     * @var Xinc::Core::Engine::EngineInterface
      */
     private $engine;
     
     /**
-     * @var Xincproject
+     * @var Xinc::Core::Models::Project
      */
     private $project;
     
@@ -356,10 +356,7 @@ class Build implements BuildInterface
         } else {
             //$subDirectory = self::generateStatusSubDir($project->getName(), $buildTimestamp);
         
-        
-            /**
-             * @throws Xinc_Build_Exception_NotFound
-             */
+            // throws Xinc_Build_Exception_NotFound
             $fileName = Xinc_Build_History::getBuildFile($project, $buildTimestamp);
         }
         

@@ -1,9 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Interface for a Build-Scheduler which will calculate the next buildtime
- * based on customizable factors.
- *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -25,7 +22,15 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-interface Xinc_Build_Scheduler_Interface
+namespace Xinc\Core\Build\Scheduler;
+
+use Xinc\Core\Build\BuildInterface;
+
+/**
+ * Interface for a Build-Scheduler which will calculate the next buildtime
+ * based on customizable factors.
+ */
+interface SchedulerInterface
 {
     /**
      * Calculates the next build timestamp.
@@ -34,5 +39,5 @@ interface Xinc_Build_Scheduler_Interface
      *
      * @return integer next build timestamp
      */
-    public function getNextBuildTime(Xinc_Build_Interface $build);
+    public function getNextBuildTime(BuildInterface $build);
 }
