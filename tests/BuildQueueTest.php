@@ -45,7 +45,8 @@ class BuildQueueTest extends BaseTest
         $queue->addBuild($build);
         $nextBuildTime = $queue->getNextBuildTime();
         
-        $this->assertTrue($nextBuildTime != null, 'We should have a default builttime');
+        $this->assertTrue($nextBuildTime != null, 
+            'We should have a default builttime');
         $nextBuild = $queue->getNextBuild();
         $this->assertEquals($build, $nextBuild, 'The Builds should be equal');
     }
@@ -55,18 +56,17 @@ class BuildQueueTest extends BaseTest
         $build = new Build(new Engine(),new Project());
         $buildIterator = new BuildIterator();
         $buildIterator->add($build);;
-        $queue = new Xinc_Build_Queue();
-        $scheduler = new Xinc_Build_Scheduler_Default();
+        $queue = new BuildQueue();
+        $scheduler = new DefaultScheduler();
         
         $build->setScheduler($scheduler);
         $queue->addBuilds($buildIterator);
         
         $nextBuildTime = $queue->getNextBuildTime();
-        $this->assertTrue($nextBuildTime != null, 'We should have a default builttime');
+        $this->assertTrue($nextBuildTime != null, 
+            'We should have a default builttime');
         
         $nextBuild = $queue->getNextBuild();
-        
-        
         $this->assertEquals($build, $nextBuild, 'The Builds should be equal');
     }
    

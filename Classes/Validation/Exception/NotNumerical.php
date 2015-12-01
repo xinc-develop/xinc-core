@@ -1,10 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, build was not found
- *
  *
  * @author    Arno Schneider <username@example.org>
+ * @author    Sebastian Knapp
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.

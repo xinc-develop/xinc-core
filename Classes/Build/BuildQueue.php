@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Queue that is holding all the builds
- *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -26,19 +24,24 @@
  
 namespace Xinc\Core\Build;
 
+/**
+ * Queue that is holding all the builds
+ */
 class BuildQueue implements BuildQueueInterface
 {
     /**
-     * @var Xinc_Build_Iterator
+     * @var Xinc::Core::Build::BuildIterator
      */
-    private $_builds;
-
-    private $_lastBuild;
+    private $builds;
+    /**
+     * @var Xinc::Core::Build::Build
+     */
+    private $lastBuild;
 
     /**
      * @var array
      */
-    private $_queue=array();
+    private $queue=array();
 
     /**
      * constructor for build queue
@@ -46,7 +49,7 @@ class BuildQueue implements BuildQueueInterface
      */
     public function __construct()
     {
-        $this->_builds = new BuildIterator();
+        $this->builds = new BuildIterator();
     }
 
     /**
@@ -56,7 +59,7 @@ class BuildQueue implements BuildQueueInterface
      */
     public function addBuild(BuildInterface $build)
     {
-        $this->_builds->add($build);
+        $this->builds->add($build);
     }
 
     /**
@@ -66,8 +69,8 @@ class BuildQueue implements BuildQueueInterface
      */
     public function addBuilds(BuildIterator $builds)
     {
-        while ($builds->hasNext()) {
-            $this->_builds->add($builds->next());
+		foreach($builds as $build) {
+            $this->builds->add($build);
         }
     }
 
@@ -80,15 +83,12 @@ class BuildQueue implements BuildQueueInterface
     public function getNextBuildTime()
     {
         $nextBuildTime = null;
-        /**
-         * Xinc_Build_Interface
-         */
         $build = null;
-        while ($this->_builds->hasNext()) {
-            $build = $this->_builds->next();
+        while ($this->builds->valid()) {
+            $build = $this->builds->current();
             if ( $build->getNextBuildTime() <= $nextBuildTime 
                || $nextBuildTime === null) {
-                if ($build->getStatus() != Xinc_Build_Interface::STOPPED) {
+                if ($build->getStatus() != BuildInterface::STOPPED) {
                     $buildTime = $build->getNextBuildTime();
 
                     if ($buildTime !== null && !$build->isQueued()) {
@@ -98,7 +98,7 @@ class BuildQueue implements BuildQueueInterface
                          * check before if not already in queue
                          */
                         //if (!in_array($build, $this->_queue)) {
-                            $this->_queue[] = $build;
+                            $this->queue[] = $build;
                             $build->enqueue();
                         //}
                     } else {
@@ -110,9 +110,10 @@ class BuildQueue implements BuildQueueInterface
                     }
                 }
             }
+            $this->builds->next();
         }
-        usort($this->_queue, array($this, 'sortQueue'));
-        $this->_builds->rewind();
+        usort($this->queue, array($this, 'sortQueue'));
+        $this->builds->rewind();
         return $nextBuildTime;
     }
 
@@ -144,11 +145,11 @@ class BuildQueue implements BuildQueueInterface
         //if (count($this->_queue)<1) {
         //    $this->getNextBuildTime();
         //}
-        usort($this->_queue, array($this, 'sortQueue'));
-        if (isset($this->_queue[0])) {
-            if ($this->_queue[0]->getNextBuildTime() <= time()) {
+        usort($this->queue, array($this, 'sortQueue'));
+        if (isset($this->queue[0])) {
+            if ($this->queue[0]->getNextBuildTime() <= time()) {
 
-                $build = array_shift($this->_queue);
+                $build = array_shift($this->queue);
                 $build->dequeue();
                 return $build;
             }

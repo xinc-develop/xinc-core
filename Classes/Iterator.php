@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Iterator over an array of elements
- *
  *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2014 Alexander Opitz, Leipzig
@@ -26,6 +24,11 @@
 
 namespace Xinc\Core;
 
+use Xinc\Core\Validation\Exception\TypeMismatch;
+
+/**
+ * Iterator over an array of elements
+ */
 class Iterator extends \ArrayIterator
 {
     /**
@@ -33,18 +36,25 @@ class Iterator extends \ArrayIterator
      */
     protected $typeOf = null;
 
+    /**
+     * @throws Xinc::Core::Validation::Exception::TypeMismatch
+     */
     public function __construct($array = array())
     {
         $this->testValues($array);
         parent::__construct($array);
     }
-
+    /**
+     * @throws Xinc::Core::Validation::Exception::TypeMismatch
+     */
     public function append($value)
     {
         $this->testValue($value);
-        parent::apend($value);
+        parent::append($value);
     }
-
+    /**
+     * @throws Xinc::Core::Validation::Exception::TypeMismatch
+     */
     public function offsetSet($index, $value)
     {
         $this->testValue($value);
@@ -52,7 +62,7 @@ class Iterator extends \ArrayIterator
     }
 
     /**
-     * @throws Exception
+     * @throws Xinc::Core::Validation::Exception::TypeMismatch
      */
     public function testValues($array)
     {
@@ -62,13 +72,29 @@ class Iterator extends \ArrayIterator
     }
 
     /**
-     * @throws Exception
+     * @throws Xinc::Core::Validation::Exception::TypeMismatch
      */
     public function testValue($value)
     {
         if (!is_a($value, $this->typeOf)) {
-            debug_print_backtrace();
-            throw new \Exception('Element is not an instance of: ' . $this->typeOf);
+            throw new TypeMismatch(get_class($value), $this->typeOf);
         }
+    }
+    
+    /**
+     * @deprecated
+     * @throws Xinc::Core::Validation::Exception::TypeMismatch
+     */
+    public function add($item)
+    {
+        $this->append($item);
+    }
+    
+    /**
+     * @deprecated
+     */
+    public function hasNext()
+    {
+        return $this->valid();
     }
 }

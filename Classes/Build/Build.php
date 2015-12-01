@@ -61,85 +61,85 @@ class Build implements BuildInterface
     /**
      * @var Xinc_Build_Properties
      */
-    private $_properties;
+    private $properties;
     
     /**
      * @var Xinc_Build_Properties
      */
-    private $_internalProperties;
+    private $internalProperties;
     
     /**
      *
      * @var Xinc_Build_Statistics
      */
-    private $_statistics;
+    private $statistics;
     
     /**
      * 
      *
      * @var integer
      */
-    private $_buildTimestamp;
+    private $buildTimestamp;
     
     /**
      * 
      *
      * @var integer
      */
-    private $_nextBuildTimestamp;
+    private $nextBuildTimestamp;
     
     /**
      * Build status, as defined in Xinc_Build_Interface
      *
      * @var integer
      */
-    private $_status;
+    private $status;
     
     /**
      *
      * @var Xinc_Build_Interface
      */
-    private $_lastBuild;
+    private $lastBuild;
     
     /**
      * The build no of this build
      *
      * @var integer
      */
-    private $_no;
+    private $no;
     
     /**
      * The label for this build
      *
      * @var string
      */
-    private $_label;
+    private $label;
     
     /**
      * Contains tasks that need to be executed for each Process Step
      *
      * @var Xinc_Build_Tasks_Registry
      */
-    private $_taskRegistry;
+    private $taskRegistry;
     
     /**
      * Build scheduler
      *
      * @var Xinc_Build_Scheduler_Interface
      */
-    private $_scheduler;
+    private $scheduler;
     
     /**
      * @var Xinc_Build_Labeler_Interface
      */
-    private $_labeler;
+    private $labeler;
     
     /**
      * Holding config values for this build
      *
      * @var array
      */
-    private $_config = array();
+    private $config = array();
     
     /**
      * sets the project, engine
@@ -160,17 +160,17 @@ class Build implements BuildInterface
             $this->setStatus(BuildInterface::MISCONFIGURED);
         }
         
-        $this->_buildTimestamp = $buildTimestamp;
-        $this->_properties = new BuildProperties();
-        $this->_internalProperties = new BuildProperties();
-        $this->_statistics = new Statistics();
+        $this->buildTimestamp = $buildTimestamp;
+        $this->properties = new BuildProperties();
+        $this->internalProperties = new BuildProperties();
+        $this->statistics = new Statistics();
         $this->setLabeler(new Labeler\DefaultLabeler());
         $this->setScheduler(new Scheduler\DefaultScheduler());
     }
 
     public function setLabeler(Labeler\LabelerInterface $labeler)
     {
-        $this->_labeler = $labeler;
+        $this->labeler = $labeler;
     }
 
     /**
@@ -178,39 +178,39 @@ class Build implements BuildInterface
      * Returns the last build
      * @return Xinc_Build_Interface
      */
-    public function &getLastBuild()
+    public function getLastBuild()
     {
-        if ($this->_lastBuild == null) { 
-            $build = new Xinc_Build($this->getEngine(), $this->getProject());
+        if ($this->lastBuild == null) { 
+            $build = new self($this->getEngine(), $this->getProject());
             return $build;
         }
-        return $this->_lastBuild;
+        return $this->lastBuild;
     }
 
     /**
      *
-     * @return Xinc_Build_Properties
+     * @return Xinc::Core::Properties
      */
-    public function &getProperties()
+    public function getProperties()
     {
-        return $this->_properties;
+        return $this->properties;
     }
     
     /**
      *
-     * @return Xinc_Build_Properties
+     * @return Xinc::Core::Properties
      */
-    public function &getInternalProperties()
+    public function getInternalProperties()
     {
-        return $this->_internalProperties;
+        return $this->internalProperties;
     }
     
     /**
      * @return Xinc_Build_Statistics
      */
-    public function &getStatistics()
+    public function getStatistics()
     {
-        return $this->_statistics;
+        return $this->statistics;
     }
     /**
      * sets the build time for this build
@@ -220,7 +220,7 @@ class Build implements BuildInterface
     public function setBuildTime($buildTime)
     {
         $this->getProperties()->set('build.timestamp', $buildTime);
-        $this->_buildTimestamp = $buildTime;
+        $this->buildTimestamp = $buildTime;
     }
 
     /**
@@ -230,7 +230,7 @@ class Build implements BuildInterface
      */
     public function getBuildTime()
     {
-        return $this->_buildTimestamp;
+        return $this->buildTimestamp;
     }
     
     /**
@@ -240,14 +240,14 @@ class Build implements BuildInterface
      */
     public function getNextBuildTime()
     {
-        return $this->_scheduler->getNextBuildTime($this);
+        return $this->scheduler->getNextBuildTime($this);
     }
 
     /**
      * 
      * @return Xincproject
      */
-    public function &getProject()
+    public function getProject()
     {
         return $this->project;
     }
@@ -256,7 +256,7 @@ class Build implements BuildInterface
      * 
      * @return Xincengine_Interface
      */
-    public function &getEngine()
+    public function getEngine()
     {
         return $this->engine;
     }
@@ -267,8 +267,8 @@ class Build implements BuildInterface
          * to prevent recursion, unset the reference to the lastBuild
          * and then clone
          */
-        $this->_lastBuild = null;
-        $this->_lastBuild = clone $this;
+        $this->lastBuild = null;
+        $this->lastBuild = clone $this;
     }
     
     /**
@@ -397,7 +397,7 @@ class Build implements BuildInterface
      */
     public function getStatus()
     {
-        return $this->_status;
+        return $this->status;
     }
     
     /**
@@ -407,7 +407,7 @@ class Build implements BuildInterface
      */
     public function setStatus($status)
     {
-        $this->_status = $status;
+        $this->status = $status;
     }
     
     
@@ -420,26 +420,15 @@ class Build implements BuildInterface
         $project = new Project();
         $project->setName($this->getProject()->getName());
         $this->project = $project;
-        if (!isset($this->_config['timezone'])) {
-            /**
-             * if no timezone was configured in the project xml, we store the
-             * used timezone and mark it as only a reporting timezone,
-             * like this the timezone will not get restored for future
-             * builds, but we have it for the record
-             */
-            $this->_config['timezone'] = Xinc_Timezone::get();
-            $this->_config['timezone.reporting'] = true;
-        }
-        
-        return array('_no','project', '_buildTimestamp',
-                     '_properties', '_status', '_lastBuild',
-                     '_labeler', 'engine', '_statistics', '_config',
-                     '_internalProperties');
+        return array('no','project', 'buildTimestamp',
+                     'properties', 'status', 'lastBuild',
+                     'labeler', 'engine', 'statistics', 'config',
+                     'internalProperties');
     }
     
     public function init()
     {
-        $this->_internalProperties = new Xinc_Build_Properties();
+        $this->internalProperties = new Xinc_Build_Properties();
     }
 
     /**
@@ -451,7 +440,7 @@ class Build implements BuildInterface
     {
         $this->info('Setting Buildnumber to:' . $no);
         $this->getProperties()->set('build.number', $no);
-        $this->_no = $no;
+        $this->no = $no;
     }
     
     /**
@@ -461,7 +450,7 @@ class Build implements BuildInterface
      */
     public function getNumber()
     {
-        return $this->_no;
+        return $this->no;
     }
     
     
@@ -482,7 +471,7 @@ class Build implements BuildInterface
      */
     public function getLabeler()
     {
-        return $this->_labeler;
+        return $this->labeler;
     }
     
     /**
@@ -491,7 +480,7 @@ class Build implements BuildInterface
      */
     public function setTaskRegistry(Xinc_Build_Tasks_Registry $taskRegistry)
     {
-        $this->_taskRegistry = $taskRegistry;
+        $this->taskRegistry = $taskRegistry;
     }
 
     /**
@@ -501,9 +490,9 @@ class Build implements BuildInterface
      *
      * @param Xinc_Build_Scheduler_Interface $scheduler
      */
-    public function setScheduler(Xinc_Build_Scheduler_Interface &$scheduler)
+    public function setScheduler(Scheduler\SchedulerInterface $scheduler)
     {
-        $this->_scheduler = $scheduler;
+        $this->scheduler = $scheduler;
     }
     
     /**
@@ -512,7 +501,7 @@ class Build implements BuildInterface
      */
     public function getScheduler()
     {
-        return $this->_scheduler;
+        return $this->scheduler;
     }
 
     /**
@@ -521,7 +510,7 @@ class Build implements BuildInterface
      */
     public function getTaskRegistry()
     {
-        return $this->_taskRegistry;
+        return $this->taskRegistry;
     }
 
     /**
@@ -650,7 +639,7 @@ class Build implements BuildInterface
     
     public function updateTasks()
     {
-        $this->_setters = Xinc_Plugin_Repository::getInstance()->getTasksForSlot(Xinc_Plugin_Slot::PROJECT_SET_VALUES);
+        $this->setters = Xinc_Plugin_Repository::getInstance()->getTasksForSlot(Xinc_Plugin_Slot::PROJECT_SET_VALUES);
         
         $this->getProperties()->set('project.name', $this->getProject()->getName());
         $this->getProperties()->set('build.number', $this->getNumber());
@@ -752,7 +741,7 @@ class Build implements BuildInterface
      */
     public function setConfigDirective($name, $value)
     {
-        $this->_config[$name] = $value;
+        $this->config[$name] = $value;
     }
     /**
      * Returns the configuration directive for the name
@@ -768,6 +757,6 @@ class Build implements BuildInterface
     
     public function resetConfigDirective()
     {
-        $this->_config = array();
+        $this->config = array();
     }
 }

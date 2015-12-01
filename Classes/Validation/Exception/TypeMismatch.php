@@ -3,6 +3,7 @@
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider <username@example.org>
+ * @author    Sebastian Knapp
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -21,48 +22,16 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @link      https://github.com/xinc-develop/xinc-core/
  */
- 
-namespace Xinc\Core\Build;
 
-/**
- * A Build queue holds all Build Jobs queued for execution
- * 
- * Build Jobs are registered with the Build Queue to be
- * executed at a certain time
- *
- */
-interface BuildQueueInterface
+namespace Xinc\Core\Validation\Exception;
+
+class TypeMismatch extends ValidationException
 {
-    /**
-     * adds a build to the queue
-     * 
-     * Calls the getNextBuildTime() method to put
-     * the builds into the right order in the queue
-     *
-     * @param Xinc_Build_Interface $build
-     */
-    public function addBuild(BuildInterface $build);
-    
-    /**
-     * Adds a number of builds to the queue
-     *
-     * @param Xinc_Build_Iterator $builds
-     */
-    public function addBuilds(BuildIterator $builds);
-    
-    /**
-     * Returns the next build time of all the builds scheduled
-     * in this queue
-     *
-     * @return integer unixtimestamp
-     */
-    public function getNextBuildTime();
-    
-    /**
-     * Removes the next scheduled build from the queue
-     * and returns it
-     *
-     * @return Xinc_Build_Interface
-     */
-    public function getNextBuild();
+    public function __construct($has, $expected)
+    {
+        parent::__construct(
+            'Expected type was "' . $expected . 
+            '", but type was "' . $has  . '".'
+        );
+    }
 }

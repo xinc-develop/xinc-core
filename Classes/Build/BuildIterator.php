@@ -30,22 +30,5 @@ use Xinc\Core\Iterator;
 
 class BuildIterator extends Iterator
 {
-  
-    /**
-     * Creates an iterator for Xinc_Build's
-     *
-     * @param Xinc_Build_Interface[] $array
-     */
-    public function __construct(array $array = array())
-    {
-        foreach ($array as $element) {
-            if (!$element instanceof Xinc_Build_Interface ) {
-                throw new Xinc_Build_Exception_Invalid();
-            }
-            
-        }
-        
-        parent::__construct($array);
-    }
-  
+	protected $typeOf = 'Xinc\Core\Build\Build';  
 }
