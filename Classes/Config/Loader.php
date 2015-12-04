@@ -24,14 +24,12 @@
 
 namespace Xinc\Core\Config;
 
-use Xinc\Core\Config\ConfigInterface;
+use Xinc\Core\Traits\Logger;
 
 /**
- * Interface for Xinc Configuration Object(s)
+ * Base class for xinc configuration loader
  */
-interface ConfigLoaderInterface
+abstract class Loader
 {
-	public function setLogger($log);
-	
-	public function load(ConfigInterface $c);
+	use Logger;
 }

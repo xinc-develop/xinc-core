@@ -22,16 +22,17 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Config;
-
-use Xinc\Core\Config\ConfigInterface;
+namespace Xinc\Core\Traits;
 
 /**
- * Interface for Xinc Configuration Object(s)
+ * A trait for objects which could log something.
  */
-interface ConfigLoaderInterface
+trait Logger
 {
-	public function setLogger($log);
+	protected $log;
 	
-	public function load(ConfigInterface $c);
+	public function setLogger($log)
+	{
+		$this->log = $log;
+	}
 }

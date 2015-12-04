@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * The logging singleton.
- *
  *
  * @author    David Ellis <username@example.com>
  * @author    Gavin Foster <username@example.com>
@@ -28,7 +26,7 @@
 
 namespace Xinc\Core;
 
-class Logger extends \Xinc\Core\Singleton
+class Logger
 {
     /**
      * Path to the log file.
@@ -78,11 +76,7 @@ class Logger extends \Xinc\Core\Singleton
 
     private $logLevelSet = false;
 
-    /**
-     * Private singleton constructor.
-     *
-     */
-    protected function __construct()
+    public function __construct()
     {
         $this->logQueue = array();
     }
@@ -90,12 +84,14 @@ class Logger extends \Xinc\Core\Singleton
     public function setLogLevel($level)
     {
         $this->logLevelSet = true;
-        /**
-         * setting to info, so the loglevel change gets written to the log
-         */
-        $this->logLevel = self::LOG_LEVEL_INFO;
-        $this->info("Setting loglevel to $level");
-        $this->logLevel = $level;
+        if($level != $this->getLogLevel) {
+            /**
+             * setting to info, so the loglevel change gets written to the log
+             */
+            $this->logLevel = self::LOG_LEVEL_INFO;
+            $this->info("Setting loglevel to $level");
+            $this->logLevel = $level;
+        }
     }
 
     public function logLevelSet()

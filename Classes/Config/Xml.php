@@ -38,8 +38,9 @@ use Xinc\Core\Exception\MalformedConfigException;
 /**
  * Xinc System Configuration File in XML Format
  */
-class Xml implements ConfigLoaderInterface
+class Xml extends Loader implements ConfigLoaderInterface
 {
+	
     public function load(ConfigInterface $conf)
     {
         $file = $conf->getOption('config-file');
@@ -51,7 +52,11 @@ class Xml implements ConfigLoaderInterface
 		}
 		// load every xml file in config dir
 		else {
-			
+			 $dir = $conf->getOption('config-dir');
+			 $list = glob("{$dir}*.xml");
+			 if($list === false) {
+				 
+		     }
 		}
 	}
         
@@ -61,6 +66,7 @@ class Xml implements ConfigLoaderInterface
             throw new IOException($file,null,null,IOException::FAILURE_NOT_FOUND);
         } 
         libxml_use_internal_errors(true);
+        $this->log->verbose("Loading configuration file $file");
         $xml = simplexml_load_file($file);
         
         if(!$xml) {

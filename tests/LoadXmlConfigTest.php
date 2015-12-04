@@ -20,6 +20,7 @@
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use Xinc\Core\Logger;
 use Xinc\Core\Config\Config;
 use Xinc\Core\Config\Xml;
 
@@ -31,12 +32,21 @@ use Xinc\Core\Exception\XmlException;
  */
 class TestLoadXml extends Xinc\Core\Test\BaseTest
 {
+	public function xml()
+	{
+		$xml = new Xml;
+		$log = new Logger();
+		//$log->setLoglevel(0);
+		$xml->setLogger($log);
+		return $xml;
+	}
+	
 	public function testFileNotFound()
 	{
 	    $conf = new Config();
 	    $conf->setOption('config-file','./x-files-unknown.xml');
 	    try {
-			(new Xml)->load($conf);
+			$this->xml()->load($conf);
 			$this->assertTrue(false,'IO exception expected');
 		}
 		catch(IOException $e) {
@@ -49,7 +59,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/broken-settings.xml');
 	    try {
-			(new Xml)->load($conf);
+			$this->xml()->load($conf);
 			$this->assertTrue(false,'XML exception expected');
 		}
 		catch(XmlException $e) {
@@ -62,8 +72,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/sample-settings.xml');
 	    
-	    $xml = new Xml;
-	    $xml->load($conf);
+	    $this->xml()->load($conf);
 	    $this->assertEquals($conf->get('heartbeat'),30);
 	    $this->assertEquals($conf->get('timezone'),'Europe/Berlin');
 	    $this->assertEquals($conf->get('loglevel'),2);	
