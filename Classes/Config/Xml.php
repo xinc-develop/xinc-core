@@ -26,83 +26,53 @@
 
 namespace Xinc\Core\Config;
 
+use SimpleXMLElement as XmlElement;
+use Xinc\Core\Config\ConfigInterface;
 use Xinc\Core\Config\ConfigLoaderInterface;
+
 use Xinc\Core\Exception\IOException;
+use Xinc\Core\Exception\XmlException;
+
 use Xinc\Core\Exception\MalformedConfigException;
 
 /**
  * Xinc System Configuration File in XML Format
  */
-class Xml extends SimpleXMLElement implements ConfigLoaderInterface
+class Xml implements ConfigLoaderInterface
 {
-    
-    private static $_allowedElements = array(
-        'xinc',
-        'xinc/configuration',
-        'xinc/configuration/setting',
-        'xinc/engines',
-        'xinc/engines/engine',
-        'xinc/plugins',
-        'xinc/plugins/plugin'
-    );
-    
-    /**
-     * Constructs a SimpleXMLElement
-     *
-     * @param string $fileName
-     *
-     * @throws Xinc_Config_Exception_FileNotFound
-     * @throws Xinc_Config_Exception_InvalidEntry
-     */
-    public static function load($fileName)
+    public function load(ConfigInterface $conf)
     {
-       
-        if (!file_exists($fileName)) {
-            throw new Xinc_Config_Exception_FileNotFound($fileName);
-        } else {
-            
-            $data = file_get_contents($fileName);
-        }
-        $file = new Xinc_Config_File($data);
+        $file = $conf->getOption('config-file');
+        if(isset($file)) {
+		    if(!strstr($file,'/')) {
+				$file = $conf->getOption('config-dir') . $file;
+			}
+			$this->loadFile($file,$conf);	
+		}
+		// load every xml file in config dir
+		else {
+			
+		}
+	}
         
-        $file->_validate();
+    public function loadFile($file,$conf)
+    {   
+        if (!file_exists($file)) {
+            throw new IOException($file,null,null,IOException::FAILURE_NOT_FOUND);
+        } 
+        libxml_use_internal_errors(true);
+        $xml = simplexml_load_file($file);
         
-        return $file;
+        if(!$xml) {
+            throw new XmlException(libxml_get_errors());
+	    }
+	    $this->loadSettings($xml,$conf);
     }
     
-    /**
-     * validate the config file
-     * - make sure only allowed tags are present
-     *
-     */
-    protected function _validate()
+    protected function loadSettings($xml,$conf)
     {
-        $array = array('xinc');
-        foreach ($this->children() as $elementName => $element) {
-            $parent = 'xinc/' . $elementName;
-            $array[] = $parent;
-            $this->_walkXml($element, $parent, $array);
-        }
-        foreach ( $array as $path ) {
-            if (!in_array($path, self::$_allowedElements)) {
-                throw new Xinc_Config_Exception_InvalidEntry($path);
-            }
-        }
-    }
-    
-    /**
-     * Creates an xpath like array of all elements
-     *
-     * @param SimpleXMLElement $element
-     * @param string $parent
-     * @param array $array
-     */
-    private function _walkXml($element, $parent,array &$array)
-    {
-        foreach ($element->children() as $elementName => $element) {
-            $newParent = $parent . '/' . $elementName;
-            $array[] = $newParent;
-            $this->_walkXml($element, $newParent, $array);
-        }
-    }
+		foreach($xml->xpath('/xinc/configuration/setting') as $element) {
+	        $conf->setSetting("{$element['name']}","{$element['value']}");		
+		}
+	}
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xinc>
+<configuration>
+<setting name="loglevel" value="2"/>
+<setting name="timezone" value="Europe/Berlin"/>
+<setting name="heartbeat" value="30">
+</configuration>
+</xinc>

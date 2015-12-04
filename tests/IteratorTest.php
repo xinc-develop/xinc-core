@@ -20,14 +20,12 @@
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
  
-use Xinc\Core\Properties;
-
 use Xinc\Core\Validation\Exception\TypeMismatch;
 
 /**
  * @test Test Class for Xinc::Core::Iterator and subclasses
  */
-class TestProperties extends Xinc\Core\Test\BaseTest
+class TestIterators extends Xinc\Core\Test\BaseTest
 {
     public function testTypecheck()
     {
@@ -39,7 +37,7 @@ class TestProperties extends Xinc\Core\Test\BaseTest
 		foreach($iterators as $iter) {
 		    try {
 				$iter->append(null);
-				$this->assertTrue(false,'null s an invalid element in iterator ' .
+				$this->assertTrue(false,'null is not an invalid element in iterator ' .
 				    get_class($iter));
 			}
 			catch(TypeMismatch $e) {

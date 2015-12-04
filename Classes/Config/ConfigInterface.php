@@ -2,9 +2,7 @@
 /**
  * Xinc - Continuous Integration.
  *
- * @author    Arno Schneider
  * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -26,57 +24,10 @@
 
 namespace Xinc\Core\Config;
 
-use Xinc\Core\Properties;
-
 /**
- * Xinc Configuration Object
+ * Interface for Xinc Configuration Object(s)
  */
-class Config implements ConfigInterface
+interface ConfigInterface
 {
-    private $options;
-    private $settings;
-    
-    public function __construct()
-    {
-		$this->options = new Properties();
-		$this->settings = new Properties();
-	}
-	
-	public function get($key)
-	{
-		if($this->options->has($key)) {
-			return $this->options[$key];
-		}
-		return $this->settings[$key];
-	}
-
-    public function getOption($key)
-    {
-		return $this->options[$key];
-	}
-		
-	public function getOptions()
-	{
-		return $this->options;
-	}
-	
-    public function setOptions($opts)
-    {
-		$this->options->set($opts);
-	}
-	
-	public function setOption($key,$value)
-	{
-		$this->options->set($key,$value);
-	}
-	
-    public function setSettings($opts)
-    {
-		$this->settings->set($opts);
-	}
-	
-	public function setSetting($key,$value)
-	{
-		$this->settings->set($key,$value);
-	}
+	public function getOption($key);
 }

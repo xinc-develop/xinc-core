@@ -31,16 +31,16 @@ use ArrayAccess;
 use Xinc\Core\Exception\Mistake;
 
 class Properties implements ArrayAccess
-{   
-    /**
-     * Associative Array holding the nvp for the build properties
-     *
-     * @var array
-     */
+{
     private $properties = array();
 
-    public function offsetExists ( $offset)
+    public function offsetExists ( $offset )
     {
+		return $this->has($offset);
+	}
+	
+	public function has($offset)
+	{
         return array_key_exists($offset, $this->properties);		
 	}
 

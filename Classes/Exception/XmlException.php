@@ -26,9 +26,16 @@
 namespace Xinc\Core\Exception;
 
 /**
- * This exception is thrown when there is a problem found parsing the config
- * file.
+ * This exception is thrown when XML could not be parsed successfully.
  */
-class MalformedConfigException extends \Xinc\Core\Exception
+class XmlException extends \Xinc\Core\Exception
 {
+	public function __construct(array $errors)
+	{
+		$msg = '';
+		foreach($errors as $error) {
+			$msg .= "Line {$error->line}: {$error->message}";
+		}
+		parent::__construct($msg);
+	}
 }
