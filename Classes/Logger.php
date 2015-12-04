@@ -84,7 +84,7 @@ class Logger
     public function setLogLevel($level)
     {
         $this->logLevelSet = true;
-        if($level != $this->getLogLevel) {
+        if($level != $this->getLogLevel()) {
             /**
              * setting to info, so the loglevel change gets written to the log
              */
