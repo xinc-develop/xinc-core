@@ -2,7 +2,8 @@
 /**
  * Xinc - Continuous Integration.
  *
- * @author    Sebastian Knapp <news@young-workers.de>
+ * @author    Arno Schneider <username@example.org>
+ * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -19,20 +20,27 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @homepage  https://github.com/xinc-develop/xinc-core/
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Config;
+namespace Xinc\Core\Plugin\ModificationSet;
 
-use Xinc\Core\Config\ConfigInterface;
-use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Plugin\Base;
 
-/**
- * Interface for Xinc Configuration Object(s)
- */
-interface ConfigLoaderInterface
+class Plugin extends Base
 {
-	public function setLogger($log);
-	
-	public function load(ConfigInterface $c, RegistryInterface $r);
+    public function validate(&$msg = null)
+    {
+        return true;
+    }
+
+    public function getTaskDefinitions()
+    {
+        return array(new Task($this));
+    }
+
+    public function getGuiWidgets()
+    {
+        return array(new Widget($this));
+    }
 }

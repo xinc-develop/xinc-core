@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This is the base exception.
- *
  *
  * @author    Alexander Opitz <opitz.alexander@gmail.com>
  * @copyright 2007 David Ellis, One Degree Square
@@ -26,6 +24,14 @@
 
 namespace Xinc\Core;
 
+/**
+ * @defgroup exceptions Exceptions
+ */
+
+/**
+ * Base class for all Xinc exceptions
+ * @ingroup exceptions
+ */
 class Exception extends \Exception
 {
 }

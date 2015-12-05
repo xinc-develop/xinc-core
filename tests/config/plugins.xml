@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xinc>
 <plugins>
-	<plugin class="Xinc_Plugin_Repos_ModificationSet"/>
+	<plugin class="Xinc\Core\Plugin\ModificationSet"/>
 	<plugin class="Xinc_Plugin_Repos_Configuration"/>
 	<plugin class="Xinc_Plugin_Repos_ModificationSet_Svn"/>
 	<plugin class="Xinc_Plugin_Repos_ModificationSet_Git"/>

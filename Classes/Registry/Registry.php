@@ -1,11 +1,11 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Abstract Registry Class to be extended by projects, buildqueue etc.
  *
- *
- * @author    Arno Schneider <username@example.com>
+ * @author    Arno Schneider
+ * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2014 Alexander Opitz, Leipzig
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -21,27 +21,78 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Registry;
 
-use Xinc\Core\Plugin\PluginRegistry;
 use Xinc\Core\Traits\Logger;
 
-class Registry implements RegistryInterface
+use Xinc\Core\Validation\Exception\TypeMismatch;
+use Xinc\Core\Exception\ClassLoaderException;
+
+use Xinc\Core\Plugin\PluginInterface;
+
+use Xinc\Core\Plugin\PluginRegistry;
+use Xinc\Core\Task\TaskRegistry;
+use Xinc\Core\Api\ApiRegistry;
+use Xinc\Core\Gui\WidgetRegistry;
+
+/**
+ * The central registry for all types.
+ * @ingroup logger
+ * @ingroup registry
+ */
+class Registry implements XincRegistryInterface
 {
 	use Logger;
 	
     private $pluginRegistry;
+    private $taskRegistry;
+    private $widgetRegistry;
+    private $apiRegistry;
     
     public function __construct()
     {
-	    $this->pluginRegistry = new PluginRegistry(); 	
+	    $this->pluginRegistry = new PluginRegistry();
+	    $this->taskRegistry = new TaskRegistry();
+	    $this->widgetRegistry = new WidgetRegistry();
+	    $this->apiRegistry = new ApiRegistry();
+	}
+	
+	public function setLogger($log)
+	{
+		$this->log = $log;
+		$this->pluginRegistry->setLogger($log);
+	    $this->taskRegistry->setLogger($log);
+	    $this->widgetRegistry->setLogger($log);
+	    $this->apiRegistry->setLogger($log);
 	}
 	
     public function registerPluginClass($class)
     {
-	     	
+	    if(!class_exists($class)) {
+			throw new ClassLoaderException($class);
+		}
+        $plugin = new $class;
+
+        if (!($plugin instanceof PluginInterface)) {
+            throw new TypeMismatch(get_class($plugin),
+                '\Xinc\Core\Plugin\PluginInterface');
+        }
+        $this->pluginRegistry->registerPlugin($plugin);
+        $this->taskRegistry->registerTasks($plugin->getTasks());
+        
+        
+        $widgets = $plugin->getGuiWidgets();
+        foreach ($widgets as $widget) {
+            Xinc_Gui_Widget_Repository::getInstance()->registerWidget($widget);
+        }
+        
+        $apiModules = $plugin->getApiModules();
+        foreach ($apiModules as $apiMod) {
+            Xinc_Api_Module_Repository::getInstance()->registerModule($apiMod);
+        }
+
 	}
 }

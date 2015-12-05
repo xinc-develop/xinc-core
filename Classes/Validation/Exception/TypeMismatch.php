@@ -25,6 +25,10 @@
 
 namespace Xinc\Core\Validation\Exception;
 
+/**
+ * Exception when an object is not of the expected type.
+ * @ingroup exceptions
+ */
 class TypeMismatch extends ValidationException
 {
     public function __construct($has, $expected)

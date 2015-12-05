@@ -25,6 +25,10 @@
 
 namespace Xinc\Core\Validation\Exception;
 
+/**
+ * Exception when a value is numerical.
+ * @ingroup exceptions
+ */
 class NotNumerical extends ValidationException
 {
     public function __construct($name, $value)

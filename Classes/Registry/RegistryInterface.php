@@ -1,7 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Registry interface
  *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2014 Alexander Opitz, Leipzig
@@ -25,9 +24,33 @@
 
 namespace Xinc\Core\Registry;
 
-interface RegistryInterface
-{
-	public function setLogger($log);
+use Xinc\Core\Logger\LoggerInterface;
 
-    public function registerPluginClass($class);	
+/**
+ * Xinc Registry Interface
+ * @ingroup interfaces
+ * @ingroup registry
+ */
+interface RegistryInterface extends LoggerInterface
+{
+    public function register($name, $object);
+
+    /**
+     * generates an array of all configured projects
+     * Unregisters an Object
+     *
+     * @param string $name
+     * @return object the unregistered Object
+     * @throws Xinc\Core\Registry\RegistryException
+     */
+    public function unregister($name);
+
+    /**
+     * Returns the registered object
+     *
+     * @param string $name
+     * @return object
+     * @throws Xinc\Core\Registry\Exception
+     */
+    public function get($name);
 }

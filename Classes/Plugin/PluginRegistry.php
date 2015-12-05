@@ -1,11 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * 
- * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Plugin
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -23,18 +19,23 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin;
 
-
+use Xinc\Core\Task\Slot;
+use Xinc\Core\Traits\Logger;
 
 /**
  * Registry holding the plugins
+ * @ingroup registry
+ * @ingroup logger
  */
 class PluginRegistry
 {
+	use Logger;
+	
     private $definedTasks = array();
     private $_plugins = array();
     
@@ -46,20 +47,13 @@ class PluginRegistry
      */
     private $_slotReference = array();
 
-    /**
-     * Enter description here...
-     *
-     * @param Xinc_Plugin_Interface $plugin
-     *
-     * @return boolean
-     * @throws Xinc_Plugin_Task_Exception
-     */
-    public function registerPlugin(Xinc_Plugin_Interface $plugin)
+    public function registerPlugin(PluginInterface $plugin)
     {
         $pluginClass = get_class($plugin);
-        if (!$plugin->validate()) {
-            Xinc_Logger::getInstance()->error(
-                'cannot load plugin ' . $pluginClass
+        if (!$plugin->validate($msg)) {
+            $this->log->error(
+                'Plugin ' . $pluginClass . ' is invalid.' .
+                ($msg ? "\nValidation message: $msg" : '')
             );
                                  
             return false;
@@ -73,7 +67,7 @@ class PluginRegistry
             $taskSlot = $task->getPluginSlot();
 
             switch ($taskSlot) {
-                case Xinc_Plugin_Slot::PROJECT_SET_VALUES: 
+                case Slot::PROJECT_SET_VALUES: 
                         // make sure the task implements the setter interface
                         if (!$task instanceof Xinc_Plugin_Task_Setter_Interface) {
                             Xinc_Logger::getInstance()->error(
@@ -121,16 +115,6 @@ class PluginRegistry
                     'plugin'   => array('classname' => $pluginClass)
                 );
             }
-        }
-
-        $widgets = $plugin->getGuiWidgets();
-        foreach ($widgets as $widget) {
-            Xinc_Gui_Widget_Repository::getInstance()->registerWidget($widget);
-        }
-        
-        $apiModules = $plugin->getApiModules();
-        foreach ($apiModules as $apiMod) {
-            Xinc_Api_Module_Repository::getInstance()->registerModule($apiMod);
         }
         
         $this->_plugins[] = $plugin;

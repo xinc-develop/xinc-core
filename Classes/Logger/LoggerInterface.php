@@ -22,17 +22,13 @@
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Config;
-
-use Xinc\Core\Config\ConfigInterface;
-use Xinc\Core\Registry\RegistryInterface;
+namespace Xinc\Core\Logger;
 
 /**
- * Interface for Xinc Configuration Object(s)
+ * Interface for objects which are using the log.
+ * @ingroup interfaces
  */
-interface ConfigLoaderInterface
+interface LoggerInterface
 {
 	public function setLogger($log);
-	
-	public function load(ConfigInterface $c, RegistryInterface $r);
 }

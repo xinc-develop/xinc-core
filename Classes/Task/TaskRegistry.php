@@ -2,7 +2,6 @@
 /**
  * Xinc - Continuous Integration.
  *
- *
  * @author    Alexander Opitz <opitz.alexander@googlemail.com>
  * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -25,7 +24,14 @@
 
 namespace Xinc\Core\Task;
 
-class Registry extends \Xinc\Core\Registry\RegistryAbstract
+use Xinc\Core\Registry\RegistryAbstract;
+
+/**
+ * Registry for task objects
+ * @ingroup registry
+ * @ingroup logger
+ */
+class TaskRegistry extends RegistryAbstract
 {
     /**
      * @var typeOf The Name of the class this elements should be.

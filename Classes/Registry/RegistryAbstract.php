@@ -26,8 +26,11 @@
 
 namespace Xinc\Core\Registry;
 
-abstract class RegistryAbstract extends \Xinc\Core\Singleton implements RegistryInterface
+use Xinc\Core\Traits\Logger;
+
+abstract class RegistryAbstract implements RegistryInterface
 {
+	use Logger;
     /**
      * @var typeOf The Name of the class this elements should be.
      */

@@ -9,7 +9,7 @@ fi
 rm -rf docs/*
 doxygen
 
-perl -pi -e 's/^.*\@(category|package).*$//sm' $(find Classes -type f)
+perl -pi -e 's/^.*\@(category|subpackage|package).*$//sm' $(find Classes -type f)
 perl -pi -e 's/^.*\* PHP version 5\s*$//sm' $(find Classes -type f)
 
 perl -pi -e 's/http:\/\/code\.google\.com\/p\/xinc\//https:\/\/github.com\/xinc-develop\/xinc-core\//g' \

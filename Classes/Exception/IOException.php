@@ -1,10 +1,8 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, for file IO problems.
  *
  *
- * @subpackage Exception
  * @author     Alexander Opitz <opitz.alexander@gmail.com>
  * @copyright  2012 Alexander Opitz, Leipzig
  * @license    http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -27,6 +25,10 @@
 
 namespace Xinc\Core\Exception;
 
+/**
+ * Exception, for file IO problems.
+ * @ingroup Exceptions
+ */
 class IOException extends \Xinc\Core\Exception
 {
     const FAILURE_IO = 1;

@@ -2,12 +2,8 @@
 /**
  * Xinc - Continuous Integration.
  *
- * PHP version 5
- *
- * @category  Development
- * @package   Xinc.Plugin.Repos
- * @author    Arno Schneider <username@example.org>
- * @copyright 2007 Arno Schneider, Barcelona
+ * @author    Arno Schneider <username@example.com>
+ * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -23,27 +19,18 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Plugin\ModificationSet;
+namespace Xinc\Core\Registry;
 
-use Xinc\Plugin\Base;
+use Xinc\Core\Logger\LoggerInterface;
 
-class ModificationSet extends Base
+/**
+ * Xinc Registry Interface
+ * @ingroup interfaces
+ */
+interface XincRegistryInterface extends LoggerInterface
 {
-    public function validate()
-    {
-        return true;
-    }
-
-    public function getTaskDefinitions()
-    {
-        return array(new Task($this));
-    }
-
-    public function getGuiWidgets()
-    {
-        return array(new Widget($this));
-    }
+    public function registerPluginClass($class);	
 }

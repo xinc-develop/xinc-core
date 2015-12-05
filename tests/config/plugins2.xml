@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<xinc>
+<plugins namespace="Xinc\Core\Plugin">
+	<plugin name="ModificationSet"/>
+	<plugin name="Configuration"/>
+	<plugin name="Schedule"/>
+	<plugin name="Phpunit"/>
+	<plugin name="Phing"/>
+	<plugin name="Publisher"/>
+</plugins>
+</xinc>
+

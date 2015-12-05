@@ -19,65 +19,75 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  http://code.google.com/p/xinc/
  */
 
 namespace Xinc\Core\Task;
 
+use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
 
-interface TaskInterface
+abstract class Base implements TaskInterface
 {
     /**
-     * Constructor
+     * @var array Subtasks for this task
      */
-    public function __construct(PluginInterface $plugin);
+    protected $arSubtasks = array();
+
+    protected $_plugin;
+    protected $_xml;
+    
+    /**
+     * Constructor, stores a reference to the plugin for
+     * usage of functionality
+     *
+     * @param Xinc_Plugin_Interface $plugin
+     */
+    public function __construct(PluginInterface $plugin)
+    {
+        $this->_plugin = $plugin;
+    }
+
+    public function init(BuildInterface $build = null)
+    {
+    }
 
     /**
-     * Initialize the task
+     * Support for subtasks, empty by default.
+     *
+     * @param Xinc_Plugin_Task_Interface $task Task to register
+     *
      * @return void
      */
-    public function init(BuildInterface $build = null);
+    public function registerTask(Xinc_Plugin_Task_Interface $task)
+    {
+        Xinc_Logger::getInstance()->debug('Registering Task: ' . get_class($task));
+        $this->arSubtasks[] = $task;
+    }
 
     /**
-     * Validates if a task can run by checking configs, directries and so on.
-     *
-     * @return boolean Is true if task can run.
-     */
-    public function validate();
-
-    /**
-     * Process the task
-     *
-     * @param Xinc\Core\Job\JobInterface $job Job to process this task for.
-     *
-     * @return void
-     */
-    public function process(BuildInterface $build);
-
-    /**
-     * Returns name of task.
+     * Returns name of task by lowercasing class name.
      *
      * @return string Name of task.
      */
-    public function getName();
+    public function getName()
+    {
+        return strtolower(get_class($this));
+    }
 
-    /**
-     * Returns the slot of this task inside a build.
-     *
-     * @return integer The slot number.
-     * @see Xinc/Plugin/Slot.php for available slots
-     */
-    public function getPluginSlot();
+    public function getTasks()
+    {
+        return new Xinc_Build_Tasks_Iterator($this->arSubtasks);
+    }
 
-    /**
-     * Gets registered subtask for this task.
-     *
-     * @return Xinc_Build_Tasks_Iterator
-     */
-    public function getTasks();
+    public function getXml()
+    {
+        return $this->_xml;
+    }
 
-    public function getXml();
-    public function setXml(\SimpleXMLElement $element);
+    public function setXml(SimpleXMLElement $element)
+    {
+        $this->_xml = $element;
+    }
 }

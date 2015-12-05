@@ -27,11 +27,16 @@ namespace Xinc\Core\Exception;
 use Xinc\Core\Exception;
 
 /**
- * The Mistake Exception is for coding problems. It should be never thrown
- * in production code.
+ * The Exception is used when a PHP class is not loadable.
+ * 
+ * For example this could happen if a plugin is configured, but the class
+ * is not avaiable.
  * @ingroup exceptions
  */
-class Mistake extends Exception
+class ClassLoaderException extends Exception
 {
-	
+	public function __construct($class)
+	{
+		parent::__construct("Class $class could not be loaded.");
+	}
 }

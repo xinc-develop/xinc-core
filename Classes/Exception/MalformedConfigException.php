@@ -28,6 +28,8 @@ namespace Xinc\Core\Exception;
 /**
  * This exception is thrown when there is a problem found parsing the config
  * file.
+ * @deprecated Is this exception used anymore?
+ * @ingroup exceptions
  */
 class MalformedConfigException extends \Xinc\Core\Exception
 {

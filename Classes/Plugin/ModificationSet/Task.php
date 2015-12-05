@@ -2,10 +2,6 @@
 /**
  * Xinc - Continuous Integration.
  *
- * PHP version 5
- *
- * @category  Development
- * @package   Xinc.Plugin.Repos.ModificationSet
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -23,17 +19,19 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-require_once 'Xinc/Plugin/Task/Base.php';
-require_once 'Xinc/Plugin/Repos/ModificationSet/Interface.php';
+namespace Xinc\Core\Plugin\ModificationSet;
 
-class Xinc_Plugin_Repos_ModificationSet_Task
-    extends Xinc_Plugin_Task_Base
+use Xinc\Core\Task\Base;
+use Xinc\Core\Task\Slot;
+use Xinc\Core\Build\BuildInterface;
+
+class Task extends Base
 {
     /**
-     * Validates if a task can run by checking configs, directries and so on.
+     * Validates if a task can run by checking configs, directories and so on.
      *
      * @return boolean Is true if task can run.
      */
@@ -64,14 +62,14 @@ class Xinc_Plugin_Repos_ModificationSet_Task
      */
     public function getPluginSlot()
     {
-        return Xinc_Plugin_Slot::PRE_PROCESS;
+        return Slot::PRE_PROCESS;
     }
 
-    public function process(Xinc_Build_Interface $build)
+    public function process(BuildInterface $build)
     {
         foreach ($this->arSubtasks as $task) {
             $task->process($build);
-            if ( $build->getStatus() == Xinc_Build_Interface::PASSED ) {
+            if ( $build->getStatus() == BuildInterface::PASSED ) {
                 return;
             } else if ($build->getStatus() == Xinc_Build_Interface::FAILED) {
                 /**
@@ -81,6 +79,6 @@ class Xinc_Plugin_Repos_ModificationSet_Task
                 return;
             }
         }
-        $build->setStatus(Xinc_Build_Interface::STOPPED);
+        $build->setStatus(BuildInterface::STOPPED);
     }
 }

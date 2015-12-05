@@ -91,9 +91,23 @@ class Xml extends Loader implements ConfigLoaderInterface
 	
 	protected function loadPlugins($xml,$reg)
 	{
-		foreach($xml->xpath('/xinc/plugins/plugin') as $element) {
-			$this->log->verbose("found plugin class {$element['class']}"); 
-			$reg->registerPluginClass("{$element['class']}");
+		foreach($xml->xpath('/xinc/plugins') as $element) {
+			$plugins = $element->xpath('plugin');
+
+			if(isset($element['namespace'])) {
+				foreach($plugins as $plugin) {
+				    $class = join('\\',array("{$element['namespace']}",
+				        "{$plugin['name']}",'Plugin'));
+				    $this->log->verbose("Looking for plugin class $class.");
+                    $reg->registerPluginClass($class);	
+				}
+			}
+			else {
+				foreach($plugins as $plugin) {
+					$this->log->verbose("found plugin class {$plugin['class']}"); 
+			        $reg->registerPluginClass("{$plugin['class']}");
+			    }
+			}
 		}
 	}
 }

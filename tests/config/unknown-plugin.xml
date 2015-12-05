@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<xinc>
+<plugins>
+	<plugin class="Xinc\Core\Plugin\UnknownPlugin"/>
+</plugins>
+</xinc>
+

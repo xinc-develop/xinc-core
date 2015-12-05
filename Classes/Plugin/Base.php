@@ -3,7 +3,9 @@
  * Xinc - Continuous Integration.
  * 
  * @author    Arno Schneider <username@example.org>
+ * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -19,7 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin;
@@ -43,7 +45,7 @@ abstract class Base implements PluginInterface
         return array();
     }
 
-    public function validate()
+    public function validate(&$msg = null)
     {
         return true;
     }

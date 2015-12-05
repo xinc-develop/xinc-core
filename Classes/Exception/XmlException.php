@@ -27,6 +27,7 @@ namespace Xinc\Core\Exception;
 
 /**
  * This exception is thrown when XML could not be parsed successfully.
+ * @ingroup exceptions
  */
 class XmlException extends \Xinc\Core\Exception
 {

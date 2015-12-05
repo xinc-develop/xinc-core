@@ -24,6 +24,10 @@
 
 namespace Xinc\Core\Validation\Exception;
 
+/**
+ * Base class for validation exceptions.
+ * @ingroup exceptions
+ */
 class ValidationException extends \Xinc\Core\Exception
 {
 	
