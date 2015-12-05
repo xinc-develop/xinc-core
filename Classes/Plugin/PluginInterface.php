@@ -2,8 +2,12 @@
 /**
  * Xinc - Continuous Integration.
  *
- * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * PHP version 5
+ *
+ * @category  Development
+ * @package   Xinc.Plugin
+ * @author    Arno Schneider <username@example.org>
+ * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -19,20 +23,39 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @link      http://code.google.com/p/xinc/
  */
 
-namespace Xinc\Core\Config;
-
-use Xinc\Core\Config\ConfigInterface;
-use Xinc\Core\Registry\RegistryInterface;
+namespace Xinc\Core\Plugin;
 
 /**
- * Interface for Xinc Configuration Object(s)
+ * This interface represents a publishing mechanism to publish build results
  */
-interface ConfigLoaderInterface
+interface PluginInterface
 {
-	public function setLogger($log);
-	
-	public function load(ConfigInterface $c, RegistryInterface $r);
+    /**
+     *
+     * @return Xinc_Api_Module_Interface[]
+     */
+    public function getApiModules();
+
+    /**
+     *
+     * @return Xinc_Gui_Widget_Interface[]
+     */
+    public function getGuiWidgets();
+
+    /**
+     * Returns the defined tasks of the plugin
+     *
+     * @return Xinc_Plugin_Task[]
+     */
+    public function getTaskDefinitions();
+
+    /**
+     * Validate if the plugin can run properly on this system
+     *
+     * @return boolean True if plugin can run properly otherwise false.
+     */
+    public function validate();
 }

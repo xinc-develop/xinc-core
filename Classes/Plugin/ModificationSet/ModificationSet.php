@@ -2,7 +2,10 @@
 /**
  * Xinc - Continuous Integration.
  *
+ * PHP version 5
  *
+ * @category  Development
+ * @package   Xinc.Plugin.Repos
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -20,48 +23,27 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @link      http://code.google.com/p/xinc/
  */
 
-require_once 'Xinc/Plugin/Interface.php';
+namespace Xinc\Core\Plugin\ModificationSet;
 
-abstract class Xinc_Plugin_Abstract implements Xinc_Plugin_Interface
+use Xinc\Plugin\Base;
+
+class ModificationSet extends Base
 {
-    /**
-     *
-     * @return Xinc_Api_Module_Interface[]
-     */
-    public function getApiModules()
-    {
-        return array();
-    }
-
-    /**
-     *
-     * @return Xinc_Gui_Widget_Interface[]
-     */
-    public function getGuiWidgets()
-    {
-        return array();
-    }
-
-    /**
-     * Returns the defined tasks of the plugin
-     *
-     * @return Xinc_Plugin_Task[]
-     */
-    public function getTaskDefinitions()
-    {
-        return array();
-    }
-
-    /**
-     * Validate if the plugin can run properly on this system
-     *
-     * @return boolean True if plugin can run properly otherwise false.
-     */
     public function validate()
     {
         return true;
+    }
+
+    public function getTaskDefinitions()
+    {
+        return array(new Task($this));
+    }
+
+    public function getGuiWidgets()
+    {
+        return array(new Widget($this));
     }
 }

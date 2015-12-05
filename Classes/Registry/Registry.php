@@ -1,9 +1,11 @@
 <?php
 /**
  * Xinc - Continuous Integration.
+ * Abstract Registry Class to be extended by projects, buildqueue etc.
  *
- * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ *
+ * @author    Arno Schneider <username@example.com>
+ * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -22,17 +24,24 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Config;
+namespace Xinc\Core\Registry;
 
-use Xinc\Core\Config\ConfigInterface;
-use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Plugin\PluginRegistry;
+use Xinc\Core\Traits\Logger;
 
-/**
- * Interface for Xinc Configuration Object(s)
- */
-interface ConfigLoaderInterface
+class Registry implements RegistryInterface
 {
-	public function setLogger($log);
+	use Logger;
 	
-	public function load(ConfigInterface $c, RegistryInterface $r);
+    private $pluginRegistry;
+    
+    public function __construct()
+    {
+	    $this->pluginRegistry = new PluginRegistry(); 	
+	}
+	
+    public function registerPluginClass($class)
+    {
+	     	
+	}
 }

@@ -23,21 +23,24 @@
 use Xinc\Core\Logger;
 use Xinc\Core\Config\Config;
 use Xinc\Core\Config\Xml;
+use Xinc\Core\Registry\Registry;
 
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
 
 /**
- * @test Test Class for Xinc::Core::Iterator and subclasses
+ * @test Test Class for loading a xml configuration
  */
 class TestLoadXml extends Xinc\Core\Test\BaseTest
 {
-	public function xml()
+	public function xml(&$reg = null)
 	{
 		$xml = new Xml;
 		$log = new Logger();
 		//$log->setLoglevel(0);
 		$xml->setLogger($log);
+		$reg = new Registry();
+		$reg->setLogger($log);
 		return $xml;
 	}
 	
@@ -46,7 +49,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file','./x-files-unknown.xml');
 	    try {
-			$this->xml()->load($conf);
+			$this->xml()->load($conf,(new Registry));
 			$this->assertTrue(false,'IO exception expected');
 		}
 		catch(IOException $e) {
@@ -59,7 +62,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/broken-settings.xml');
 	    try {
-			$this->xml()->load($conf);
+			$this->xml()->load($conf,(new Registry));
 			$this->assertTrue(false,'XML exception expected');
 		}
 		catch(XmlException $e) {
@@ -72,9 +75,17 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/sample-settings.xml');
 	    
-	    $this->xml()->load($conf);
+	    $this->xml()->load($conf,(new Registry));
 	    $this->assertEquals($conf->get('heartbeat'),30);
 	    $this->assertEquals($conf->get('timezone'),'Europe/Berlin');
 	    $this->assertEquals($conf->get('loglevel'),2);	
 	}
+	
+	public function testPlugins()
+	{
+		$conf = new Config();
+	    $conf->setOption('config-file', __DIR__ . '/config/plugins.xml');
+	    
+	    $this->xml($reg)->load($conf,$reg);
+	 }
 }

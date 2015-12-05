@@ -29,6 +29,7 @@ namespace Xinc\Core\Config;
 use SimpleXMLElement as XmlElement;
 use Xinc\Core\Config\ConfigInterface;
 use Xinc\Core\Config\ConfigLoaderInterface;
+use Xinc\Core\Registry\RegistryInterface;
 
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
@@ -40,27 +41,32 @@ use Xinc\Core\Exception\MalformedConfigException;
  */
 class Xml extends Loader implements ConfigLoaderInterface
 {
-	
-    public function load(ConfigInterface $conf)
+    public function load(ConfigInterface $conf, RegistryInterface $reg)
     {
         $file = $conf->getOption('config-file');
         if(isset($file)) {
 		    if(!strstr($file,'/')) {
 				$file = $conf->getOption('config-dir') . $file;
 			}
-			$this->loadFile($file,$conf);	
+			$this->loadFile($file,$conf,$reg);	
 		}
 		// load every xml file in config dir
 		else {
 			 $dir = $conf->getOption('config-dir');
 			 $list = glob("{$dir}*.xml");
 			 if($list === false) {
-				 
+				 throw new IOException($dir,null,null,IOException::FAILURE_NOT_READABLE);
 		     }
+		     if(empty($list)) {
+                 throw new IOException($dir,null,null,IOException::FAILURE_NOT_FOUND);
+             }
+             foreach($list as $file) {
+				 $this->loadFile($file,$conf,$reg);
+			 }
 		}
 	}
         
-    public function loadFile($file,$conf)
+    public function loadFile($file,$conf,$reg)
     {   
         if (!file_exists($file)) {
             throw new IOException($file,null,null,IOException::FAILURE_NOT_FOUND);
@@ -73,12 +79,21 @@ class Xml extends Loader implements ConfigLoaderInterface
             throw new XmlException(libxml_get_errors());
 	    }
 	    $this->loadSettings($xml,$conf);
+	    $this->loadPlugins($xml,$reg);
     }
     
     protected function loadSettings($xml,$conf)
     {
 		foreach($xml->xpath('/xinc/configuration/setting') as $element) {
 	        $conf->setSetting("{$element['name']}","{$element['value']}");		
+		}
+	}
+	
+	protected function loadPlugins($xml,$reg)
+	{
+		foreach($xml->xpath('/xinc/plugins/plugin') as $element) {
+			$this->log->verbose("found plugin class {$element['class']}"); 
+			$reg->registerPluginClass("{$element['class']}");
 		}
 	}
 }

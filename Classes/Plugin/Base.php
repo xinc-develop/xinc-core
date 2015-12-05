@@ -1,9 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- *
- * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * 
+ * @author    Arno Schneider <username@example.org>
+ * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -22,17 +22,29 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Config;
+namespace Xinc\Core\Plugin;
 
-use Xinc\Core\Config\ConfigInterface;
-use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Plugin\PluginInterface;
 
-/**
- * Interface for Xinc Configuration Object(s)
- */
-interface ConfigLoaderInterface
+abstract class Base implements PluginInterface
 {
-	public function setLogger($log);
-	
-	public function load(ConfigInterface $c, RegistryInterface $r);
+    public function getApiModules()
+    {
+        return array();
+    }
+
+    public function getGuiWidgets()
+    {
+        return array();
+    }
+
+    public function getTaskDefinitions()
+    {
+        return array();
+    }
+
+    public function validate()
+    {
+        return true;
+    }
 }

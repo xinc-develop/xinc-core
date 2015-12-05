@@ -3,7 +3,6 @@
  * Xinc - Continuous Integration.
  * Registry interface
  *
- *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -26,35 +25,9 @@
 
 namespace Xinc\Core\Registry;
 
-interface RegistryInterface extends \IteratorAggregate
+interface RegistryInterface
 {
-    public static function getInstance();
+	public function setLogger($log);
 
-    /**
-     * Registers an object
-     *
-     * @param string $name
-     * @param object $object
-     * @return void
-     * @throws Xinc\Core\Registry\Exception
-     */
-    public function register($name, $object);
-
-    /**
-     * Unregisters an Object
-     *
-     * @param string $name
-     * @return object the unregistered Object
-     * @throws Xinc\Core\Registry\Exception
-     */
-    public function unregister($name);
-
-    /**
-     * Returns the registered object
-     *
-     * @param string $name
-     * @return object
-     * @throws Xinc\Core\Registry\Exception
-     */
-    public function get($name);
+    public function registerPluginClass($class);	
 }

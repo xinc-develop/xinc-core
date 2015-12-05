@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xinc>
+<plugins>
+	<plugin class="Xinc_Plugin_Repos_ModificationSet"/>
+	<plugin class="Xinc_Plugin_Repos_Configuration"/>
+	<plugin class="Xinc_Plugin_Repos_ModificationSet_Svn"/>
+	<plugin class="Xinc_Plugin_Repos_ModificationSet_Git"/>
+	<plugin class="Xinc_Plugin_Repos_ModificationSet_BuildAlways"/>
+	<plugin class="Xinc_Plugin_Repos_Schedule"/>
+	<plugin class="Xinc_Plugin_Repos_Builder"/>
+	<plugin class="Xinc_Plugin_Repos_Phing"/>
+	<plugin class="Xinc_Plugin_Repos_Publisher"/>
+	<plugin class="Xinc_Plugin_Repos_Publisher_OnSuccess"/>
+	<plugin class="Xinc_Plugin_Repos_Publisher_OnRecovery"/>
+	<plugin class="Xinc_Plugin_Repos_Publisher_OnFailure"/>
+	<plugin class="Xinc_Plugin_Repos_Publisher_Email"/>
+	<plugin class="Xinc_Plugin_Repos_Gui_Dashboard"/>
+	<plugin class="Xinc_Plugin_Repos_Gui_Homepage"/>
+</plugins>
+</xinc>
+
