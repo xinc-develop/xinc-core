@@ -27,7 +27,7 @@
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Models\Project;
+use Xinc\Core\Project\Project;
 
 interface EngineInterface
 {

@@ -27,7 +27,7 @@ namespace Xinc\Core\Build;
 
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Engine\EngineInterface;
-use Xinc\Core\Models\Project;
+use Xinc\Core\Project\Project;
 
 use Xinc\Core\Project\Status as ProjectStatus;
 use Xinc\Core\Properties as BuildProperties;

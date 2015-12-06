@@ -25,7 +25,7 @@
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Engine\EngineInterface;
-use Xinc\Core\Models\Project;
+use Xinc\Core\Project\Project;
 
 /**
  * Build interface

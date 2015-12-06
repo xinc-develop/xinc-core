@@ -23,7 +23,7 @@
 */
 
 
-use Xinc\Core\Models\Project;
+use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
 
 use Xinc\Core\Test\BaseTest;

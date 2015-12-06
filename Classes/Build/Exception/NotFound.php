@@ -26,7 +26,7 @@
 
 namespace Xinc\Core\Build\Exception;
 
-use Xinc\Core\Model\Project;
+use Xinc\Core\Project\Project;
 
 class NotFound extends BuildException
 {

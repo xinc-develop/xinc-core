@@ -1,11 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This model represents one group of projects.
- * It is loaded from the configuration.
- *
  *
  * @author    Alexander Opitz <opitz.alexander@googlemail.com>
+ * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -25,14 +23,19 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Models;
+namespace Xinc\Core\Project;
 
-class ProjectGroup
+/**
+ * This class represents one project with its processes.
+ *
+ * It is loaded from the configuration.
+ */
+class Project
 {
     /**
      * @var string The name of the project.
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string Name of the used engine.
@@ -40,9 +43,23 @@ class ProjectGroup
     private $engineName = '';
 
     /**
+     * @var Xinc::Core::Project::Status
+     */
+    private $status;
+
+    /**
+     * @see Xinc::Core::Task::Slot
      * @var array Used Processes
      */
-    private $projects = array();
+    private $processes = array();
+
+    // TODO: Not the right direction.
+    private $config;
+    
+    public function __construct()
+    {
+	$this->status = new Status( Status::NEVERRUN );
+    }
 
     /**
      * Sets the project name for display purposes.
@@ -56,7 +73,7 @@ class ProjectGroup
     }
 
     /**
-     * Returns this project's name.
+     * Returns this name of the project.
      *
      * @return string
      */
@@ -87,23 +104,56 @@ class ProjectGroup
     }
 
     /**
-     * Adds a project to this group.
+     * sets the status of the project
      *
-     * @param Xinc\Core\Models\Project $project
+     * @see Xinc\Core\Project\Status
+     * @param integer $status
      * @return void
      */
-    public function addProject(Project $project)
+    public function setStatus($status)
     {
-        $this->projects[] = $project;
+        $this->status->setValue( $status );
     }
 
     /**
-     * Returns the projects in this group.
-     *
-     * @return Xinc\Core\Models\Project[]
+     * Retrieves the status of the current project
+     * @see Xinc\Core\Project\Status
+     * @return integer
      */
-    public function getProjects()
+    public function getStatus()
     {
-        return $this->projects;
+        return $this->status->getValue();
+    }
+
+    public function setGroup(ProjectGroup $group)
+    {
+        $this->group = $group;
+    }
+
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Adds a process with appropriate slot to the project
+     *
+     * @param integer $slot
+     * @param ? $process
+     * @return void
+     */
+    public function addProcess($slot, $process)
+    {
+        $this->processes[$slot][] = $process;
+    }
+
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
     }
 }

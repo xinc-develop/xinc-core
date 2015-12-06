@@ -26,7 +26,7 @@ use Xinc\Core\Build\Build;
 use Xinc\Core\Build\BuildQueue;
 use Xinc\Core\Build\BuildIterator;
 use Xinc\Core\Build\Scheduler\DefaultScheduler;
-use Xinc\Core\Models\Project;
+use Xinc\Core\Project\Project;
 use Xinc\Core\Test\BaseTest;
 use Xinc\Core\Test\Engine;
 

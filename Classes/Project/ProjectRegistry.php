@@ -31,5 +31,5 @@ class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
     /**
      * @var typeOf The Name of the class this elements should be.
      */
-    protected $typeOf = 'Xinc\Core\Models\Projects';
+    protected $typeOf = 'Xinc\Core\Project\Project';
 }

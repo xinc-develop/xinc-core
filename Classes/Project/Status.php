@@ -34,4 +34,21 @@ class Status
     const MISCONFIGURED = -1;
     const BUILDING = 2;
     const NEVERRUN = 3;
+    
+    private $value;
+    
+    public function __construct( $status = self::NEVERRUN )
+    {
+		$this->setValue($status);
+	}
+	
+	public function getValue()
+	{
+		return $value;
+	}
+	
+	public function setValue($status)
+	{
+		$this->value = $status;
+	}
 }

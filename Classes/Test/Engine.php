@@ -28,7 +28,7 @@ namespace Xinc\Core\Test;
 
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Models\Project;
+use Xinc\Core\Project\Project;
 
 class Engine implements EngineInterface
 {
@@ -55,7 +55,7 @@ class Engine implements EngineInterface
     /**
      * Adds a project to the engine.
      *
-     * @param \Xinc\Core\Models\Project $project A project inside this engine.
+     * @param Xinc::Core::Project::Project $project A project inside this engine.
      *
      * @return void
      */
@@ -83,5 +83,5 @@ class Engine implements EngineInterface
     public function setHeartBeat($seconds)
     {
 		
-	}
+    }
 }
