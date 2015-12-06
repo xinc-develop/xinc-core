@@ -1,11 +1,9 @@
 <?php
 /**
- * Xinc - Continuous Integration.
- * Abstract Registry Class to be extended by projects, buildqueue etc.
- *
+ *  Xinc - Continuous Integration.
  *
  * @author    Arno Schneider <username@example.com>
- * @copyright 2014 Alexander Opitz, Leipzig
+ * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -24,12 +22,14 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Project;
+namespace Xinc\Core\Registry;
 
-class Registry extends \Xinc\Core\Registry\RegistryAbstract
+use Xinc\Core\Exception;
+
+/**
+ * Exception thrown when a registry cannot deal with the Object
+ * @ingroup excptions
+ */
+class RegistryException extends Exception
 {
-    /**
-     * @var typeOf The Name of the class this elements should be.
-     */
-    protected $typeOf = 'Xinc\Core\Models\Projects';
 }

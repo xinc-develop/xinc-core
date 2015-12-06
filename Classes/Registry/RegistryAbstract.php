@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Abstract Registry Class to be extended by projects, buildqueue etc.
- *
  *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2014 Alexander Opitz, Leipzig
@@ -27,7 +25,11 @@
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Traits\Logger;
+use Xinc\Core\Validation\Exception\TypeMismatch;
 
+/**
+ * Abstract Registry Class to be extended by projects, buildqueue etc.
+ */
 abstract class RegistryAbstract implements RegistryInterface
 {
 	use Logger;
@@ -45,15 +47,16 @@ abstract class RegistryAbstract implements RegistryInterface
      *
      * @param string $name
      * @param object $object
-     * @throws Xinc\Core\Registry\Exception
+     * @throws Xinc\Core\Registry\RegistryException
+     * @throws Xinc\Core\Validation\Exception\TypeMismatch
      */
     public function register($name, $object)
     {
         if (isset($this->registry[$name])) {
-            throw new Exception('Object with name "' . $name . '" is already registered');
+            throw new RegistryException('Object with name "' . $name . '" is already registered');
         }
         if (!is_a($object, $this->typeOf)) {
-            throw new Exception('Element is not an instance of: ' . $this->typeOf);
+            throw new TypeMismatch(get_class($object), $this->typeOf);
         }
 
         $this->registry[$name] = $object;
@@ -63,7 +66,7 @@ abstract class RegistryAbstract implements RegistryInterface
      *
      * @param string $name
      * @return object
-     * @throws Xinc\Core\Registry\Exception
+     * @throws Xinc\Core\Registry\RegistryException
      */
     public function unregister($name)
     {
@@ -90,6 +93,11 @@ abstract class RegistryAbstract implements RegistryInterface
 
         return $this->registry[$name];
     }
+    
+    public function knows($name)
+    {
+		return isset($this->registry[$name]);
+	}
 
     public function getIterator()
     {

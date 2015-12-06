@@ -31,8 +31,7 @@ class TestIterators extends Xinc\Core\Test\BaseTest
     {
 		$iterators = array(
 		    new \Xinc\Core\Iterator,
-		    new \Xinc\Core\Build\BuildIterator,
-		    new \Xinc\Core\Config\ElementIterator
+		    new \Xinc\Core\Build\BuildIterator
 		);
 		foreach($iterators as $iter) {
 		    try {

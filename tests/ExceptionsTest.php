@@ -29,7 +29,9 @@ class TestExceptions extends Xinc\Core\Test\BaseTest
     {
 		$e[] = new Xinc\Core\Exception;
 		$e[] = new Xinc\Core\Validation\Exception\ValidationException;
-	    $e[] = new Xinc\Core\Validation\Exception\NotNumerical('arg','wrong');	
+	    $e[] = new Xinc\Core\Validation\Exception\NotNumerical('arg','wrong');
+	    $e[] = new Xinc\Core\Validation\Exception\TypeMismatch('has','epected');
+	    $e[] = new Xinc\Core\Registry\RegistryException();
 		foreach($e as $exp) {
 			$this->assertTrue(($exp instanceof Xinc\Core\Exception), 
 			   get_class($exp) . ' is instanceof Xinc\Core\Exception');

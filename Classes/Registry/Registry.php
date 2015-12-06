@@ -42,6 +42,7 @@ use Xinc\Core\Gui\WidgetRegistry;
  * The central registry for all types.
  * @ingroup logger
  * @ingroup registry
+ * @todo api registry
  */
 class Registry implements XincRegistryInterface
 {
@@ -57,7 +58,7 @@ class Registry implements XincRegistryInterface
 	    $this->pluginRegistry = new PluginRegistry();
 	    $this->taskRegistry = new TaskRegistry();
 	    $this->widgetRegistry = new WidgetRegistry();
-	    $this->apiRegistry = new ApiRegistry();
+	    #$this->apiRegistry = new ApiRegistry();
 	}
 	
 	public function setLogger($log)
@@ -66,7 +67,7 @@ class Registry implements XincRegistryInterface
 		$this->pluginRegistry->setLogger($log);
 	    $this->taskRegistry->setLogger($log);
 	    $this->widgetRegistry->setLogger($log);
-	    $this->apiRegistry->setLogger($log);
+	    #$this->apiRegistry->setLogger($log);
 	}
 	
     public function registerPluginClass($class)
@@ -81,13 +82,9 @@ class Registry implements XincRegistryInterface
                 '\Xinc\Core\Plugin\PluginInterface');
         }
         $this->pluginRegistry->registerPlugin($plugin);
-        $this->taskRegistry->registerTasks($plugin->getTasks());
-        
-        
-        $widgets = $plugin->getGuiWidgets();
-        foreach ($widgets as $widget) {
-            Xinc_Gui_Widget_Repository::getInstance()->registerWidget($widget);
-        }
+        $this->taskRegistry->registerTasks($plugin->getTaskDefinitions());
+        $this->widgetRegistry->registerWidgets($plugin->getGuiWidgets());
+        return;
         
         $apiModules = $plugin->getApiModules();
         foreach ($apiModules as $apiMod) {

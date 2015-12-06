@@ -22,32 +22,63 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Plugin\ModificationSet;
+namespace Xinc\Core\Gui;
 
 use Xinc\Core\Plugin\PluginInterface;
-use Xinc\Core\Gui\Gui;
 use Xinc\Core\Gui\WidgetInterface;
 
-#require_once 'Xinc/Plugin/Repos/Gui/ModificationSet/Extension/Summary.php';
-#require_once 'Xinc/Plugin/Repos/Gui/ModificationSet/Extension/ChangeLog.php';
-
-class Widget extends Gui implements WidgetInterface
+abstract class Gui implements WidgetInterface
 {
+    protected $_plugin;
+
+    private $_extensions = array();
+
+    public $scripts = '';
+
+    private $_projectName;
+
+    public function __construct(PluginInterface $plugin)
+    {
+        $this->_plugin = $plugin;
+    }
+
+    public function handleEvent($eventId)
+    {
+    }
+
+    public function getPaths()
+    {
+        return array();
+    }
+
     public function init()
     {
-        try {
-            $indexWidget = Xinc_Gui_Widget_Repository::getInstance()
-                ->getWidgetByClassName('Xinc_Plugin_Repos_Gui_Dashboard_Detail');
+    }
 
-            $extension = new Xinc_Plugin_Repos_Gui_ModificationSet_Extension_Summary();
-
-            $indexWidget->registerExtension('BUILD_DETAILS', $extension);
-
-            $extension2 = new Xinc_Plugin_Repos_Gui_ModificationSet_Extension_ChangeLog();
-
-            $indexWidget->registerExtension('BUILD_DETAILS', $extension2);
-        } catch (Exception $e) {
-            echo "Could not init on " . __FILE__ . "<br>";
+    public function registerExtension($extensionPoint, $extension)
+    {
+        if (!isset($this->_extensions[$extensionPoint])) {
+            $this->_extensions[$extensionPoint] = array();
         }
+        $this->_extensions[$extensionPoint][] = $extension;
+    }
+
+    public function getExtensions()
+    {
+        return $this->_extensions;
+    }
+
+    public function getExtensionPoints()
+    {
+        return array();
+    }
+
+    public function hasExceptionHandler()
+    {
+        return false;
+    }
+
+    public function handleException(\Exception $e)
+    {
     }
 }

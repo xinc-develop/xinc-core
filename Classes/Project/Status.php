@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Statuses of a project
- *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -26,6 +24,9 @@
 
 namespace Xinc\Core\Project;
 
+/**
+ * Statuses of a project
+ */
 class Status
 {
     const ENABLED = 1;

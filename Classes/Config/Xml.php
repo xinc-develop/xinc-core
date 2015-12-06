@@ -29,7 +29,7 @@ namespace Xinc\Core\Config;
 use SimpleXMLElement as XmlElement;
 use Xinc\Core\Config\ConfigInterface;
 use Xinc\Core\Config\ConfigLoaderInterface;
-use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Registry\XincRegistryInterface;
 
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
@@ -41,7 +41,7 @@ use Xinc\Core\Exception\MalformedConfigException;
  */
 class Xml extends Loader implements ConfigLoaderInterface
 {
-    public function load(ConfigInterface $conf, RegistryInterface $reg)
+    public function load(ConfigInterface $conf, XincRegistryInterface $reg)
     {
         $file = $conf->getOption('config-file');
         if(isset($file)) {

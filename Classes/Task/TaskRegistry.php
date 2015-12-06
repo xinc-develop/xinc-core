@@ -43,6 +43,11 @@ class TaskRegistry extends RegistryAbstract
      */
     private $slot = array();
 
+    public function registerTasks($tasks)
+    {
+		
+	}
+
     /**
      *
      * @param string $name

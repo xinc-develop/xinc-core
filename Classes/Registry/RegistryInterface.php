@@ -53,4 +53,12 @@ interface RegistryInterface extends LoggerInterface
      * @throws Xinc\Core\Registry\Exception
      */
     public function get($name);
+    
+    /**
+     * Is the name registered
+     * 
+     * @param string $name
+     * @return boolean
+     */
+    public function knows($name);
 }

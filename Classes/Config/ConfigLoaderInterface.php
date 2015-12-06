@@ -25,14 +25,13 @@
 namespace Xinc\Core\Config;
 
 use Xinc\Core\Config\ConfigInterface;
-use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Logger\LoggerInterface;
+use Xinc\Core\Registry\XincRegistryInterface;
 
 /**
  * Interface for Xinc Configuration Object(s)
  */
-interface ConfigLoaderInterface
-{
-	public function setLogger($log);
-	
-	public function load(ConfigInterface $c, RegistryInterface $r);
+interface ConfigLoaderInterface extends LoggerInterface
+{	
+	public function load(ConfigInterface $c, XincRegistryInterface $r);
 }

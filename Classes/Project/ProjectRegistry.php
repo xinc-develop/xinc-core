@@ -1,11 +1,11 @@
 <?php
 /**
  * Xinc - Continuous Integration.
+ * Abstract Registry Class to be extended by projects, buildqueue etc.
  *
- * @author    Arno Schneider
- * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2007 Arno Schneider, Barcelona
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ *
+ * @author    Arno Schneider <username@example.com>
+ * @copyright 2014 Alexander Opitz, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -24,11 +24,12 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Config;
+namespace Xinc\Core\Project;
 
-use Xinc\Core\Iterator;
-
-class ElementIterator extends Iterator
+class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
 {
-    protected $typeOf = 'SimpleXMLElement';  
+    /**
+     * @var typeOf The Name of the class this elements should be.
+     */
+    protected $typeOf = 'Xinc\Core\Models\Projects';
 }

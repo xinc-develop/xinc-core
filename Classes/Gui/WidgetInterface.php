@@ -1,5 +1,4 @@
 <?php
-declare(encoding = 'utf-8');
 /**
  * Xinc - Continuous Integration.
  * Interface for a gui widget
@@ -108,5 +107,5 @@ interface WidgetInterface
     /**
      * @param Exception $e
      */
-    public function handleException(Exception $e);
+    public function handleException(\Exception $e);
 }
