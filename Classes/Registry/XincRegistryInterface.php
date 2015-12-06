@@ -35,5 +35,12 @@ interface XincRegistryInterface extends LoggerInterface
 {
     public function registerPluginClass($class);
     
+    public function registerEngineClass($class, $default);
+    
     public function registerProject(Project $project);	
+    
+    /**
+     * @return Xinc::Core::Engine::EngineInterface
+     */
+    public function getDefaultEngine();
 }

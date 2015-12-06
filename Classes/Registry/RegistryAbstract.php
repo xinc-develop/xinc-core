@@ -88,7 +88,7 @@ abstract class RegistryAbstract implements RegistryInterface
     public function get($name)
     {
         if (!isset($this->registry[$name])) {
-            throw new Exception('Object with name "' . $name . '" is not registered');
+            throw new RegistryException('Object with name "' . $name . '" is not registered');
         }
 
         return $this->registry[$name];

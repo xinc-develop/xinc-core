@@ -30,6 +30,8 @@ namespace Xinc\Core\Plugin;
  */
 interface PluginInterface
 {
+	public function getName();
+	
     public function getApiModules();
 
     public function getGuiWidgets();

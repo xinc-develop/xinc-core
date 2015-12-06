@@ -20,20 +20,21 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link       https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Exception;
 
 /**
- * This exception is thrown when XML could not be parsed successfully.
+ * This exception is thrown when XML was not parsed successfully.
  * @ingroup exceptions
  */
 class XmlException extends \Xinc\Core\Exception
 {
 	public function __construct(array $errors)
 	{
-		$msg = '';
+		$msg = "XML Errors detected\n";
 		foreach($errors as $error) {
 			$msg .= "Line {$error->line}: {$error->message}";
 		}

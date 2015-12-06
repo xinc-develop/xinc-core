@@ -3,6 +3,7 @@
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider
+ * @author    Alexander Opitz <opitz.alexander@googlemail.com>
  * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
@@ -31,6 +32,7 @@ use Xinc\Core\Config\ConfigInterface;
 use Xinc\Core\Config\ConfigLoaderInterface;
 use Xinc\Core\Config\Loader;
 use Xinc\Core\Registry\XincRegistryInterface;
+use Xinc\Core\Project\Project;
 
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
@@ -52,7 +54,7 @@ class Xml extends Loader implements ConfigLoaderInterface
 			}
 			$this->loadFile($file,$conf,$reg);	
 		}
-		// load every xml file in config dir
+		// load every xml file in project dir
 		else {
 			 $dir = $conf->getOption('project-dir');
 			 $list = glob("{$dir}*.xml");
@@ -86,14 +88,29 @@ class Xml extends Loader implements ConfigLoaderInterface
     protected function loadProjects($xml,$reg)
     {
 		foreach($xml->xpath('/xinc/project') as $element) {
-			$project = $this->setupProject($element);
+			$project = $this->setupProject($element,$reg);
 			$reg->registerProject($project);		
 		}
 	}
 	
-	protected function setupProject($element)
+	protected function setupProject($element,$xincreg)
 	{
-	    print_r($element);	
-	}
-	
+		$project = new Project;
+        foreach ($element->attributes() as $name => $value) {
+                $method = 'set' . ucfirst(strtolower($name));
+                if (method_exists($project, $method)) {
+                    $project->$method((string)$value);
+                } else {
+                    $this->log->error(
+                        "Trying to set '{$name}' on Xinc Project '{$element['name']}' failed. No such setter."
+                    );
+                }
+        }
+        $project->setConfig($element);
+
+        if ($project->getEngineName() === '') {
+            $project->setEngineName($xincreg->getDefaultEngine()->getName());
+        }
+        return $project;
+    }
 }

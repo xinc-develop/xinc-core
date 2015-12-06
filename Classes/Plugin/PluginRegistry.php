@@ -24,6 +24,8 @@
 
 namespace Xinc\Core\Plugin;
 
+use Xinc\Core\Registry\RegistryAbstract;
+use Xinc\Core\Registry\RegistryInterface;
 use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Logger;
 
@@ -32,12 +34,13 @@ use Xinc\Core\Traits\Logger;
  * @ingroup registry
  * @ingroup logger
  */
-class PluginRegistry
+class PluginRegistry extends RegistryAbstract implements RegistryInterface
 {
 	use Logger;
 	
+	protected $typeOf = 'Xinc\Core\Plugin\PluginInterface';
+	
     private $definedTasks = array();
-    private $_plugins = array();
     
     /**
      * Holding a reference from the task to
@@ -58,6 +61,8 @@ class PluginRegistry
                                  
             return false;
         }
+        $this->register($plugin->getName(),$plugin);
+        
         $tasks = $plugin->getTaskDefinitions();
 
         $task = null;
@@ -116,8 +121,6 @@ class PluginRegistry
                 );
             }
         }
-        
-        $this->_plugins[] = $plugin;
     }
 
     /**

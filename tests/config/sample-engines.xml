@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xinc>
+<engines>
+<engine class="Xinc\Core\Test\Engine" default="default"/>
+</engines>
+</xinc>

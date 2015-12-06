@@ -21,6 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
@@ -31,8 +32,10 @@ use Xinc\Core\Traits\Logger;
 use Xinc\Core\Validation\Exception\TypeMismatch;
 use Xinc\Core\Exception\ClassLoaderException;
 
+use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Plugin\PluginInterface;
 
+use Xinc\Core\Engine\EngineRegistry;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\ProjectRegistry;
 use Xinc\Core\Plugin\PluginRegistry;
@@ -50,6 +53,7 @@ class Registry implements XincRegistryInterface
 {
 	use Logger;
 	
+	private $engineRegistry;
 	private $projectRegistry;
     private $pluginRegistry;
     private $taskRegistry;
@@ -58,6 +62,7 @@ class Registry implements XincRegistryInterface
     
     public function __construct()
     {
+		$this->engineRegistry = new EngineRegistry();
 		$this->projectRegistry = new ProjectRegistry();
 	    $this->pluginRegistry = new PluginRegistry();
 	    $this->taskRegistry = new TaskRegistry();
@@ -68,6 +73,7 @@ class Registry implements XincRegistryInterface
 	public function setLogger($log)
 	{
 		$this->log = $log;
+		$this->engineRegistry->setLogger($log);
 		$this->projectRegistry->setLogger($log);
 		$this->pluginRegistry->setLogger($log);
 	    $this->taskRegistry->setLogger($log);
@@ -97,8 +103,43 @@ class Registry implements XincRegistryInterface
         }
 	}
 	
+	public function registerEngineClass($class,$default)
+	{
+		if(!class_exists($class)) {
+			throw new ClassLoaderException($class);
+		}
+        $engine = new $class;
+
+        if (!($engine instanceof EngineInterface)) {
+            throw new TypeMismatch(get_class($engine),
+                '\Xinc\Core\Engine\EngineInterface');
+        }
+        $this->engineRegistry->register($engine->getName(),$engine);
+        if($default) {
+			$this->engineRegistry->setDefaultEngine($engine->getName());
+		}
+	}
+	
 	public function registerProject(Project $project)
 	{
 		$this->projectRegistry->register($project->getName(),$project);
+	}
+	
+	public function getPlugin($name)
+	{
+		return $this->pluginRegistry->get($name);
+	}
+	
+	public function getEngine($name)
+	{
+		return $this->engineRegistry->get($name);
+	}
+	/**
+	 * Get the default engine.
+	 * @throw Xinc::Core::Registry::RegistryException
+	 */
+	public function getDefaultEngine()
+	{
+	    return $this->engineRegistry->getDefaultEngine();	
 	}
 }

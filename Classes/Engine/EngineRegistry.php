@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Abstract Registry Class to be extended by projects, buildqueue etc.
- *
  *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2014 Alexander Opitz, Leipzig
@@ -25,22 +23,43 @@
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Project;
+namespace Xinc\Core\Engine;
 
-class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
+use Xinc\Core\Registry\RegistryException;
+
+/**
+ * Registry for engines
+ */
+class EngineRegistry extends \Xinc\Core\Registry\RegistryAbstract
 {
     /**
      * @var typeOf The Name of the class this elements should be.
      */
-    protected $typeOf = 'Xinc\Core\Project\Project';
+    protected $typeOf = 'Xinc\Core\Engine\EngineInterface';
     
-    public function register($name, $project)
+    protected $default;
+    
+    public function setDefaultEngine($name, $force = false)
     {
-		if(empty($name)) {
-			$name = md5($project->getConfig()->toXml());
-			$this->log->info("Automatic project name $name given.");
-            $project->setName($name);
-        }
-        parent::register($name,$project);
-    }
+	    if(isset($this->default) && $name == $this->default) {
+			$this->log->info("$name is already the default engine.");
+		} 
+	    if(!$force && isset($this->default)) {
+			throw new RegistryException("There is already a default engine: {$this->default}.");
+		}
+		$this->default = $name;
+	}
+    
+    public function getDefaultEngine()
+    {
+		if(isset($this->default)) {
+		    return $this->get($this->default);	
+		}
+		$iterator = $this->getIterator();
+		if($iterator->count()) {
+			$this->log->info("using first engine as default.");
+		    return $iterator->current();	
+		}
+		throw new RegistryException("There are no registered engines.");
+	}
 }

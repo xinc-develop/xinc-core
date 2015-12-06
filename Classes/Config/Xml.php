@@ -80,6 +80,7 @@ class Xml extends Loader implements ConfigLoaderInterface
 	    }
 	    $this->loadSettings($xml,$conf);
 	    $this->loadPlugins($xml,$reg);
+	    $this->loadEngines($xml,$reg);
     }
     
     protected function loadSettings($xml,$conf)
@@ -108,6 +109,14 @@ class Xml extends Loader implements ConfigLoaderInterface
 			        $reg->registerPluginClass("{$plugin['class']}");
 			    }
 			}
+		}
+	}
+	
+	protected function loadEngines($xml,$reg)
+	{
+		foreach($xml->xpath('/xinc/engines/engine') as $engine) {
+		    $this->log->verbose("found engine class {$engine['class']}"); 
+			$reg->registerEngineClass("{$engine['class']}","{$engine['default']}");	        		
 		}
 	}
 }

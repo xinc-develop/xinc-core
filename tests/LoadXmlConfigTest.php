@@ -28,6 +28,7 @@ use Xinc\Core\Registry\Registry;
 use Xinc\Core\Exception\ClassLoaderException;
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
+use Xinc\Core\Registry\RegistryException;
 
 /**
  * @test Test Class for loading a xml configuration
@@ -103,6 +104,10 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins.xml');
 	    
 	    $this->xml($reg)->load($conf,$reg);
+	    
+	    $this->assertInstanceOf(
+	        'Xinc\Core\Plugin\ModificationSet\Plugin',
+	        $reg->getPlugin('ModificationSet'));
 	 }
 	 
 	 
@@ -113,4 +118,22 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    
 	    $this->xml($reg)->load($conf,$reg);
 	 }
+	 
+	public function testEngines()
+	{
+		$conf = new Config();
+	    $conf->setOption('config-file', __DIR__ . '/config/sample-engines.xml');
+	    
+	    $this->xml($reg)->load($conf,$reg);
+	    $this->assertInstanceOf('Xinc\Core\Test\Engine',$reg->getDefaultEngine());
+	    $this->assertInstanceOf('Xinc\Core\Test\Engine',$reg->getEngine('TestEngine'));
+	    try {
+			$reg->getEngine('xyz');
+			$this->assertTrue(false,"Unknown engine?");
+		}
+		catch(RegistryException $e) {
+			$this->assertTrue(true,"Ok, unknown engine throws exception.");
+		}
+	 }
+
 }

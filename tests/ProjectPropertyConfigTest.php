@@ -42,6 +42,7 @@ class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
 		$log->setLoglevel(0);
 		$xml->setLogger($log);
 		$reg = new Registry();
+		$reg->registerEngineClass('Xinc\Core\Test\Engine',true);
 		$reg->setLogger($log);
 		$xml->load($conf,$reg);
 		$pro = new ProjectXml();
