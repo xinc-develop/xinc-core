@@ -22,7 +22,8 @@
 
 use Xinc\Core\Logger;
 use Xinc\Core\Config\Config;
-use Xinc\Core\Config\Xml;
+use Xinc\Core\Config\Xml as ConfigXml;
+use Xinc\Core\Project\Config\Xml as ProjectXml;
 use Xinc\Core\Registry\Registry;
 
 use Xinc\Core\Exception\ClassLoaderException;
@@ -34,83 +35,26 @@ use Xinc\Core\Exception\XmlException;
  */
 class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
 {
-	public function xml(&$reg = null)
+	public function projectXml($conf,&$reg = null)
 	{
-		$xml = new Xml;
+		$xml = new ConfigXml;
 		$log = new Logger();
 		$log->setLoglevel(0);
 		$xml->setLogger($log);
 		$reg = new Registry();
 		$reg->setLogger($log);
-		return $xml;
+		$xml->load($conf,$reg);
+		$pro = new ProjectXml();
+		$pro->setLogger($log);
+		return $pro;
 	}
-	
-	public function testFileNotFound()
-	{
-	    $conf = new Config();
-	    $conf->setOption('config-file','./x-files-unknown.xml');
-	    try {
-			$this->xml()->load($conf,(new Registry));
-			$this->assertTrue(false,'IO exception expected');
-		}
-		catch(IOException $e) {
-			$this->assertTrue(true,'Exception: ' . $e->getMessage());
-		}	
-	}
-
-	public function testXmlError()
-	{
-	    $conf = new Config();
-	    $conf->setOption('config-file', __DIR__ . '/config/broken-settings.xml');
-	    try {
-			$this->xml()->load($conf,(new Registry));
-			$this->assertTrue(false,'XML exception expected');
-		}
-		catch(XmlException $e) {
-			$this->assertTrue(true,'Exception: ' . $e->getMessage());
-		}	
-	}
-	
-    public function testSampleSettings()
-    {
-	    $conf = new Config();
-	    $conf->setOption('config-file', __DIR__ . '/config/sample-settings.xml');
-	    
-	    $this->xml()->load($conf,(new Registry));
-	    $this->assertEquals($conf->get('heartbeat'),30);
-	    $this->assertEquals($conf->get('timezone'),'Europe/Berlin');
-	    $this->assertEquals($conf->get('loglevel'),2);	
-	}
-	
-	
-	public function testUnknownPluginClass()
-	{
-		$conf = new Config();
-	    $conf->setOption('config-file', __DIR__ . '/config/unknown-plugin.xml');
-	    
-	    try {
-	        $this->xml($reg)->load($conf,$reg);
-	        $this->assertTrue(false,"Unknown plugin class should throw exception");
-	    }
-	    catch(ClassLoaderException $exp) {
-			$this->assertTrue(true,"Unknown plugin throws exception");
-		}
-    }
-
-	public function testPlugins()
-	{
-		$conf = new Config();
-	    $conf->setOption('config-file', __DIR__ . '/config/plugins.xml');
-	    
-	    $this->xml($reg)->load($conf,$reg);
-	 }
-	 
 	 
 	public function testPlugins2()
 	{
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
+	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');
 	    
-	    $this->xml($reg)->load($conf,$reg);
+	    $this->projectXml($conf,$reg)->load($conf,$reg);
 	 }
 }

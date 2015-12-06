@@ -25,6 +25,7 @@
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Logger\LoggerInterface;
+use Xinc\Core\Project\Project;
 
 /**
  * Xinc Registry Interface
@@ -32,5 +33,7 @@ use Xinc\Core\Logger\LoggerInterface;
  */
 interface XincRegistryInterface extends LoggerInterface
 {
-    public function registerPluginClass($class);	
+    public function registerPluginClass($class);
+    
+    public function registerProject(Project $project);	
 }

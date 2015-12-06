@@ -2,6 +2,10 @@
 /**
  * Xinc - Continuous Integration.
  *
+ * PHP version 5
+ *
+ * @category  Development
+ * @package   Xinc.Plugin.Repos
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -19,36 +23,25 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @link      http://code.google.com/p/xinc/
  */
 
-namespace Xinc\Core\Project;
+namespace Xinc\Core\Plugin\Configuration;
+
+use Xinc\Core\Plugin\Base;
+
+#require_once 'Xinc/Plugin/Repos/Configuration/Task.php';
+#require_once 'Xinc/Plugin/Repos/Configuration/Setting/Task.php';
 
 /**
- * Statuses of a project
+ * @todo this is a stub
  */
-class Status
+class Plugin extends Base
 {
-    const ENABLED = 1;
-    const DISABLED = 0;
-    const MISCONFIGURED = -1;
-    const BUILDING = 2;
-    const NEVERRUN = 3;
-    
-    private $value;
-    
-    public function __construct( $status = self::NEVERRUN )
+    public function getTaskDefinitions()
     {
-		$this->setValue($status);
-	}
-	
-	public function getValue()
-	{
-		return $this->value;
-	}
-	
-	public function setValue($status)
-	{
-		$this->value = $status;
-	}
+		return array();
+        return array(new Xinc_Plugin_Repos_Configuration_Task($this),
+                     new Xinc_Plugin_Repos_Configuration_Setting_Task($this));
+    }
 }

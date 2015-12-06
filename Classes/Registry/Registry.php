@@ -33,6 +33,8 @@ use Xinc\Core\Exception\ClassLoaderException;
 
 use Xinc\Core\Plugin\PluginInterface;
 
+use Xinc\Core\Project\Project;
+use Xinc\Core\Project\ProjectRegistry;
 use Xinc\Core\Plugin\PluginRegistry;
 use Xinc\Core\Task\TaskRegistry;
 use Xinc\Core\Api\ApiRegistry;
@@ -48,6 +50,7 @@ class Registry implements XincRegistryInterface
 {
 	use Logger;
 	
+	private $projectRegistry;
     private $pluginRegistry;
     private $taskRegistry;
     private $widgetRegistry;
@@ -55,6 +58,7 @@ class Registry implements XincRegistryInterface
     
     public function __construct()
     {
+		$this->projectRegistry = new ProjectRegistry();
 	    $this->pluginRegistry = new PluginRegistry();
 	    $this->taskRegistry = new TaskRegistry();
 	    $this->widgetRegistry = new WidgetRegistry();
@@ -64,6 +68,7 @@ class Registry implements XincRegistryInterface
 	public function setLogger($log)
 	{
 		$this->log = $log;
+		$this->projectRegistry->setLogger($log);
 		$this->pluginRegistry->setLogger($log);
 	    $this->taskRegistry->setLogger($log);
 	    $this->widgetRegistry->setLogger($log);
@@ -90,6 +95,10 @@ class Registry implements XincRegistryInterface
         foreach ($apiModules as $apiMod) {
             Xinc_Api_Module_Repository::getInstance()->registerModule($apiMod);
         }
-
+	}
+	
+	public function registerProject(Project $project)
+	{
+		$this->projectRegistry->register($project->getName(),$project);
 	}
 }

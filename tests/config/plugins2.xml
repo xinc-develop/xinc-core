@@ -5,7 +5,7 @@
 	<plugin name="Configuration"/>
 	<plugin name="Schedule"/>
 	<plugin name="Phpunit"/>
-	<plugin name="Phing"/>
+	<plugin name="Property"/>
 	<plugin name="Publisher"/>
 </plugins>
 </xinc>
