@@ -21,7 +21,8 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Config;
@@ -33,8 +34,6 @@ use Xinc\Core\Registry\XincRegistryInterface;
 
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
-
-use Xinc\Core\Exception\MalformedConfigException;
 
 /**
  * Xinc System Configuration File in XML Format

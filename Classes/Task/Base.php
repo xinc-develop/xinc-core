@@ -90,4 +90,14 @@ abstract class Base implements TaskInterface
     {
         $this->_xml = $element;
     }
+    
+    /**
+     * Validates if a task can run by checking configs, directories and so on.
+     *
+     * @return boolean Is true if task can run.
+     */
+    public function validate()
+    {
+        return true;
+    }
 }
