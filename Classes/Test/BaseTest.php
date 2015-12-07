@@ -25,7 +25,35 @@
 
 namespace Xinc\Core\Test;
 
+use Xinc\Core\Logger;
+use Xinc\Core\Config\Config;
+use Xinc\Core\Config\Xml as ConfigXml;
+use Xinc\Core\Project\Config\Xml as ProjectXml;
+use Xinc\Core\Registry\Registry;
+
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
-
+	public function xincLoglevel()
+	{
+		$loglevel = getenv('XINC_LOGLEVEL');
+		if(FALSE===$loglevel) {
+			$loglevel = Logger::INFO;
+		}
+		return $loglevel;		
+	}
+	
+	public function projectXml($conf,&$reg = null)
+	{
+		$xml = new ConfigXml;
+		$log = new Logger();
+		$log->setLoglevel($this->xincLoglevel());
+		$xml->setLogger($log);
+		$reg = new Registry();
+		$reg->registerEngineClass('Xinc\Core\Test\Engine',true);
+		$reg->setLogger($log);
+		$xml->load($conf,$reg);
+		$pro = new ProjectXml();
+		$pro->setLogger($log);
+		return $pro;
+	}
 }

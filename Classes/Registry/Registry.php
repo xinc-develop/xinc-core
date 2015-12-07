@@ -134,6 +134,16 @@ class Registry implements XincRegistryInterface
 	{
 		return $this->engineRegistry->get($name);
 	}
+	
+	/**
+	 * Get the a project by name.
+	 * @throw Xinc::Core::Registry::RegistryException
+	 */
+	public function getProject($name)
+	{
+		return $this->projectRegistry->get($name);
+	}
+	
 	/**
 	 * Get the default engine.
 	 * @throw Xinc::Core::Registry::RegistryException

@@ -34,28 +34,15 @@ use Xinc\Core\Exception\XmlException;
  * @test Test Class for loading a xml configuration
  */
 class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
-{
-	public function projectXml($conf,&$reg = null)
-	{
-		$xml = new ConfigXml;
-		$log = new Logger();
-		$log->setLoglevel(0);
-		$xml->setLogger($log);
-		$reg = new Registry();
-		$reg->registerEngineClass('Xinc\Core\Test\Engine',true);
-		$reg->setLogger($log);
-		$xml->load($conf,$reg);
-		$pro = new ProjectXml();
-		$pro->setLogger($log);
-		return $pro;
-	}
-	 
-	public function testPlugins2()
+{	 
+	public function testProjectProperty()
 	{
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
 	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');
 	    
 	    $this->projectXml($conf,$reg)->load($conf,$reg);
+	    $project = $reg->getProject("TestProjectProperty");
+	    $this->assertInstanceOf('Xinc\Core\Project\Project',$project);
 	 }
 }

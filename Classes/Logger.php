@@ -64,6 +64,12 @@ class Logger
 
     const DEFAULT_LOG_LEVEL = 2;
 
+    const VERBOSE = self::LOG_LEVEL_VERBOSE;
+    const DEBUG = self::LOG_LEVEL_DEBUG;
+    const INFO = self::LOG_LEVEL_INFO;
+    const WARN = self::LOG_LEVEL_WARN;
+    const ERROR = self::LOG_LEVEL_ERROR;
+    
     /**
      * Log levels
      */
