@@ -557,9 +557,8 @@ class Build implements BuildInterface
      */
     public function info($message)
     {
-        Xinc_Logger::getInstance()->info('[build] ' 
-                                        . $this->getProject()->getName() 
-                                        . ': '.$message);
+        $this->log->info('[build] ' . $this->getProject()->getName() 
+            . ': '.$message);
             
     }
 
@@ -570,9 +569,8 @@ class Build implements BuildInterface
      */
     public function warn($message)
     {
-        Xinc_Logger::getInstance()->warn('[build] ' 
-                                        . $this->getProject()->getName() 
-                                        . ': '.$message);
+        $this->log->warn('[build] ' . $this->getProject()->getName() 
+            . ': '.$message);
             
     }
     
@@ -583,9 +581,8 @@ class Build implements BuildInterface
      */
     public function verbose($message)
     {
-        Xinc_Logger::getInstance()->verbose('[build] ' 
-                                        . $this->getProject()->getName() 
-                                        . ': '.$message);
+        $this->log->verbose('[build] ' . $this->getProject()->getName() 
+           . ': '.$message);
             
     }
 
@@ -596,10 +593,8 @@ class Build implements BuildInterface
      */
     public function debug($message)
     {
-        Xinc_Logger::getInstance()->debug('[build] ' 
-                                         . $this->getProject()->getName() 
-                                         . ': '.$message);
-            
+        $this->log->debug('[build] ' . $this->getProject()->getName() 
+             . ': '.$message);    
     }
 
     /**
