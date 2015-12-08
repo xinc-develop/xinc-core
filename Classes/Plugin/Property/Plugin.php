@@ -96,7 +96,7 @@ class Plugin extends Base
     public function getTaskDefinitions()
     {
 		return array();
-        return array(new Xinc_Plugin_Repos_Property_SetTask($this),
-                     new Xinc_Plugin_Repos_Property_SubstituteTask($this));
+        return array(new SetTask($this),
+                     new SubstituteTask($this));
     }
 }

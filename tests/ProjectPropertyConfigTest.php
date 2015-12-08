@@ -44,5 +44,7 @@ class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
 	    $this->projectXml($conf,$reg)->load($conf,$reg);
 	    $project = $reg->getProject("TestProjectProperty");
 	    $this->assertInstanceOf('Xinc\Core\Project\Project',$project);
+	    $build = $this->aBuildWithConfig($conf);
+	    $this->assertInstanceOf('Xinc\Core\Build\Build',$build);
 	 }
 }

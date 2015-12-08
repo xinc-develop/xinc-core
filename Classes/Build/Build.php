@@ -36,11 +36,15 @@ use Xinc\Core\Build\Exception\NotRun;
 use Xinc\Core\Build\Exception\NotFound;
 use Xinc\Core\Build\Exception\Serialization;
 
+use Xinc\Core\Traits\Logger;
+
 /**
  * This class represents the build that is going to be run with Xinc
+ * @ingroup logger
  */
 class Build implements BuildInterface
 {
+	use Logger;
     /**
      * Are we queued?
      *
@@ -154,6 +158,7 @@ class Build implements BuildInterface
                                 $buildTimestamp = null
     ) {
         $this->engine = $engine;
+        $this->setLogger($engine->getLogger());
         $this->project = $project;
         
         if (ProjectStatus::MISCONFIGURED == $this->project->getStatus()) {
@@ -604,10 +609,8 @@ class Build implements BuildInterface
      */
     public function error($message)
     {
-        Xinc_Logger::getInstance()->error('[build] ' 
-                                         . $this->getProject()->getName()
-                                         . ': '.$message);
-            
+        $this->log->error('[build] ' . $this->getProject()->getName()
+            . ': '.$message);
     }
     
     public function build()

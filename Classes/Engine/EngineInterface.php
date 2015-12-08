@@ -28,11 +28,17 @@
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Logger\LoggerInterface;
 use Xinc\Core\Project\Project;
 
-interface EngineInterface
+interface EngineInterface extends LoggerInterface
 {
-
+	/**
+	 * Get the log which will be used in a build
+	 * @return Xinc::Core::Logger
+	 */
+    public function getLogger();
+    
     /**
      * get the name of the engine
      *

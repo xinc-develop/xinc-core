@@ -2,8 +2,8 @@
 /**
  * Base test
  * 
- * @author Arno Schneider
- * @version 2.0
+ * @author Sebastian Knapp
+ * @version 3.0
  * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Developer, Leipzig
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -25,6 +25,7 @@
 
 namespace Xinc\Core\Test;
 
+use Xinc\Core\Build\Build;
 use Xinc\Core\Logger;
 use Xinc\Core\Config\Config;
 use Xinc\Core\Config\Xml as ConfigXml;
@@ -49,11 +50,22 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
 		$log->setLoglevel($this->xincLoglevel());
 		$xml->setLogger($log);
 		$reg = new Registry();
-		$reg->registerEngineClass('Xinc\Core\Test\Engine',true);
 		$reg->setLogger($log);
+		$reg->registerEngineClass('Xinc\Core\Test\Engine',true);
 		$xml->load($conf,$reg);
 		$pro = new ProjectXml();
 		$pro->setLogger($log);
 		return $pro;
+	}
+	
+	public function aBuildWithConfig($conf)
+	{
+	    $xml = $this->projectXml($conf,$reg);
+	    $xml->load($conf,$reg);
+	    $iterator = $reg->getProjectIterator();
+	    $project = $iterator->current();
+	    $engine = $reg->getEngine($project->getEngineName());
+	    $build = new Build($engine,$project);
+	    return $build;	
 	}
 }

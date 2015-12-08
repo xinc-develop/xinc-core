@@ -94,11 +94,20 @@ abstract class RegistryAbstract implements RegistryInterface
         return $this->registry[$name];
     }
     
+    /**
+     * Check if a given name was registred.
+     * @param string $name
+     * @return boolean
+     */
     public function knows($name)
     {
 		return isset($this->registry[$name]);
 	}
-
+    
+    /**
+     * Made a iterator from stored objects
+     * @return ArrayIterator
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->registry);

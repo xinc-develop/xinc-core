@@ -130,11 +130,6 @@ class Registry implements XincRegistryInterface
 		return $this->pluginRegistry->get($name);
 	}
 	
-	public function getEngine($name)
-	{
-		return $this->engineRegistry->get($name);
-	}
-	
 	/**
 	 * Get the a project by name.
 	 * @throw Xinc::Core::Registry::RegistryException
@@ -142,6 +137,26 @@ class Registry implements XincRegistryInterface
 	public function getProject($name)
 	{
 		return $this->projectRegistry->get($name);
+	}
+	
+	/**
+	 * Get a Iterator over the defined projects.
+	 * @return Xinc::Core::Project::ProjectIterator;
+	 */
+	public function getProjectIterator()
+	{
+		return $this->projectRegistry->getIterator();
+	}
+	
+	/**
+	 * get an engine by name
+	 * @param string $name
+	 * @return Xinc::Core::Engine::EngineInterface
+	 * @throw Xinc::Core::Registry::RegistryException
+	 */ 
+	public function getEngine($name)
+	{
+		return $this->engineRegistry->get($name);
 	}
 	
 	/**

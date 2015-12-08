@@ -30,8 +30,16 @@ use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Project\Project;
 
+use Xinc\Core\Traits\Logger;
+
 class Engine implements EngineInterface
 {
+    use Logger;
+    
+    public function getLogger()
+    {
+		return $this->log;
+	}
 
     /**
      * get the name of the engine

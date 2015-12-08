@@ -22,7 +22,7 @@
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
+use Xinc\Core\Config\Config;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
 
@@ -46,4 +46,21 @@ class TestProject extends BaseTest
         $this->assertEquals($status, $project->getStatus(), 'Stati should match');
     }
 
+
+	public function testProjectFromConfig1()
+	{
+		$conf = new Config();
+	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
+	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');
+	    
+	    $this->projectXml($conf,$reg)->load($conf,$reg);
+	    $project = $reg->getProject("TestProjectProperty");
+	    $this->assertInstanceOf('Xinc\Core\Project\Project',$project);
+	    $iterator = $reg->getProjectIterator();
+	    $this->assertInstanceOf('ArrayIterator',$iterator);
+	    $project2 = $iterator->current();
+	    $this->assertSame($project,$project2);
+	    $engine = $reg->getEngine($project->getEngineName());
+	    $this->assertInstanceOf('Xinc\Core\Engine\EngineInterface',$engine);
+	 }
 }
