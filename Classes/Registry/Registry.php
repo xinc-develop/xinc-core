@@ -109,6 +109,7 @@ class Registry implements XincRegistryInterface
 			throw new ClassLoaderException($class);
 		}
         $engine = new $class;
+        $engine->setLogger($this->log);
 
         if (!($engine instanceof EngineInterface)) {
             throw new TypeMismatch(get_class($engine),

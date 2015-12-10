@@ -26,6 +26,7 @@ namespace Xinc\Core\Plugin;
 
 use Xinc\Core\Registry\RegistryAbstract;
 use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Task\SetterInterface;
 use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Logger;
 
@@ -74,8 +75,8 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
             switch ($taskSlot) {
                 case Slot::PROJECT_SET_VALUES: 
                         // make sure the task implements the setter interface
-                        if (!$task instanceof Xinc_Plugin_Task_Setter_Interface) {
-                            Xinc_Logger::getInstance()->error(
+                        if (!$task instanceof SetterInterface) {
+                            $this->log->error(
                                 'cannot register task ' . $fullTaskName
                                 . ' it does not implement the required interface '
                                 . 'Xinc_Plugin_Task_Setter_Interface'

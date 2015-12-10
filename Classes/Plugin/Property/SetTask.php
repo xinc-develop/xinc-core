@@ -29,7 +29,10 @@
 
 namespace Xinc\Core\Plugin\Property;
 
+
+use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
+use Xinc\Core\Task\Slot;
 
 class SetTask extends Base
 {
@@ -135,10 +138,10 @@ class SetTask extends Base
      */
     public function getPluginSlot()
     {
-        return Xinc_Plugin_Slot::INIT_PROCESS;
+        return Slot::INIT_PROCESS;
     }
 
-    public function process(Xinc_Build_Interface $build)
+    public function process(BuildInterface $build)
     {
         if ($this->_if !== null) {
             /**
@@ -147,7 +150,7 @@ class SetTask extends Base
             $property = $build->getProperties()->get($this->_if);
             if ($property !== true) {
                 $build->info('Property: ' . $this->_name . ' does not apply, ' . $this->_if . ' == false');
-                $build->setStatus(Xinc_Build_Interface::PASSED);
+                $build->setStatus(BuildInterface::PASSED);
                 return;
             }
         }
@@ -164,7 +167,7 @@ class SetTask extends Base
             $build->debug('Setting property "${' . $this->_name . '}" to "' . $this->_value . '"');
             
             $build->getProperties()->set($this->_name, $this->_value);
-            $build->setStatus(Xinc_Build_Interface::PASSED);
+            $build->setStatus(BuildInterface::PASSED);
         }
     }
 }

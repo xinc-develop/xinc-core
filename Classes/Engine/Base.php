@@ -1,12 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Property setter task
+ * Engine to build projects
  *
- * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Plugin.Repos.Property
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -24,47 +21,29 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
-namespace Xinc\Core\Plugin\Property;
+namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Task\Base;
-use Xinc\Core\Task\Slot;
-use Xinc\Core\Task\SetterInterface;
+use Xinc\Core\Traits\Logger;
+use Xinc\Core\Project\Project;
 
-class SubstituteTask extends Base implements SetterInterface
+/**
+ * Base class for engines with common functionality.
+ * @ingroup logger
+ */
+abstract class Base implements EngineInterface
 {
-    /**
-     * Returns name of Task.
-     *
-     * @return string Name of task.
-     */
-    public function getName()
-    {
-        return 'propertySubstitution';
-    }
-
-    /**
-     * Returns the slot of this task inside a build.
-     *
-     * @return integer The slot number.
-     */
-    public function getPluginSlot()
-    {
-        return Slot::PROJECT_SET_VALUES;
-    }
-
-    public function process(BuildInterface $build)
-    {
-        $build->debug('Setting property "${' . $this->_name . '}" to "' . $this->_value . '"');
-        //$build->getProperties()->set($this->_name, $this->_value);
-    }
-
-    public function set(BuildInterface $build, $value)
-    {
-        $newvalue = $build->getProperties()->parseString($value);
-        return $newvalue;
+	use Logger;
+	
+	protected function setupBuildProperties(BuildInterface $build)
+	{
+		$project = $build->getProject();
+		$build->setProperty('project.name', $project->getName());
+        $build->setProperty('build.number', $build->getNumber());
+        $build->setProperty('build.label', $build->getLabel());
     }
 }

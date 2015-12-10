@@ -95,7 +95,6 @@ class Plugin extends Base
 
     public function getTaskDefinitions()
     {
-		return array();
         return array(new SetTask($this),
                      new SubstituteTask($this));
     }

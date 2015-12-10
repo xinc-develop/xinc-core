@@ -45,22 +45,18 @@ interface EngineInterface extends LoggerInterface
      * @return string Name of the engine.
      */
     public function getName();
+    
+    /**
+     * interprets the project config
+     */
+    public function setupBuild(Project $proj); 
 
     /**
      * process the build
      *
-     * @param Xinc_Build_Interface $build
+     * @param BuildInterface $build
      */
     public function build(BuildInterface $build);
-
-    /**
-     * Adds a project to the engine.
-     *
-     * @param \Xinc\Core\Models\Project $project A project inside this engine.
-     *
-     * @return void
-     */
-    public function addProject(Project $project);
 
     /**
      * returns the interval in seconds in which the engine checks for new builds

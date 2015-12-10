@@ -193,13 +193,26 @@ class Build implements BuildInterface
     }
 
     /**
-     *
      * @return Xinc::Core::Properties
      */
     public function getProperties()
     {
         return $this->properties;
     }
+    
+    public function getProperty($name)
+    {
+		return $this->properties->get($name);
+	}
+    
+    /**
+     * @param string $name
+     * @param $value
+     */
+    public function setProperty($name,$val)
+    {
+		$this->properties->set($name,$val);
+	}
     
     /**
      *
@@ -250,7 +263,7 @@ class Build implements BuildInterface
 
     /**
      * 
-     * @return Xincproject
+     * @return Xinc::Core::Project::Project
      */
     public function getProject()
     {
@@ -259,7 +272,7 @@ class Build implements BuildInterface
     
     /**
      * 
-     * @return Xincengine_Interface
+     * @return Xinc::Core::Engine::EngineInterface
      */
     public function getEngine()
     {
@@ -466,7 +479,7 @@ class Build implements BuildInterface
      */
     public function getLabel()
     {
-        return $this->_labeler->getLabel($this);
+        return $this->labeler->getLabel($this);
     }
     
     /**
@@ -559,7 +572,6 @@ class Build implements BuildInterface
     {
         $this->log->info('[build] ' . $this->getProject()->getName() 
             . ': '.$message);
-            
     }
 
     /**

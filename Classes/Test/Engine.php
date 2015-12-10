@@ -1,10 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Engine to build projects
  *
- *
- * @author    Arno Schneider <username@example.org>
+ * @author    Sebastian Knapp
+ * @author    Arno Schneider
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -21,21 +20,20 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Test;
 
+use Xinc\Core\Engine\Base;
 use Xinc\Core\Engine\EngineInterface;
+use Xinc\Core\Build\Build;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Project\Project;
 
-use Xinc\Core\Traits\Logger;
-
-class Engine implements EngineInterface
+class Engine extends Base implements EngineInterface
 {
-    use Logger;
-    
     public function getLogger()
     {
 		return $this->log;
@@ -61,14 +59,20 @@ class Engine implements EngineInterface
     }
 
     /**
-     * Adds a project to the engine.
+     * Setup a project for the engine and setup a build object from
+     * project configuration. 
      *
      * @param Xinc::Core::Project::Project $project A project inside this engine.
-     *
-     * @return void
+     * @return BuildInterface
      */
-    public function addProject(Project $project)
+    public function setupBuild(Project $project)
     {
+		$build = new Build($this,$project);
+		$build->setLogger($this->log);
+		$build->setNumber(1);
+		$this->setupBuildProperties($build);
+		
+		return $build;
     }
 
     /**

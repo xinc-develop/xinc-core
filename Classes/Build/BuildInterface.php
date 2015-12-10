@@ -72,10 +72,13 @@ interface BuildInterface
     /**
      * returns the build properties
      *
-     * @return Xinc_Build_Properties
+     * @return Properties
      */
     public function getProperties();
 
+    public function setProperty($name,$value);
+    
+    public function getProperty($name);
     /**
      * returns the internal build properties
      *

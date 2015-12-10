@@ -1,12 +1,11 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Property setter task
  *
  * PHP version 5
  *
  * @category  Development
- * @package   Xinc.Plugin.Repos.Property
+ * @package   Xinc.Plugin.Task
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -24,47 +23,28 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ * 
+ * @homepage  http://code.google.com/p/xinc/
  */
 
-namespace Xinc\Core\Plugin\Property;
+namespace Xinc\Core\Task;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Task\Base;
-use Xinc\Core\Task\Slot;
-use Xinc\Core\Task\SetterInterface;
 
-class SubstituteTask extends Base implements SetterInterface
+/**
+ * Interface for plugin tasks that want to implement
+ * the listener for all "setValue"'s on the project tasks
+ */
+interface SetterInterface
 {
-    /**
-     * Returns name of Task.
-     *
-     * @return string Name of task.
-     */
-    public function getName()
-    {
-        return 'propertySubstitution';
-    }
 
     /**
-     * Returns the slot of this task inside a build.
+     * is called whenever a value is set on a task
      *
-     * @return integer The slot number.
+     * @param Xinc_Build_Interface $build
+     * @param string $value
+     *
+     * @return string modified $value
      */
-    public function getPluginSlot()
-    {
-        return Slot::PROJECT_SET_VALUES;
-    }
-
-    public function process(BuildInterface $build)
-    {
-        $build->debug('Setting property "${' . $this->_name . '}" to "' . $this->_value . '"');
-        //$build->getProperties()->set($this->_name, $this->_value);
-    }
-
-    public function set(BuildInterface $build, $value)
-    {
-        $newvalue = $build->getProperties()->parseString($value);
-        return $newvalue;
-    }
+    public function set(BuildInterface $build, $value);
 }
