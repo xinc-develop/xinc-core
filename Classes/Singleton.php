@@ -1,11 +1,12 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Instance class
  *
- *
- * @author    Arno Schneider <username@example.com>
+ * @author    Arno Schneider
+ * @author    Alexander Opitz
+ * @author    Sebastian Knapp
  * @copyright 2014 Alexander Opitz, Leipzig
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -21,11 +22,20 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
+/** 
+ * A Singleton Pattern Implementation 
+ */
 namespace Xinc\Core;
 
+use Xinc\Core\Exception\Mistake;
+
+/**
+ * Base class for classes which needs to have a singleton instance.
+ */
 class Singleton
 {
     /**
@@ -43,11 +53,11 @@ class Singleton
 
     protected function __wakeup()
     {
-        throw news \Exception('You can\'t wakeup Singletons.');
+        throw new Mistake('You can\'t wakeup Singletons.');
     }
 
     /**
-     * Get an instance of the Plugin Repository
+     * Get an instance of the Singleton Object
      *
      * @return \Xinc\Core\Singleton
      */
@@ -55,8 +65,9 @@ class Singleton
     {
         $class = get_called_class();
         if (!isset(static::$instances[$class])) {
-            static::$instances[$class] = new static;
+            static::$instances[$class] = new static();
         }
+
         return static::$instances[$class];
     }
 
