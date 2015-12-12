@@ -19,15 +19,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Task;
 
 use Xinc\Core\Registry\RegistryAbstract;
 
 /**
- * Registry for task objects
+ * Registry for task objects.
+ *
  * @ingroup registry
  * @ingroup logger
  */
@@ -45,13 +46,12 @@ class TaskRegistry extends RegistryAbstract
 
     public function registerTasks($tasks)
     {
-		
-	}
+    }
 
     /**
-     *
      * @param string $name
      * @param object $task
+     *
      * @throws Xinc\Core\Registry\Exception
      */
     public function register($name, $task)
@@ -62,9 +62,10 @@ class TaskRegistry extends RegistryAbstract
     }
 
     /**
-     *
      * @param string $name
+     *
      * @return object
+     *
      * @throws Xinc\Core\Registry\Exception
      */
     public function unregister($name)
@@ -78,7 +79,7 @@ class TaskRegistry extends RegistryAbstract
 
     /**
      * Returns all tasks that are registered
-     * for a specific slot
+     * for a specific slot.
      *
      * @param int $slot @see Xinc_Plugin_Slot
      *

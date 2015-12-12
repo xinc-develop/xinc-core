@@ -19,15 +19,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Gui;
 
 use Xinc\Core\Registry\RegistryAbstract;
 
 /**
- * Registry for widget objects
+ * Registry for widget objects.
+ *
  * @ingroup registry
  * @ingroup logger
  */
@@ -46,14 +47,14 @@ class WidgetRegistry extends RegistryAbstract
     public function registerWidgets($widgets)
     {
         foreach ($widgets as $widget) {
-            $this->register(get_class($widget),$widget);
+            $this->register(get_class($widget), $widget);
         }
     }
 
     /**
-     *
      * @param string $name
      * @param object $task
+     *
      * @throws Xinc::Core::Registry::RegistryException
      * @throws Xinc::Core::Validation::Exception::TypeMismatch
      */
@@ -62,19 +63,20 @@ class WidgetRegistry extends RegistryAbstract
         parent::register($name, $widget);
         $paths = $widget->getPaths();
         if (!is_array($paths)) {
-			$this->log->warn(get_class($widget) . "::getPaths has invalid return value.");
+            $this->log->warn(get_class($widget).'::getPaths has invalid return value.');
             $paths = array();
         }
-        
+
         foreach ($paths as $path) {
             $this->paths[$path] = $widget;
         }
     }
 
     /**
-     *
      * @param string $name
+     *
      * @return object
+     *
      * @throws Xinc\Core\Registry\Exception
      */
     public function unregister($name)
@@ -82,38 +84,38 @@ class WidgetRegistry extends RegistryAbstract
         $widget = parent::unregister($name);
         $paths = $widget->getPaths();
         if (!is_array($paths)) {
-			$this->log->warn(get_class($widget) . "::getPaths has invalid return value.");
+            $this->log->warn(get_class($widget).'::getPaths has invalid return value.');
             $paths = array();
         }
-        
+
         foreach ($paths as $path) {
             unset($this->paths[$path]);
         }
+
         return $widget;
     }
 
     /**
      * Determines the Widget that should be used
      * for the specified Http-Request by the Pathname that 
-     * is called
+     * is called.
      *
-     * @param String $path Pathname of the HTTP-Request
+     * @param string $path Pathname of the HTTP-Request
      *
      * @return WidgetInterface
+     *
      * @todo optimize match
-     */    
+     */
     public function getWidgetForPath($path)
     {
-        $this->log->info('Getting widget for path: ' . $path);
+        $this->log->info('Getting widget for path: '.$path);
         $widget = null;
         if (!isset($this->paths[$path])) {
             // find the largest match
             $largest = 0;
             foreach ($this->paths as $pathReg => $widgetItem) {
-                
-                if (($match = strstr($path, $pathReg)) !== false && strpos($path, $pathReg)==0) {
-                    if (strlen($pathReg)>$largest) {
-                        
+                if (($match = strstr($path, $pathReg)) !== false && strpos($path, $pathReg) == 0) {
+                    if (strlen($pathReg) > $largest) {
                         $largest = strlen($pathReg);
                         $widget = $widgetItem;
                     }
@@ -122,6 +124,7 @@ class WidgetRegistry extends RegistryAbstract
         } else {
             $widget = $this->paths[$path];
         }
+
         return $widget;
     }
 }

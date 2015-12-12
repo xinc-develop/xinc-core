@@ -32,7 +32,11 @@ class TestEngine extends Xinc\Core\Test\BaseTest
     {
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
-	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');   
+	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');
+	    $conf->setOption('working-dir', './','working-dir');
+	    $conf->setOption('status-dir', './','status-dir');
+	    $conf->setOption('project-dir', './','project-dir');
+	      
 	    $this->projectXml($conf,$reg)->load($conf,$reg);
 	    $build = $this->aBuildWithConfig($conf);
 	    $project = $build->getProject();
@@ -45,7 +49,9 @@ class TestEngine extends Xinc\Core\Test\BaseTest
 	    $this->assertEquals('TestProjectProperty',$build2->getProperty('project.name'));
         $this->assertEquals(1,$build2->getProperty('build.number'));
         $this->assertEquals('BUILD.1',$build2->getProperty('build.label'));
-        
+        $this->assertEquals('./',$build2->getProperty('workingdir'));
+        $this->assertEquals('./',$build2->getProperty('statusdir'));
+        $this->assertEquals('./',$build2->getProperty('projectdir')); 
 	  //  print_r($project->getConfig());
     }
 }

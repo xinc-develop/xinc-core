@@ -1,6 +1,6 @@
 <?php
 /**
- * Exception, config file was not found
+ * Exception, config file was not found.
  * 
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -19,20 +19,20 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Project\Config\Exception;
 
 class InvalidEntryException extends \Exception
 {
     /**
-     * constructor, generates an Exception Message
+     * constructor, generates an Exception Message.
      *
      * @param string $fileName
      */
     public function __construct($entry)
     {
-        parent::__construct('Entry: ' . $entry . ' not allowed');
+        parent::__construct('Entry: '.$entry.' not allowed');
     }
 }

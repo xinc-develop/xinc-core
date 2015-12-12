@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, plugin file was not found
+ * Exception, plugin file was not found.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 class Xinc_Plugin_Exception_FileNotFound extends Exception
 {
     /**
@@ -35,7 +35,7 @@ class Xinc_Plugin_Exception_FileNotFound extends Exception
     public function __construct($strPluginName, $strFileName)
     {
         parent::__construct(
-            'Plugin ' . $strPluginName . ': file not found: ' . $strFileName
+            'Plugin '.$strPluginName.': file not found: '.$strFileName
         );
     }
 }

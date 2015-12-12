@@ -20,6 +20,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Build\Scheduler;
@@ -27,7 +28,7 @@ namespace Xinc\Core\Build\Scheduler;
 use Xinc\Core\Build\BuildInterface;
 
 /**
- * Build-Scheduler, will only build once if not built yet
+ * Build-Scheduler, will only build once if not built yet.
  */
 class DefaultScheduler implements SchedulerInterface
 {
@@ -35,9 +36,9 @@ class DefaultScheduler implements SchedulerInterface
 
     /**
      * Calculates the next build timestamp
-     * this is a build once scheduler
+     * this is a build once scheduler.
      *
-     * @return integer
+     * @return int
      */
     public function getNextBuildTime(BuildInterface $build)
     {
@@ -47,9 +48,10 @@ class DefaultScheduler implements SchedulerInterface
             if (!isset($this->_nextBuildTime)) {
                 $this->_nextBuildTime = time();
             }
+
             return $this->_nextBuildTime;
         } else {
-            return null;
+            return;
         }
     }
 }

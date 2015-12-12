@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Build Properties carry additional information about a build
+ * Build Properties carry additional information about a build.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -25,7 +25,6 @@
  *
  * @link  @rel team https://github.com/xinc-develop
  */
-
 namespace Xinc\Core;
 
 use ArrayAccess;
@@ -35,53 +34,53 @@ class Properties implements ArrayAccess
 {
     private $properties = array();
 
-    public function offsetExists ( $offset )
+    public function offsetExists($offset)
     {
-		return $this->has($offset);
-	}
-	
-	public function has($offset)
-	{
-        return array_key_exists($offset, $this->properties);		
-	}
+        return $this->has($offset);
+    }
 
-    public function offsetGet ( $offset )
+    public function has($offset)
     {
-		return $this->properties[$offset];
-	}
+        return array_key_exists($offset, $this->properties);
+    }
 
-    public function offsetSet ( $offset , $value )
+    public function offsetGet($offset)
     {
-		throw new Mistake("Properties should not be written as arrays!");
-	}
-	
-    public function offsetUnset ( $offset )
+        return $this->properties[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        throw new Mistake('Properties should not be written as arrays!');
+    }
+
+    public function offsetUnset($offset)
     {
         unset($this->properties[$offset]);
-	}
-    
+    }
+
     /**
-     * set a property
+     * set a property.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function set($name, $value = null)
     {
-		if(is_array($name)) {
-			foreach($name as $k => $v) {
-				$this->properties[$k] = $v;
-			}
-		}
-		else {
+        if (is_array($name)) {
+            foreach ($name as $k => $v) {
+                $this->properties[$k] = $v;
+            }
+        } else {
             $this->properties[$name] = $value;
         }
     }
-    
+
     /**
-     * Returns the property value of the questioned keyname
+     * Returns the property value of the questioned keyname.
      *
-     * @param String $name
+     * @param string $name
+     *
      * @return mixed String or null if not found
      */
     public function get($name)
@@ -89,12 +88,12 @@ class Properties implements ArrayAccess
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         } else {
-            return null;
+            return;
         }
     }
-    
+
     /**
-     * returns all the properties in an array
+     * returns all the properties in an array.
      *
      * @return array
      */
@@ -104,15 +103,16 @@ class Properties implements ArrayAccess
     }
     /**
      * Parses a string and substitutes ${name} with $value
-     * of property
+     * of property.
      *
      * @param string $string
      */
     public function parseString($string)
     {
         $string = (string) $string;
-        $string = preg_replace_callback("/\\$\{(.*?)\}/", 
+        $string = preg_replace_callback("/\\$\{(.*?)\}/",
             function ($k) { return $this->properties[$k[1]]; }, $string);
+
         return $string;
     }
 }

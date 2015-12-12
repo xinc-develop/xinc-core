@@ -21,10 +21,8 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Task;
 
-use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
 
@@ -37,10 +35,10 @@ abstract class Base implements TaskInterface
 
     protected $_plugin;
     protected $_xml;
-    
+
     /**
      * Constructor, stores a reference to the plugin for
-     * usage of functionality
+     * usage of functionality.
      *
      * @param Xinc_Plugin_Interface $plugin
      */
@@ -57,12 +55,10 @@ abstract class Base implements TaskInterface
      * Support for subtasks, empty by default.
      *
      * @param Xinc_Plugin_Task_Interface $task Task to register
-     *
-     * @return void
      */
     public function registerTask(Xinc_Plugin_Task_Interface $task)
     {
-        Xinc_Logger::getInstance()->debug('Registering Task: ' . get_class($task));
+        Xinc_Logger::getInstance()->debug('Registering Task: '.get_class($task));
         $this->arSubtasks[] = $task;
     }
 
@@ -90,11 +86,11 @@ abstract class Base implements TaskInterface
     {
         $this->_xml = $element;
     }
-    
+
     /**
      * Validates if a task can run by checking configs, directories and so on.
      *
-     * @return boolean Is true if task can run.
+     * @return bool Is true if task can run.
      */
     public function validate()
     {

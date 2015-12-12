@@ -27,15 +27,15 @@
  */
 
 /** 
- * A Singleton Pattern Implementation 
+ * A Singleton Pattern Implementation.
  */
 namespace Xinc\Core\Test;
 
 use Xinc\Core\Singleton as Base;
+
 /**
  * Base class for classes which needs to have a singleton instance.
  */
 class Singleton extends Base
 {
-
 }

@@ -23,21 +23,21 @@
  *
  * @link       https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Exception;
 
 /**
  * This exception is thrown when XML was not parsed successfully.
+ *
  * @ingroup exceptions
  */
 class XmlException extends \Xinc\Core\Exception
 {
-	public function __construct(array $errors)
-	{
-		$msg = "XML Errors detected\n";
-		foreach($errors as $error) {
-			$msg .= "Line {$error->line}: {$error->message}";
-		}
-		parent::__construct($msg);
-	}
+    public function __construct(array $errors)
+    {
+        $msg = "XML Errors detected\n";
+        foreach ($errors as $error) {
+            $msg .= "Line {$error->line}: {$error->message}";
+        }
+        parent::__construct($msg);
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Iterator over an array of Xinc_Plugin_Interface objects
+ * Iterator over an array of Xinc_Plugin_Interface objects.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 require_once 'Xinc/Iterator.php';
 require_once 'Xinc/Plugin/Exception.php';
 require_once 'Xinc/Plugin/Interface.php';
@@ -31,7 +31,7 @@ require_once 'Xinc/Plugin/Interface.php';
 class Xinc_Plugin_Iterator extends Xinc_Iterator
 {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $array
      *

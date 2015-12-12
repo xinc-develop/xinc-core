@@ -19,16 +19,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Validation\Exception;
 
 /**
  * Base class for validation exceptions.
+ *
  * @ingroup exceptions
  */
 class ValidationException extends \Xinc\Core\Exception
 {
-	
 }

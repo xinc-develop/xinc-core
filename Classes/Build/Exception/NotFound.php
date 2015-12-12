@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, build was not found
+ * Exception, build was not found.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build\Exception;
 
 use Xinc\Core\Project\Project;
@@ -31,16 +31,16 @@ use Xinc\Core\Project\Project;
 class NotFound extends BuildException
 {
     /**
-     * Constructor, generates an Exception Message
+     * Constructor, generates an Exception Message.
      *
      * @param Xinc_Project $project
-     * @param integer      $buildTime
+     * @param int          $buildTime
      */
     public function __construct(Project $project, $buildTime)
     {
         parent::__construct(
-            'Build  "' . $project->getName()  . '" '
-            . 'with timestamp ' . $buildTime . ' was not found.'
+            'Build  "'.$project->getName().'" '
+            .'with timestamp '.$buildTime.' was not found.'
         );
     }
 }

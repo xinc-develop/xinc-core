@@ -19,22 +19,21 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
- 
 namespace Xinc\Core\Build;
 
 /**
- * A Build queue holds all Build Jobs queued for execution
+ * A Build queue holds all Build Jobs queued for execution.
  * 
  * Build Jobs are registered with the Build Queue to be
  * executed at a certain time
- *
  */
 interface BuildQueueInterface
 {
     /**
-     * adds a build to the queue
+     * adds a build to the queue.
      * 
      * Calls the getNextBuildTime() method to put
      * the builds into the right order in the queue
@@ -42,25 +41,25 @@ interface BuildQueueInterface
      * @param Xinc_Build_Interface $build
      */
     public function addBuild(BuildInterface $build);
-    
+
     /**
-     * Adds a number of builds to the queue
+     * Adds a number of builds to the queue.
      *
      * @param Xinc_Build_Iterator $builds
      */
     public function addBuilds(BuildIterator $builds);
-    
+
     /**
      * Returns the next build time of all the builds scheduled
-     * in this queue
+     * in this queue.
      *
-     * @return integer unixtimestamp
+     * @return int unixtimestamp
      */
     public function getNextBuildTime();
-    
+
     /**
      * Removes the next scheduled build from the queue
-     * and returns it
+     * and returns it.
      *
      * @return Xinc_Build_Interface
      */

@@ -21,17 +21,29 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Config;
 
-use Xinc\Core\Config\ConfigInterface;
 use Xinc\Core\Logger\LoggerInterface;
 use Xinc\Core\Registry\XincRegistryInterface;
 
 /**
- * Interface for Xinc Configuration Object(s)
+ * Interface for Xinc Configuration Object(s).
  */
 interface ConfigLoaderInterface extends LoggerInterface
-{	
-	public function load(ConfigInterface $c, XincRegistryInterface $r);
+{
+    /**
+   * Get Commandline Options.
+   *
+   * @return array with Ulrichsg\Option
+   */
+  public function getCommandlineOptions();
+
+    /**
+     * Finds all configuration sources.
+     *
+     * @return array with configured sources
+     */
+    public function getConfigurationSources(ConfigInterface $c);
+
+    public function load(ConfigInterface $c, XincRegistryInterface $r);
 }

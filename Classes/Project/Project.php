@@ -23,7 +23,6 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Project;
 
 /**
@@ -50,23 +49,23 @@ class Project
 
     /**
      * @see Xinc::Core::Task::Slot
+     *
      * @var array Used Processes
      */
     private $processes = array();
 
     // TODO: Not the right direction.
     private $config;
-    
+
     public function __construct()
     {
-	$this->status = new Status( Status::NEVERRUN );
+        $this->status = new Status(Status::NEVERRUN);
     }
 
     /**
      * Sets the project name for display purposes.
      *
      * @param string $name
-     * @return void
      */
     public function setName($name)
     {
@@ -87,7 +86,6 @@ class Project
      * Sets the project name of the used engine.
      *
      * @param string $engine
-     * @return void
      */
     public function setEngineName($engineName)
     {
@@ -105,21 +103,23 @@ class Project
     }
 
     /**
-     * sets the status of the project
+     * sets the status of the project.
      *
      * @see Xinc\Core\Project\Status
-     * @param integer $status
-     * @return void
+     *
+     * @param int $status
      */
     public function setStatus($status)
     {
-        $this->status->setValue( $status );
+        $this->status->setValue($status);
     }
 
     /**
-     * Retrieves the status of the current project
+     * Retrieves the status of the current project.
+     *
      * @see Xinc\Core\Project\Status
-     * @return integer
+     *
+     * @return int
      */
     public function getStatus()
     {
@@ -137,11 +137,10 @@ class Project
     }
 
     /**
-     * Adds a process with appropriate slot to the project
+     * Adds a process with appropriate slot to the project.
      *
-     * @param integer $slot
-     * @param ? $process
-     * @return void
+     * @param int $slot
+     * @param ?   $process
      */
     public function addProcess($slot, $process)
     {

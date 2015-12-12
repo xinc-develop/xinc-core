@@ -39,11 +39,33 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	{
 		$xml = new Xml;
 		$log = new Logger();
-		$log->setLoglevel(0);
+		$log->setLoglevel($this->xincLoglevel());
 		$xml->setLogger($log);
 		$reg = new Registry();
 		$reg->setLogger($log);
 		return $xml;
+	}
+	
+	public function testConfigFilename()
+	{
+	    $conf = new Config();
+	    $conf->setOption('config-file','./config/sample-settings.xml');
+	    $files = $this->xml()->getConfigurationSources($conf);
+	    $expect = array('./config/sample-settings.xml');
+	    $this->assertEquals($expect,$files);
+    }
+    
+    public function testConfigDirFiles()
+    {	    
+	    $conf = new Config();
+	    $conf->setOption('config-dir',__DIR__ . '/config/test1/');
+	    $files = $this->xml()->getConfigurationSources($conf);
+	    $expect = array(
+	        __DIR__ .'/config/test1/1.xml',
+	        __DIR__ .'/config/test1/2.xml',
+	        __DIR__ .'/config/test1/3.xml'
+	    );
+	    $this->assertEquals($expect,$files);
 	}
 	
 	public function testFileNotFound()
@@ -82,8 +104,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $this->assertEquals($conf->get('timezone'),'Europe/Berlin');
 	    $this->assertEquals($conf->get('loglevel'),2);	
 	}
-	
-	
+		
 	public function testUnknownPluginClass()
 	{
 		$conf = new Config();

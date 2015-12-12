@@ -20,13 +20,14 @@
  *             You should have received a copy of the GNU Lesser General Public
  *             License along with Xinc, write to the Free Software Foundation,
  *             Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link       https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Exception;
 
 /**
  * Exception, for file IO problems.
+ *
  * @ingroup Exceptions
  */
 class IOException extends \Xinc\Core\Exception
@@ -47,12 +48,12 @@ class IOException extends \Xinc\Core\Exception
     private $strResourceName = null;
 
     /**
-     * Constructor, generates an Exception Message
+     * Constructor, generates an Exception Message.
      *
      * @param string    $strResourceName Name of directory/file/stream that failed.
      * @param string    $strResourcePath Path of directory/file/stream that failed.
      * @param string    $strMessage      Exception message.
-     * @param integer   $nCode           Code of failure from this consts.
+     * @param int       $nCode           Code of failure from this consts.
      * @param Exception $previous        Exception if nested exception.
      */
     public function __construct(
@@ -90,8 +91,8 @@ class IOException extends \Xinc\Core\Exception
     /**
      * Builds and returns an error message for this exception.
      *
-     * @param integer $nCode      Code of failure from this consts.
-     * @param string  $strMessage Exception message.
+     * @param int    $nCode      Code of failure from this consts.
+     * @param string $strMessage Exception message.
      *
      * @return string A message for this error.
      */
@@ -99,9 +100,9 @@ class IOException extends \Xinc\Core\Exception
     {
         $strReturn = 'Failure: ';
         if (null !== $this->strResourcePath) {
-            $strReturn = 'Path: "' . $this->strResourcePath . '" ';
+            $strReturn = 'Path: "'.$this->strResourcePath.'" ';
         }
-        $strReturn .= 'Name: "' . $this->strResourceName . '"';
+        $strReturn .= 'Name: "'.$this->strResourceName.'"';
         $strReturn .= ' Code: ';
         switch ($nCode) {
             case self::FAILURE_IO:
@@ -121,8 +122,9 @@ class IOException extends \Xinc\Core\Exception
                 break;
         }
         if (null !== $strMessage) {
-            $strReturn .= ' with message: "' . $strMessage . '"';
+            $strReturn .= ' with message: "'.$strMessage.'"';
         }
+
         return $strReturn;
     }
 }

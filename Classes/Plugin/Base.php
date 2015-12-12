@@ -24,20 +24,18 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin;
-
-use Xinc\Core\Plugin\PluginInterface;
 
 abstract class Base implements PluginInterface
 {
-	public function getName()
-	{
-		$class = get_class($this);
-		$parts = explode('\\',$class);
-		return $parts[count($parts)-2];
-	}
-	
+    public function getName()
+    {
+        $class = get_class($this);
+        $parts = explode('\\', $class);
+
+        return $parts[count($parts) - 2];
+    }
+
     public function getApiModules()
     {
         return array();

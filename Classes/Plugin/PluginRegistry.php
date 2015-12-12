@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin;
 
 use Xinc\Core\Registry\RegistryAbstract;
@@ -31,21 +31,22 @@ use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Logger;
 
 /**
- * Registry holding the plugins
+ * Registry holding the plugins.
+ *
  * @ingroup registry
  * @ingroup logger
  */
 class PluginRegistry extends RegistryAbstract implements RegistryInterface
 {
-	use Logger;
-	
-	protected $typeOf = 'Xinc\Core\Plugin\PluginInterface';
-	
+    use Logger;
+
+    protected $typeOf = 'Xinc\Core\Plugin\PluginInterface';
+
     private $definedTasks = array();
-    
+
     /**
      * Holding a reference from the task to
-     * the slot they are working in
+     * the slot they are working in.
      *
      * @var array
      */
@@ -56,14 +57,14 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
         $pluginClass = get_class($plugin);
         if (!$plugin->validate($msg)) {
             $this->log->error(
-                'Plugin ' . $pluginClass . ' is invalid.' .
+                'Plugin '.$pluginClass.' is invalid.'.
                 ($msg ? "\nValidation message: $msg" : '')
             );
-                                 
+
             return false;
         }
-        $this->register($plugin->getName(),$plugin);
-        
+        $this->register($plugin->getName(), $plugin);
+
         $tasks = $plugin->getTaskDefinitions();
 
         $task = null;
@@ -73,13 +74,13 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
             $taskSlot = $task->getPluginSlot();
 
             switch ($taskSlot) {
-                case Slot::PROJECT_SET_VALUES: 
+                case Slot::PROJECT_SET_VALUES:
                         // make sure the task implements the setter interface
                         if (!$task instanceof SetterInterface) {
                             $this->log->error(
-                                'cannot register task ' . $fullTaskName
-                                . ' it does not implement the required interface '
-                                . 'Xinc_Plugin_Task_Setter_Interface'
+                                'cannot register task '.$fullTaskName
+                                .' it does not implement the required interface '
+                                .'Xinc_Plugin_Task_Setter_Interface'
                             );
                             continue;
                         }
@@ -88,7 +89,7 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
                     break;
             }
 
-            /**
+            /*
              * Register task for the slot
              */
             if (!isset($this->_slotReference[$taskSlot])) {
@@ -96,19 +97,18 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
             }
             $this->_slotReference[$taskSlot][] = &$task;
 
-            $parentTasks  = array(); //$task->getAllowedParentElements(); // should return the tasks! not the string
-            if (count($parentTasks)>0) {
+            $parentTasks = array(); //$task->getAllowedParentElements(); // should return the tasks! not the string
+            if (count($parentTasks) > 0) {
                 $this->_registerTaskDependencies($plugin, $task, $parentTasks);
             } else {
-
                 $fullTaskName = strtolower($fullTaskName);
-                
+
                 if (isset($this->_definedTasks[$fullTaskName])) {
-                        throw new Xinc_Plugin_Task_Exception();
+                    throw new Xinc_Plugin_Task_Exception();
                 }
                 $this->definedTasks[$fullTaskName] = array(
-                    'classname'=> $taskClass,
-                    'plugin'   => array('classname'=> $pluginClass)
+                    'classname' => $taskClass,
+                    'plugin' => array('classname' => $pluginClass),
                 );
 
                     // register default classname as task
@@ -117,33 +117,32 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
                     throw new Xinc_Plugin_Task_Exception();
                 }
                 $this->definedTasks[$classNameTask] = array(
-                    'classname'=> $taskClass,
-                    'plugin'   => array('classname' => $pluginClass)
+                    'classname' => $taskClass,
+                    'plugin' => array('classname' => $pluginClass),
                 );
             }
         }
     }
 
     /**
-     *
-     * @param Xinc_Plugin_Interface $plugin
+     * @param Xinc_Plugin_Interface      $plugin
      * @param Xinc_Plugin_Task_Interface $task
-     * @param array $parentTasks
+     * @param array                      $parentTasks
      *
      * @throws Xinc_Plugin_Task_Exception
      */
     private function _registerTaskDependencies(Xinc_Plugin_Interface $plugin,
                                                Xinc_Plugin_Task_Interface $task,
                                                array $parentTasks
-    ) {    
+    ) {
         $taskClass = get_class($task);
         $pluginClass = get_class($plugin);
         $fullTaskNames = array();
         foreach ($parentTasks as $parentTask) {
-            if ($parentTask instanceof Xinc_Plugin_Task_Interface ) {
+            if ($parentTask instanceof Xinc_Plugin_Task_Interface) {
                 $parentTaskClass = get_class($parentTask);
-                $fullTaskNames[] = $parentTask->getName() . '/' . $task->getName();
-                $fullTaskNames[] = $parentTaskClass . '/' . $taskClass;
+                $fullTaskNames[] = $parentTask->getName().'/'.$task->getName();
+                $fullTaskNames[] = $parentTaskClass.'/'.$taskClass;
             }
         }
         foreach ($fullTaskNames as $fullTaskName) {
@@ -153,8 +152,8 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
                 throw new Xinc_Plugin_Task_Exception();
             }
             $this->definedTasks[$fullTaskName] = array(
-                'classname'=> $taskClass,
-                'plugin'   => array('classname'=> $pluginClass)
+                'classname' => $taskClass,
+                'plugin' => array('classname' => $pluginClass),
             );
         }
     }
@@ -163,34 +162,32 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
     {
         $taskname = strtolower($taskname);
         if ($parentElement !== null) {
-            $taskname2  = $parentElement . '/' . $taskname;
+            $taskname2 = $parentElement.'/'.$taskname;
         }
 
         if (isset($this->definedTasks[$taskname2])) {
             $taskData = $this->definedTasks[$taskname2];
-        } else if (isset($this->definedTasks[$taskname])) {
+        } elseif (isset($this->definedTasks[$taskname])) {
             $taskData = $this->definedTasks[$taskname];
         } else {
-            
             throw new Xinc_Plugin_Task_Exception('undefined task '.$taskname);
         }
 
-        if ( !isset($this->_plugins[$taskData['plugin']['classname']]) ) {
-            
-            $plugin = new $taskData['plugin']['classname'];
+        if (!isset($this->_plugins[$taskData['plugin']['classname']])) {
+            $plugin = new $taskData['plugin']['classname']();
             $this->_plugins[$taskData['plugin']['classname']] = &$plugin;
-
         } else {
             $plugin = $this->_plugins[$taskData['plugin']['classname']];
         }
 
         $className = $taskData['classname'];
         $object = new $className($plugin);
+
         return $object;
     }
-    
+
     /**
-     * Returns Plugin Iterator
+     * Returns Plugin Iterator.
      *
      * @return Xinc_Iterator
      */
@@ -201,7 +198,7 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
 
     /**
      * Returns all tasks that are registered
-     * for a specific slot
+     * for a specific slot.
      *
      * @param int $slot @see Xinc_Plugin_Slot
      *

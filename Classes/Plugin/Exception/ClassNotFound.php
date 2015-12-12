@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, engine class was not found
+ * Exception, engine class was not found.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 class Xinc_Plugin_Exception_ClassNotFound extends Exception
 {
     /**
@@ -36,7 +36,7 @@ class Xinc_Plugin_Exception_ClassNotFound extends Exception
     public function __construct($strPluginName, $strFileName)
     {
         parent::__construct(
-            'Plugin ' . $strPluginName . ': class not found in file: ' . $strFileName
+            'Plugin '.$strPluginName.': class not found in file: '.$strFileName
         );
     }
 }

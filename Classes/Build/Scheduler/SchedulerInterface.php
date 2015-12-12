@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build\Scheduler;
 
 use Xinc\Core\Build\BuildInterface;
@@ -37,7 +37,7 @@ interface SchedulerInterface
      *
      * @param Xinc_Build_Interface $build
      *
-     * @return integer next build timestamp
+     * @return int next build timestamp
      */
     public function getNextBuildTime(BuildInterface $build);
 }

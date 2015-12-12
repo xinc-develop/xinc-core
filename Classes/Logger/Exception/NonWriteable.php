@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, logging file is not writeable
+ * Exception, logging file is not writeable.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,20 +21,20 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Logger\Exception;
 
-class NonWriteableException extends \Exception
+class NonWriteable extends \Exception
 {
     /**
-     * Constructor, generates an Exception Message
+     * Constructor, generates an Exception Message.
      *
      * @param string $strFileName Name of file which isn't writeable.
      */
     public function __construct($strFileName)
     {
-        parent::__construct('Log File ' . $strFileName . ' is not writeable');
+        parent::__construct('Log File '.$strFileName.' is not writeable');
     }
 }

@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Task;
 
 use Xinc\Core\Plugin\PluginInterface;
@@ -30,29 +30,26 @@ use Xinc\Core\Build\BuildInterface;
 interface TaskInterface
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(PluginInterface $plugin);
 
     /**
-     * Initialize the task
-     * @return void
+     * Initialize the task.
      */
     public function init(BuildInterface $build = null);
 
     /**
      * Validates if a task can run by checking configs, directries and so on.
      *
-     * @return boolean Is true if task can run.
+     * @return bool Is true if task can run.
      */
     public function validate();
 
     /**
-     * Process the task
+     * Process the task.
      *
      * @param Xinc\Core\Job\JobInterface $job Job to process this task for.
-     *
-     * @return void
      */
     public function process(BuildInterface $build);
 
@@ -66,7 +63,8 @@ interface TaskInterface
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number.
+     *
      * @see Xinc/Plugin/Slot.php for available slots
      */
     public function getPluginSlot();

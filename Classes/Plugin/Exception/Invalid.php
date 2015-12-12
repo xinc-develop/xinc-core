@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, plugin is invalid. Does not implement Xinc_Plugin_Interface
+ * Exception, plugin is invalid. Does not implement Xinc_Plugin_Interface.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 class Xinc_Plugin_Exception_Invalid extends Exception
 {
     /**
@@ -34,7 +34,7 @@ class Xinc_Plugin_Exception_Invalid extends Exception
     public function __construct($strPluginName)
     {
         parent::__construct(
-            'Plugin ' . $strPluginName . ': does not implement Xinc_Plugin_Interface'
+            'Plugin '.$strPluginName.': does not implement Xinc_Plugin_Interface'
         );
     }
 }

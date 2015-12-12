@@ -19,12 +19,11 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\ModificationSet;
 
-use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Gui\Gui;
 use Xinc\Core\Gui\WidgetInterface;
 
@@ -47,7 +46,7 @@ class Widget extends Gui implements WidgetInterface
 
             $indexWidget->registerExtension('BUILD_DETAILS', $extension2);
         } catch (Exception $e) {
-            echo "Could not init on " . __FILE__ . "<br>";
+            echo 'Could not init on '.__FILE__.'<br>';
         }
     }
 }

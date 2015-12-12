@@ -20,138 +20,126 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build;
 
-use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
-
 use Xinc\Core\Project\Status as ProjectStatus;
 use Xinc\Core\Properties as BuildProperties;
-
-use Xinc\Core\Build\Exception\NotRun;
-use Xinc\Core\Build\Exception\NotFound;
-use Xinc\Core\Build\Exception\Serialization;
-
 use Xinc\Core\Traits\Logger;
 
 /**
- * This class represents the build that is going to be run with Xinc
+ * This class represents the build that is going to be run with Xinc.
+ *
  * @ingroup logger
  */
 class Build implements BuildInterface
 {
-	use Logger;
+    use Logger;
     /**
      * Are we queued?
      *
-     * @var boolean
+     * @var bool
      */
-    private $isQueued=false;
-    
+    private $isQueued = false;
+
     /**
      * @var Xinc::Core::Engine::EngineInterface
      */
     private $engine;
-    
+
     /**
      * @var Xinc::Core::Models::Project
      */
     private $project;
-    
+
     /**
      * @var Xinc_Build_Properties
      */
     private $properties;
-    
+
     /**
      * @var Xinc_Build_Properties
      */
     private $internalProperties;
-    
+
     /**
-     *
      * @var Xinc_Build_Statistics
      */
     private $statistics;
-    
+
     /**
-     * 
-     *
-     * @var integer
+     * @var int
      */
     private $buildTimestamp;
-    
+
     /**
-     * 
-     *
-     * @var integer
+     * @var int
      */
     private $nextBuildTimestamp;
-    
+
     /**
-     * Build status, as defined in Xinc_Build_Interface
+     * Build status, as defined in Xinc_Build_Interface.
      *
-     * @var integer
+     * @var int
      */
     private $status;
-    
+
     /**
-     *
      * @var Xinc_Build_Interface
      */
     private $lastBuild;
-    
+
     /**
-     * The build no of this build
+     * The build no of this build.
      *
-     * @var integer
+     * @var int
      */
     private $no;
-    
+
     /**
-     * The label for this build
+     * The label for this build.
      *
      * @var string
      */
     private $label;
-    
+
     /**
-     * Contains tasks that need to be executed for each Process Step
+     * Contains tasks that need to be executed for each Process Step.
      *
      * @var Xinc_Build_Tasks_Registry
      */
     private $taskRegistry;
-    
+
     /**
-     * Build scheduler
+     * Build scheduler.
      *
      * @var Xinc_Build_Scheduler_Interface
      */
     private $scheduler;
-    
+
     /**
      * @var Xinc_Build_Labeler_Interface
      */
     private $labeler;
-    
+
     /**
-     * Holding config values for this build
+     * Holding config values for this build.
      *
      * @var array
      */
     private $config = array();
-    
+
     /**
      * sets the project, engine
-     * and timestamp for the build
+     * and timestamp for the build.
      *
      * @param Xincengine_Interface $engine
      * @param Xincproject          $project
-     * @param integer               $buildTimestamp
+     * @param int                  $buildTimestamp
      */
     public function __construct(EngineInterface $engine,
                                 Project $project,
@@ -160,11 +148,11 @@ class Build implements BuildInterface
         $this->engine = $engine;
         $this->setLogger($engine->getLogger());
         $this->project = $project;
-        
+
         if (ProjectStatus::MISCONFIGURED == $this->project->getStatus()) {
             $this->setStatus(BuildInterface::MISCONFIGURED);
         }
-        
+
         $this->buildTimestamp = $buildTimestamp;
         $this->properties = new BuildProperties();
         $this->internalProperties = new BuildProperties();
@@ -179,16 +167,18 @@ class Build implements BuildInterface
     }
 
     /**
-     * 
-     * Returns the last build
+     * Returns the last build.
+     *
      * @return Xinc_Build_Interface
      */
     public function getLastBuild()
     {
-        if ($this->lastBuild == null) { 
+        if ($this->lastBuild == null) {
             $build = new self($this->getEngine(), $this->getProject());
+
             return $build;
         }
+
         return $this->lastBuild;
     }
 
@@ -199,30 +189,29 @@ class Build implements BuildInterface
     {
         return $this->properties;
     }
-    
+
     public function getProperty($name)
     {
-		return $this->properties->get($name);
-	}
-    
+        return $this->properties->get($name);
+    }
+
     /**
      * @param string $name
      * @param $value
      */
-    public function setProperty($name,$val)
+    public function setProperty($name, $val)
     {
-		$this->properties->set($name,$val);
-	}
-    
+        $this->properties->set($name, $val);
+    }
+
     /**
-     *
      * @return Xinc::Core::Properties
      */
     public function getInternalProperties()
     {
         return $this->internalProperties;
     }
-    
+
     /**
      * @return Xinc_Build_Statistics
      */
@@ -231,9 +220,9 @@ class Build implements BuildInterface
         return $this->statistics;
     }
     /**
-     * sets the build time for this build
+     * sets the build time for this build.
      *
-     * @param integer $buildTime unixtimestamp
+     * @param int $buildTime unixtimestamp
      */
     public function setBuildTime($buildTime)
     {
@@ -242,19 +231,18 @@ class Build implements BuildInterface
     }
 
     /**
-     * returns the timestamp of this build
+     * returns the timestamp of this build.
      *
-     * @return integer Timestamp of build (unixtimestamp)
+     * @return int Timestamp of build (unixtimestamp)
      */
     public function getBuildTime()
     {
         return $this->buildTimestamp;
     }
-    
+
     /**
      * Returns the next build time (unix timestamp)
-     * for this build
-     *
+     * for this build.
      */
     public function getNextBuildTime()
     {
@@ -262,74 +250,73 @@ class Build implements BuildInterface
     }
 
     /**
-     * 
      * @return Xinc::Core::Project::Project
      */
     public function getProject()
     {
         return $this->project;
     }
-    
+
     /**
-     * 
      * @return Xinc::Core::Engine::EngineInterface
      */
     public function getEngine()
     {
         return $this->engine;
     }
-    
+
     public function setLastBuild()
     {
-        /**
+        /*
          * to prevent recursion, unset the reference to the lastBuild
          * and then clone
          */
         $this->lastBuild = null;
         $this->lastBuild = clone $this;
     }
-    
+
     /**
-     * stores the build information
+     * stores the build information.
      *
      * @throws Xinc_Build_Exception_NotRun
      * @throws Xinc_Build_Exception_Serialization
      * @throws Xinc_Build_History_Exception_Storage
-     * @return boolean
+     *
+     * @return bool
      */
     public function serialize()
     {
         Xinc_Logger::getInstance()->flush();
         $this->setLastBuild();
-        
+
         if (!in_array($this->getStatus(), array(self::PASSED, self::FAILED, self::STOPPED))) {
             throw new Xinc_Build_Exception_NotRun();
-        } else if ($this->getBuildTime() == null) {
+        } elseif ($this->getBuildTime() == null) {
             throw new Xinc_Build_Exception_Serialization($this->getProject(),
                                                          $this->getBuildTime());
         }
         $statusDir = Xinc::getInstance()->getStatusDir();
-        
-        $buildHistoryFile = $statusDir . DIRECTORY_SEPARATOR 
-                          . $this->getProject()->getName() . '.history';
-        
+
+        $buildHistoryFile = $statusDir.DIRECTORY_SEPARATOR
+                          .$this->getProject()->getName().'.history';
+
         $subDirectory = self::generateStatusSubDir($this->getProject()->getName(), $this->getBuildTime());
 
-        $fileName = $statusDir . DIRECTORY_SEPARATOR 
-                  . $subDirectory
-                  . DIRECTORY_SEPARATOR . 'build.ser';
-        $logfileName = $statusDir . DIRECTORY_SEPARATOR 
-                  . $subDirectory
-                  . DIRECTORY_SEPARATOR . 'buildlog.xml';
-        $lastBuildFileName = $statusDir . DIRECTORY_SEPARATOR . $this->getProject()->getName()
-                           . DIRECTORY_SEPARATOR . 'build.ser';
-        $lastLogFileName = $statusDir . DIRECTORY_SEPARATOR . $this->getProject()->getName()
-                           . DIRECTORY_SEPARATOR . 'buildlog.xml';
+        $fileName = $statusDir.DIRECTORY_SEPARATOR
+                  .$subDirectory
+                  .DIRECTORY_SEPARATOR.'build.ser';
+        $logfileName = $statusDir.DIRECTORY_SEPARATOR
+                  .$subDirectory
+                  .DIRECTORY_SEPARATOR.'buildlog.xml';
+        $lastBuildFileName = $statusDir.DIRECTORY_SEPARATOR.$this->getProject()->getName()
+                           .DIRECTORY_SEPARATOR.'build.ser';
+        $lastLogFileName = $statusDir.DIRECTORY_SEPARATOR.$this->getProject()->getName()
+                           .DIRECTORY_SEPARATOR.'buildlog.xml';
         if (!file_exists(dirname($fileName))) {
             mkdir(dirname($fileName), 0755, true);
         }
         $contents = serialize($this);
-        
+
         $written = file_put_contents($lastBuildFileName, $contents);
         if ($written == strlen($contents)) {
             $res = copy($lastBuildFileName, $fileName);
@@ -343,6 +330,7 @@ class Build implements BuildInterface
                 }
                 Xinc_Build_History::addBuild($this, $fileName);
             }
+
             return true;
         } else {
             throw new Xinc_Build_Exception_Serialization($this->getProject(),
@@ -350,14 +338,14 @@ class Build implements BuildInterface
         }
     }
 
-    
     /**
-     * Unserialize a build by its project and buildtimestamp
+     * Unserialize a build by its project and buildtimestamp.
      *
      * @param Xincproject $project
-     * @param integer $buildTimestamp
+     * @param int         $buildTimestamp
      *
      * @return Xinc_Build
+     *
      * @throws Xinc_Build_Exception_Unserialization
      * @throws Xinc_Build_Exception_NotFound
      */
@@ -366,18 +354,18 @@ class Build implements BuildInterface
         if ($statusDir == null) {
             $statusDir = Xinc::getInstance()->getStatusDir();
         }
-        
+
         if ($buildTimestamp == null) {
             //$fileName = $statusDir . DIRECTORY_SEPARATOR . $project->getName()
             //          . DIRECTORY_SEPARATOR . 'build.ser';
             $fileName = Xinc_Build_History::getLastBuildFile($project);
         } else {
             //$subDirectory = self::generateStatusSubDir($project->getName(), $buildTimestamp);
-        
+
             // throws Xinc_Build_Exception_NotFound
             $fileName = Xinc_Build_History::getBuildFile($project, $buildTimestamp);
         }
-        
+
         //Xinc_Build_Repository::getBuild($project, $buildTimestamp);
         if (!file_exists($fileName)) {
             throw new Xinc_Build_Exception_NotFound($project,
@@ -389,7 +377,7 @@ class Build implements BuildInterface
                 throw new Xinc_Build_Exception_Unserialization($project,
                                                                $buildTimestamp);
             } else {
-                /**
+                /*
                  * compatibility with old Xinc_Build w/o statistics object
                  */
                 if ($unserialized->getStatistics() === null) {
@@ -399,81 +387,79 @@ class Build implements BuildInterface
                     $unserialized->setConfigDirective('timezone', null);
                 }
                 if (!isset($unserialized->_internalProperties)) {
-                    if (method_exists($unserialized,'init')) {
+                    if (method_exists($unserialized, 'init')) {
                         $unserialized->init();
                     }
-                    
                 }
+
                 return $unserialized;
             }
         }
     }
-    
+
     /**
-     * returns the status of this build
-     *
+     * returns the status of this build.
      */
     public function getStatus()
     {
         return $this->status;
     }
-    
+
     /**
-     * Set the status of this build
+     * Set the status of this build.
      *
-     * @param integer $status
+     * @param int $status
      */
     public function setStatus($status)
     {
         $this->status = $status;
     }
-    
-    
+
     public function __sleep()
     {
-        /**
+        /*
          * minimizing the storage for the project,
          * we just want the name
          */
         $project = new Project();
         $project->setName($this->getProject()->getName());
         $this->project = $project;
-        return array('no','project', 'buildTimestamp',
+
+        return array('no', 'project', 'buildTimestamp',
                      'properties', 'status', 'lastBuild',
                      'labeler', 'engine', 'statistics', 'config',
-                     'internalProperties');
+                     'internalProperties', );
     }
-    
+
     public function init()
     {
         $this->internalProperties = new Xinc_Build_Properties();
     }
 
     /**
-     * Sets the sequence number for this build
+     * Sets the sequence number for this build.
      *
-     * @param integer $no
+     * @param int $no
      */
     public function setNumber($no)
     {
-        $this->info('Setting Buildnumber to:' . $no);
+        $this->info('Setting Buildnumber to:'.$no);
         $this->getProperties()->set('build.number', $no);
         $this->no = $no;
     }
-    
+
     /**
-     * returns the build no for this build
+     * returns the build no for this build.
      *
-     * @return integer
+     * @return int
      */
     public function getNumber()
     {
         return $this->no;
     }
-    
-    
+
     /**
-     * returns the label of this build
+     * returns the label of this build.
      *
      * @return string
      */
@@ -481,9 +467,9 @@ class Build implements BuildInterface
     {
         return $this->labeler->getLabel($this);
     }
-    
+
     /**
-     * returns the labeler of this build
+     * returns the labeler of this build.
      *
      * @return Xinc_Build_Labeler
      */
@@ -491,9 +477,8 @@ class Build implements BuildInterface
     {
         return $this->labeler;
     }
-    
+
     /**
-     *
      * @param Xinc_Build_Tasks_Registry $taskRegistry
      */
     public function setTaskRegistry(Xinc_Build_Tasks_Registry $taskRegistry)
@@ -504,7 +489,7 @@ class Build implements BuildInterface
     /**
      * Sets a build scheduler,
      * which calculates the next build time based
-     * on the configuration
+     * on the configuration.
      *
      * @param Xinc_Build_Scheduler_Interface $scheduler
      */
@@ -512,9 +497,8 @@ class Build implements BuildInterface
     {
         $this->scheduler = $scheduler;
     }
-    
+
     /**
-     *
      * @return Xinc_Build_Scheduler_Interface
      */
     public function getScheduler()
@@ -524,7 +508,6 @@ class Build implements BuildInterface
 
     /**
      * @return Xinc_Build_Tasks_Registry
-     *
      */
     public function getTaskRegistry()
     {
@@ -532,7 +515,7 @@ class Build implements BuildInterface
     }
 
     /**
-     * processes the tasks that are registered for the slot
+     * processes the tasks that are registered for the slot.
      *
      * @param mixed $slot
      */
@@ -540,20 +523,18 @@ class Build implements BuildInterface
     {
         $tasks = $this->getTaskRegistry()->getTasksForSlot($slot);
         while ($tasks->hasNext()) {
-            
             $task = $tasks->next();
-            Xinc_Logger::getInstance()->info('Processing task: ' . $task->getName());
+            Xinc_Logger::getInstance()->info('Processing task: '.$task->getName());
             try {
                 $task->process($this);
             } catch (Exception $e) {
                 var_dump($e);
             }
 
-            /**
+            /*
              * The Post-Process continues on failure
              */
             if ($slot != Xinc_Plugin_Slot::POST_PROCESS) {
-                
                 if ($this->getStatus() != Xinc_Build_Interface::PASSED) {
                     $tasks->rewind();
                     break;
@@ -562,81 +543,79 @@ class Build implements BuildInterface
         }
         $tasks->rewind();
     }
-    
+
     /**
-     * Logs a message of priority info
+     * Logs a message of priority info.
      *
      * @param string $message
      */
     public function info($message)
     {
-        $this->log->info('[build] ' . $this->getProject()->getName() 
-            . ': '.$message);
+        $this->log->info('[build] '.$this->getProject()->getName()
+            .': '.$message);
     }
 
     /**
-     * Logs a message of priority warn
+     * Logs a message of priority warn.
      *
      * @param string $message
      */
     public function warn($message)
     {
-        $this->log->warn('[build] ' . $this->getProject()->getName() 
-            . ': '.$message);
-            
+        $this->log->warn('[build] '.$this->getProject()->getName()
+            .': '.$message);
     }
-    
+
     /**
-     * Logs a message of priority verbose
+     * Logs a message of priority verbose.
      *
      * @param string $message
      */
     public function verbose($message)
     {
-        $this->log->verbose('[build] ' . $this->getProject()->getName() 
-           . ': '.$message);
-            
+        $this->log->verbose('[build] '.$this->getProject()->getName()
+           .': '.$message);
     }
 
     /**
-     * Logs a message of priority debug
+     * Logs a message of priority debug.
      *
      * @param string $message
      */
     public function debug($message)
     {
-        $this->log->debug('[build] ' . $this->getProject()->getName() 
-             . ': '.$message);    
+        $this->log->debug('[build] '.$this->getProject()->getName()
+             .': '.$message);
     }
 
     /**
-     * Logs a message of priority error
+     * Logs a message of priority error.
      *
      * @param string $message
      */
     public function error($message)
     {
-        $this->log->error('[build] ' . $this->getProject()->getName()
-            . ': '.$message);
+        $this->log->error('[build] '.$this->getProject()->getName()
+            .': '.$message);
     }
-    
+
     public function build()
     {
         Xinc_Logger::getInstance()->setBuildLogFile(null);
         Xinc_Logger::getInstance()->emptyLogQueue();
         Xinc::setCurrentBuild($this);
-        
-        $buildLogFile = Xinc::getInstance()->getStatusDir() 
-                        . DIRECTORY_SEPARATOR 
-                        . $this->getProject()->getName()
-                        . DIRECTORY_SEPARATOR
-                        . 'buildlog.xml';
+
+        $buildLogFile = Xinc::getInstance()->getStatusDir()
+                        .DIRECTORY_SEPARATOR
+                        .$this->getProject()->getName()
+                        .DIRECTORY_SEPARATOR
+                        .'buildlog.xml';
         if (file_exists($buildLogFile)) {
-            self::info('Removing old logfile "' . $buildLogFile . '" with size: ' . filesize($buildLogFile));
+            self::info('Removing old logfile "'.$buildLogFile.'" with size: '.filesize($buildLogFile));
             unlink($buildLogFile);
         }
         Xinc_Logger::getInstance()->setBuildLogFile($buildLogFile);
-        
+
         $this->getEngine()->build($this);
         //Xinc_Logger::getInstance()->flush();
         Xinc_Logger::getInstance()->setBuildLogFile(null);
@@ -644,53 +623,52 @@ class Build implements BuildInterface
         if (Xinc_Build_Interface::STOPPED != $this->getStatus()) {
             $this->setStatus(Xinc_Build_Interface::INITIALIZED);
         }
-        
     }
-    
+
     public function updateTasks()
     {
         $this->setters = Xinc_Plugin_Repository::getInstance()->getTasksForSlot(Xinc_Plugin_Slot::PROJECT_SET_VALUES);
-        
+
         $this->getProperties()->set('project.name', $this->getProject()->getName());
         $this->getProperties()->set('build.number', $this->getNumber());
         $this->getProperties()->set('build.label', $this->getLabel());
-        
-        
+
         $builtinProps = Xinc::getInstance()->getBuiltinProperties();
-        
+
         foreach ($builtinProps as $prop => $value) {
             $this->getProperties()->set($prop, $value);
         }
-        
+
         $tasks = $this->getTaskRegistry()->getTasks();
-        
+
         while ($tasks->hasNext()) {
-            
             $task = $tasks->next();
-            
+
             $this->_updateTask($task);
         }
     }
-    
+
     public static function generateStatusSubDir($projectName, $buildTime)
     {
         $oldTimeZone = ini_get('date.timezone');
         if (Xinc_Timezone::getIniTimezone() == null) {
             ini_set('date.timezone', 'UTC');
         }
-        $yearMonthDay = date("Ymd", $buildTime);
+        $yearMonthDay = date('Ymd', $buildTime);
         $subDirectory = $projectName;
         $subDirectory .= DIRECTORY_SEPARATOR;
-        $subDirectory .= $yearMonthDay . DIRECTORY_SEPARATOR . $buildTime;
+        $subDirectory .= $yearMonthDay.DIRECTORY_SEPARATOR.$buildTime;
         if (Xinc_Timezone::getIniTimezone() == null) {
             ini_set('date.timezone', $oldTimeZone);
         }
+
         return $subDirectory;
     }
-    
+
     public function getStatusSubDir()
     {
         $subDirectory = self::generateStatusSubDir($this->getProject()->getName(), $this->getBuildTime());
+
         return $subDirectory;
     }
 
@@ -699,52 +677,48 @@ class Build implements BuildInterface
         $element = $task->getXml();
         foreach ($element->attributes() as $name => $value) {
             $setter = 'set'.$name;
-            
-            /**
+
+            /*
              * Call PROJECT_SET_VALUES plugins
              */
             while ($this->_setters->hasNext()) {
                 $setterObj = $this->_setters->next();
                 $value = $setterObj->set($this, $value);
-                
             }
             $this->_setters->rewind();
-            $task->$setter((string)$value, $this);
-            
+            $task->$setter((string) $value, $this);
         }
-        
+
         $subtasks = $task->getTasks();
-        
+
         while ($subtasks->hasNext()) {
             $this->_updateTask($subtasks->next());
         }
     }
-    
+
     public function enqueue()
     {
         $this->isQueued = true;
     }
-    
+
     /**
-     * check if build is in queue mode
-     *
+     * check if build is in queue mode.
      */
     public function isQueued()
     {
         return $this->isQueued;
     }
-    
+
     /**
-     * remove build from queue mode
-     *
+     * remove build from queue mode.
      */
     public function dequeue()
     {
         $this->isQueued = false;
     }
-    
+
     /**
-     * Sets custom config value for the current build
+     * Sets custom config value for the current build.
      *
      * @param string $name
      * @param string $value
@@ -754,7 +728,7 @@ class Build implements BuildInterface
         $this->config[$name] = $value;
     }
     /**
-     * Returns the configuration directive for the name
+     * Returns the configuration directive for the name.
      *
      * @param string $name
      *
@@ -762,9 +736,9 @@ class Build implements BuildInterface
      */
     public function getConfigDirective($name)
     {
-        return isset($this->_config[$name])?$this->_config[$name]:null;
+        return isset($this->_config[$name]) ? $this->_config[$name] : null;
     }
-    
+
     public function resetConfigDirective()
     {
         $this->config = array();

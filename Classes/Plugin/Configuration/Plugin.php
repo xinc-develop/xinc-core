@@ -20,9 +20,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\Configuration;
 
 use Xinc\Core\Plugin\Base;
@@ -37,8 +37,9 @@ class Plugin extends Base
 {
     public function getTaskDefinitions()
     {
-		return array();
+        return array();
+
         return array(new Xinc_Plugin_Repos_Configuration_Task($this),
-                     new Xinc_Plugin_Repos_Configuration_Setting_Task($this));
+                     new Xinc_Plugin_Repos_Configuration_Setting_Task($this), );
     }
 }

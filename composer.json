@@ -8,14 +8,17 @@
         { "name": "David Ellis" },
 	{ "name": "Alexander Opitz", "email": "opitz.alexander@googlemail.com" },
 	{ "name": "Arno Schneider" },
-	{ "name": "Gavin Foster" }
+	{ "name": "Gavin Foster" },
+        { "name": "Sebastian Knapp", "email": "news@young-workers.de" }
     ],
     "require": {
         "xinc/packager": "3.0.0",
-        "php": ">=5.4.4"
+        "php": ">=5.4.4",
+	"ulrichsg/getopt-php": "~2.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.8.*"
+        "phpunit/phpunit": "4.8.*",
+        "fabpot/php-cs-fixer": "~1.11"
     },
     "autoload": {
         "psr-4": {

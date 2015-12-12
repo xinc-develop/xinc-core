@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\ModificationSet;
 
 use Xinc\Core\Task\Base;
@@ -33,7 +33,7 @@ class Task extends Base
     /**
      * Validates if a task can run by checking configs, directories and so on.
      *
-     * @return boolean Is true if task can run.
+     * @return bool Is true if task can run.
      */
     public function validate()
     {
@@ -42,6 +42,7 @@ class Task extends Base
                 return false;
             }
         }
+
         return true;
     }
 
@@ -58,7 +59,7 @@ class Task extends Base
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number.
      */
     public function getPluginSlot()
     {
@@ -69,10 +70,10 @@ class Task extends Base
     {
         foreach ($this->arSubtasks as $task) {
             $task->process($build);
-            if ( $build->getStatus() == BuildInterface::PASSED ) {
+            if ($build->getStatus() == BuildInterface::PASSED) {
                 return;
-            } else if ($build->getStatus() == Xinc_Build_Interface::FAILED) {
-                /**
+            } elseif ($build->getStatus() == Xinc_Build_Interface::FAILED) {
+                /*
                  * if the modification cannot be detected make the build fail
                  * See Issue 79
                  */

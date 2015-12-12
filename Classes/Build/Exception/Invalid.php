@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Exception, build is invalid. Does not implement Xinc_Build_Interface
+ * Exception, build is invalid. Does not implement Xinc_Build_Interface.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build\Exception;
 
 /**
@@ -32,7 +32,7 @@ namespace Xinc\Core\Build\Exception;
 class Invalid extends BuildException
 {
     /**
-     * Constructor, generates an Exception Message
+     * Constructor, generates an Exception Message.
      */
     public function __construct()
     {

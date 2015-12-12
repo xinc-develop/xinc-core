@@ -19,13 +19,12 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build\Labeler;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Build\Labeler\LabelerInterface;
 
 /**
  * The default Build Labeler.
@@ -33,20 +32,19 @@ use Xinc\Core\Build\Labeler\LabelerInterface;
 class DefaultLabeler implements LabelerInterface
 {
     /**
-     *
-     * @var integer
+     * @var int
      */
     private $_firstBuild = 1;
 
     /**
-     * Prefix for the build
+     * Prefix for the build.
      *
      * @var string
      */
     private $_prefix = 'BUILD.';
 
     /**
-     * Return the label for this build
+     * Return the label for this build.
      *
      * @param Xinc_Build_Interface $build
      *
@@ -55,12 +53,12 @@ class DefaultLabeler implements LabelerInterface
     public function getLabel(BuildInterface $build)
     {
         $buildNo = $build->getNumber();
-        
+
         if ($buildNo == null) {
             $buildNo = $this->_firstBuild;
         }
-       
-        $buildLabel = $this->_prefix . $buildNo;
+
+        $buildLabel = $this->_prefix.$buildNo;
         $build->getProperties()->set('build.label', $buildLabel);
 
         return $buildLabel;

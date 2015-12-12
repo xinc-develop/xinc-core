@@ -19,34 +19,35 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin;
 
 /**
  * This interface represents a publishing mechanism to publish build results.
+ *
  * @ingroup interfaces
  */
 interface PluginInterface
 {
-	public function getName();
-	
+    public function getName();
+
     public function getApiModules();
 
     public function getGuiWidgets();
 
     /**
-     * Returns the defined tasks of the plugin
+     * Returns the defined tasks of the plugin.
      *
      * @return Xinc_Plugin_Task[]
      */
     public function getTaskDefinitions();
 
     /**
-     * Validate if the plugin can run properly on this system
+     * Validate if the plugin can run properly on this system.
      *
-     * @return boolean True if plugin can run properly otherwise false.
+     * @return bool True if plugin can run properly otherwise false.
      */
     public function validate();
 }

@@ -24,7 +24,6 @@
  * 
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Project;
 
 class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
@@ -33,14 +32,14 @@ class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
      * @var typeOf The Name of the class this elements should be.
      */
     protected $typeOf = 'Xinc\Core\Project\Project';
-    
+
     public function register($name, $project)
     {
-		if(empty($name)) {
-			$name = md5($project->getConfig()->toXml());
-			$this->log->info("Automatic project name $name given.");
+        if (empty($name)) {
+            $name = md5($project->getConfig()->toXml());
+            $this->log->info("Automatic project name $name given.");
             $project->setName($name);
         }
-        parent::register($name,$project);
+        parent::register($name, $project);
     }
 }

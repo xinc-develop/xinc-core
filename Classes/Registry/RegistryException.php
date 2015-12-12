@@ -22,13 +22,13 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Exception;
 
 /**
  * Exception thrown when a detects an invalid state.
+ *
  * @ingroup excptions
  */
 class RegistryException extends Exception

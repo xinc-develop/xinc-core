@@ -20,19 +20,21 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\Publisher;
 
 use Xinc\Core\Plugin\Base;
+
 #require_once 'Xinc/Plugin/Repos/Publisher/Task.php';
 
 class Plugin  extends Base
 {
     public function getTaskDefinitions()
     {
-		return array();
+        return array();
+
         return array(new Xinc_Plugin_Repos_Publisher_Task($this));
     }
 }

@@ -51,6 +51,17 @@ class Config implements ConfigInterface
         return $this->settings[$key];
     }
 
+    public function hasOption($key)
+    {
+      return $this->options->has($key);
+    }
+
+    public function has($key)
+    {
+      if($this->hasOption($key)) return true;
+      return $this->settings->has($key);
+    }
+
     public function getOption($key)
     {
         return $this->options[$key];

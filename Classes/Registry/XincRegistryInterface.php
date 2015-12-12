@@ -19,26 +19,27 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Logger\LoggerInterface;
 use Xinc\Core\Project\Project;
 
 /**
- * Xinc Registry Interface
+ * Xinc Registry Interface.
+ *
  * @ingroup interfaces
  */
 interface XincRegistryInterface extends LoggerInterface
 {
     public function registerPluginClass($class);
-    
+
     public function registerEngineClass($class, $default);
-    
-    public function registerProject(Project $project);	
-    
+
+    public function registerProject(Project $project);
+
     /**
      * @return Xinc::Core::Engine::EngineInterface
      */

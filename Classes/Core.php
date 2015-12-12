@@ -26,37 +26,34 @@
  *            it under the terms of the GNU Lesser General Public License as
  *            published by the Free Software Foundation; either version 2.1 of
  *            the License, or (at your option) any later version.
- *
  * @license   Xinc is distributed in the hope that it will be useful,
  *            but WITHOUT ANY WARRANTY; without even the implied warranty of
  *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *            GNU Lesser General Public License for more details.
- *
  * @license   You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core;
 
-/**
+/*
  * @defgroup config Classes with a reference to config object
  */
- 
-/**
+
+/*
  * @defgroup exceptions Exceptions
  */
- 
-/**
+
+/*
  * @defgroup interfaces Interfaces
  */
 
-/**
+/*
  * @defgroup logger Classes which are using a logger.
  */
- 
-/**
+
+/*
  * @defgroup registry Classes fo registering objects
- */ 
+ */

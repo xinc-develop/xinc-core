@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Definition of Plugin Slots
+ * Definition of Plugin Slots.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,31 +21,31 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Task;
 
 class Slot
 {
     /**
-     * Plugin is loaded when Xinc-Daemon starts running
+     * Plugin is loaded when Xinc-Daemon starts running.
      */
     const GLOBAL_INIT = 0;
 
     /**
      * Plugin is loaded when Xinc Daemon starts running
-     * and listens globally on all events (across projects)
+     * and listens globally on all events (across projects).
      */
     const GLOBAL_LISTENER = 1;
 
     /**
-     * Plugin is run in any slot (listeners)
+     * Plugin is run in any slot (listeners).
      */
     const PROJECT_LISTENER = 2;
 
     /**
-     * Project is initialized when starting up Xinc daemon
+     * Project is initialized when starting up Xinc daemon.
      */
     const PROJECT_INIT = 3;
 
@@ -57,17 +57,17 @@ class Slot
     const INIT_PROCESS = 5;
 
     /**
-     * First step, ModificiationSets, BootStrappers etc
+     * First step, ModificiationSets, BootStrappers etc.
      */
     const PRE_PROCESS = 10;
 
     /**
-     * Builders
+     * Builders.
      */
     const PROCESS = 20;
 
     /**
-     * Publishers
+     * Publishers.
      */
     const POST_PROCESS = 30;
 

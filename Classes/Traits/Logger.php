@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Traits;
 
 /**
@@ -29,10 +29,10 @@ namespace Xinc\Core\Traits;
  */
 trait Logger
 {
-	protected $log;
-	
-	public function setLogger($log)
-	{
-		$this->log = $log;
-	}
+    protected $log;
+
+    public function setLogger($log)
+    {
+        $this->log = $log;
+    }
 }

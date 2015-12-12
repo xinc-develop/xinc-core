@@ -20,26 +20,28 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\Phpunit;
 
 use Xinc\Core\Plugin\Base;
+
 #require_once 'Xinc/Plugin/Repos/Schedule/Task.php';
 #require_once 'Xinc/Plugin/Repos/Cron/Task.php';
 
 class Plugin extends Base
 {
     /**
-     * Returns the defined tasks of the plugin
+     * Returns the defined tasks of the plugin.
      *
      * @return Xinc_Plugin_Task[]
      */
     public function getTaskDefinitions()
     {
-		return array();
+        return array();
+
         return array(new Xinc_Plugin_Repos_Schedule_Task($this),
-                     new Xinc_Plugin_Repos_Cron_Task($this));
+                     new Xinc_Plugin_Repos_Cron_Task($this), );
     }
 }

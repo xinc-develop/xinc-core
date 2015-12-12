@@ -21,14 +21,14 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Logger;
 
 /**
  * Interface for objects which are using the log.
+ *
  * @ingroup interfaces
  */
 interface LoggerInterface
 {
-	public function setLogger($log);
+    public function setLogger($log);
 }

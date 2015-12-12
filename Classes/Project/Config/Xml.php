@@ -22,95 +22,103 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Project\Config;
 
-use SimpleXMLElement as XmlElement;
 use Xinc\Core\Config\ConfigInterface;
 use Xinc\Core\Config\ConfigLoaderInterface;
 use Xinc\Core\Config\Loader;
 use Xinc\Core\Registry\XincRegistryInterface;
 use Xinc\Core\Project\Project;
-
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
 
-use Xinc\Core\Exception\MalformedConfigException;
-
 /**
- * Xinc Project Configuration File in XML Format
+ * Xinc Project Configuration File in XML Format.
+ *
  * @todo use original advanced glob mechanism
  */
 class Xml extends Loader implements ConfigLoaderInterface
 {
+    public function getCommandlineOptions()
+    {
+        return array();
+    }
+
+    public function getConfigurationSources(ConfigInterface $conf)
+    {
+        return array();
+    }
+
     public function load(ConfigInterface $conf, XincRegistryInterface $reg)
     {
         $file = $conf->getOption('project-file');
-        if(isset($file)) {
-		    if(!strstr($file,'/')) {
-				$file = $conf->getOption('project-dir') . $file;
-			}
-			$this->loadFile($file,$conf,$reg);	
-		}
-		// load every xml file in project dir
-		else {
-			 $dir = $conf->getOption('project-dir');
-			 $list = glob("{$dir}*.xml");
-			 if($list === false) {
-				 throw new IOException($dir,null,null,IOException::FAILURE_NOT_READABLE);
-		     }
-		     if(empty($list)) {
-                 throw new IOException($dir,null,null,IOException::FAILURE_NOT_FOUND);
-             }
-             foreach($list as $file) {
-				 $this->loadFile($file,$conf,$reg);
-			 }
-		}
-	}
-        
-    public function loadFile($file,$conf,$reg)
-    {   
+        if (isset($file)) {
+            if (!strstr($file, '/')) {
+                $file = $conf->getOption('project-dir').$file;
+            }
+            $this->loadFile($file, $conf, $reg);
+        }
+        // load every xml file in project dir
+        else {
+            $dir = $conf->getOption('project-dir');
+            $list = glob("{$dir}*.xml");
+            if ($list === false) {
+                throw new IOException($dir, null, null, IOException::FAILURE_NOT_READABLE);
+            }
+            if (empty($list)) {
+                throw new IOException($dir, null, null, IOException::FAILURE_NOT_FOUND);
+            }
+            foreach ($list as $file) {
+                $this->loadFile($file, $conf, $reg);
+            }
+        }
+    }
+
+    public function loadFile($file, $conf, $reg)
+    {
         if (!file_exists($file)) {
-            throw new IOException($file,null,null,IOException::FAILURE_NOT_FOUND);
-        } 
+            throw new IOException($file, null, null, IOException::FAILURE_NOT_FOUND);
+        }
         libxml_use_internal_errors(true);
         $this->log->verbose("Loading configuration file $file");
         $xml = simplexml_load_file($file);
-        
-        if(!$xml) {
+
+        if (!$xml) {
             throw new XmlException(libxml_get_errors());
-	    }
-	    $this->loadProjects($xml,$reg);
+        }
+        $this->loadProjects($xml, $reg);
     }
-    
-    protected function loadProjects($xml,$reg)
+
+    protected function loadProjects($xml, $reg)
     {
-		foreach($xml->xpath('/xinc/project') as $element) {
-			$project = $this->setupProject($element,$reg);
-			$reg->registerProject($project);		
-		}
-	}
-	
-	protected function setupProject($element,$xincreg)
-	{
-		$project = new Project;
+        foreach ($xml->xpath('/xinc/project') as $element) {
+            $project = $this->setupProject($element, $reg);
+            $reg->registerProject($project);
+        }
+    }
+
+    protected function setupProject($element, $xincreg)
+    {
+        $project = new Project();
         foreach ($element->attributes() as $name => $value) {
-                $method = 'set' . ucfirst(strtolower($name));
-                if (method_exists($project, $method)) {
-                    $project->$method((string)$value);
-                } else {
-                    $this->log->error(
+            $method = 'set'.ucfirst(strtolower($name));
+            if (method_exists($project, $method)) {
+                $project->$method((string) $value);
+            } else {
+                $this->log->error(
                         "Trying to set '{$name}' on Xinc Project '{$element['name']}' failed. No such setter."
                     );
-                }
+            }
         }
         $project->setConfig($element);
 
         if ($project->getEngineName() === '') {
             $project->setEngineName($xincreg->getDefaultEngine()->getName());
         }
+
         return $project;
     }
 }

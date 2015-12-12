@@ -23,7 +23,6 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Test;
 
 use Xinc\Core\Engine\Base;
@@ -34,23 +33,18 @@ use Xinc\Core\Project\Project;
 
 class Engine extends Base implements EngineInterface
 {
-    public function getLogger()
-    {
-		return $this->log;
-	}
-
     /**
-     * get the name of the engine
+     * get the name of the engine.
      *
      * @return string Name of the engine.
      */
     public function getName()
     {
-		return 'TestEngine';
+        return 'TestEngine';
     }
 
     /**
-     * process the build
+     * process the build.
      *
      * @param Xinc_Build_Interface $build
      */
@@ -63,30 +57,32 @@ class Engine extends Base implements EngineInterface
      * project configuration. 
      *
      * @param Xinc::Core::Project::Project $project A project inside this engine.
+     *
      * @return BuildInterface
      */
     public function setupBuild(Project $project)
     {
-		$build = new Build($this,$project);
-		$build->setLogger($this->log);
-		$build->setNumber(1);
-		$this->setupBuildProperties($build);
-		
-		return $build;
+        $build = new Build($this, $project);
+        $build->setLogger($this->log);
+        $build->setNumber(1);
+        $this->setupBuildProperties($build);
+        $this->setupConfigProperties($build);
+
+        return $build;
     }
 
     /**
-     * returns the interval in seconds in which the engine checks for new builds
+     * returns the interval in seconds in which the engine checks for new builds.
      *
-     * @return integer
+     * @return int
      */
     public function getHeartBeat()
     {
-		return 30;
-	}
+        return 30;
+    }
 
     /**
-     * Set the interval in which the engine checks for modified builds, necessary builds etc
+     * Set the interval in which the engine checks for modified builds, necessary builds etc.
      *
      * @param string $seconds
      *
@@ -94,6 +90,5 @@ class Engine extends Base implements EngineInterface
      */
     public function setHeartBeat($seconds)
     {
-		
     }
 }

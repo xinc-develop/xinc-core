@@ -1,12 +1,9 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Property setter task
+ * Property setter task.
  *
- * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Plugin.Repos.Property
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -24,9 +21,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ *
+ * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\Property;
 
 use Xinc\Core\Build\BuildInterface;
@@ -49,7 +46,7 @@ class SubstituteTask extends Base implements SetterInterface
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number.
      */
     public function getPluginSlot()
     {
@@ -58,13 +55,14 @@ class SubstituteTask extends Base implements SetterInterface
 
     public function process(BuildInterface $build)
     {
-        $build->debug('Setting property "${' . $this->_name . '}" to "' . $this->_value . '"');
+        $build->debug('Setting property "${'.$this->_name.'}" to "'.$this->_value.'"');
         //$build->getProperties()->set($this->_name, $this->_value);
     }
 
     public function set(BuildInterface $build, $value)
     {
         $newvalue = $build->getProperties()->parseString($value);
+
         return $newvalue;
     }
 }

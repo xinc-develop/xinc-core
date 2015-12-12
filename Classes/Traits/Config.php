@@ -22,12 +22,17 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-namespace Xinc\Core\Config;
+namespace Xinc\Core\Traits;
 
 /**
- * Interface for Xinc Configuration Object(s).
+ * A trait for objects which contain the config.
  */
-interface ConfigInterface
+trait Config
 {
-    public function getOption($key);
+    protected $config;
+
+    public function setConfig($conf)
+    {
+        $this->config = $conf;
+    }
 }

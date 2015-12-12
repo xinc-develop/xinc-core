@@ -19,13 +19,13 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Project;
 
 /**
- * Statuses of a project
+ * Statuses of a project.
  */
 class Status
 {
@@ -34,21 +34,21 @@ class Status
     const MISCONFIGURED = -1;
     const BUILDING = 2;
     const NEVERRUN = 3;
-    
+
     private $value;
-    
-    public function __construct( $status = self::NEVERRUN )
+
+    public function __construct($status = self::NEVERRUN)
     {
-		$this->setValue($status);
-	}
-	
-	public function getValue()
-	{
-		return $this->value;
-	}
-	
-	public function setValue($status)
-	{
-		$this->value = $status;
-	}
+        $this->setValue($status);
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function setValue($status)
+    {
+        $this->value = $status;
+    }
 }

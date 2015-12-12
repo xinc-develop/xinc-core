@@ -1,8 +1,8 @@
 <?php
-/** 
+/**
  * Xinc - Continuous Integration.
  *
- * @author     Sebastian Knapp <news@young-workers.de>
+ * @author     Sebastian Knapp
  * @copyright  2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license    http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *             This file is part of Xinc.
@@ -19,18 +19,16 @@
  *             You should have received a copy of the GNU Lesser General Public
  *             License along with Xinc, write to the Free Software Foundation,
  *             Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @homepage   https://github.com/xinc-develop/xinc-core/
+ *
+ * @link       https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Exception;
 
-use Xinc\Core\Exception;
-
 /**
- * The Mistake Exception is for coding problems. It should be never thrown
- * in production code.
+ * Exception for incomplete or wrong config settings. 
  *
- * @ingroup exceptions
+ * @ingroup Exceptions
  */
-class Mistake extends Exception
+class ConfigException extends \Xinc\Core\Exception
 {
 }

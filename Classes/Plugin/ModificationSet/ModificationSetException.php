@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This exception is thrown when there is a problem found with the ModificationSet
+ * This exception is thrown when there is a problem found with the ModificationSet.
  *
  *
  * @author    David Ellis <username@example.org>
@@ -22,9 +22,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link       https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Exception;
 
 class ModificationSetException extends \Xinc\Core\Exception

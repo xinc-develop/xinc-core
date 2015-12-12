@@ -22,13 +22,12 @@
  * 
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Registry\RegistryException;
 
 /**
- * Registry for engines
+ * Registry for engines.
  */
 class EngineRegistry extends \Xinc\Core\Registry\RegistryAbstract
 {
@@ -36,30 +35,31 @@ class EngineRegistry extends \Xinc\Core\Registry\RegistryAbstract
      * @var typeOf The Name of the class this elements should be.
      */
     protected $typeOf = 'Xinc\Core\Engine\EngineInterface';
-    
+
     protected $default;
-    
+
     public function setDefaultEngine($name, $force = false)
     {
-	    if(isset($this->default) && $name == $this->default) {
-			$this->log->info("$name is already the default engine.");
-		} 
-	    if(!$force && isset($this->default)) {
-			throw new RegistryException("There is already a default engine: {$this->default}.");
-		}
-		$this->default = $name;
-	}
-    
+        if (isset($this->default) && $name == $this->default) {
+            $this->log->info("$name is already the default engine.");
+        }
+        if (!$force && isset($this->default)) {
+            throw new RegistryException("There is already a default engine: {$this->default}.");
+        }
+        $this->default = $name;
+    }
+
     public function getDefaultEngine()
     {
-		if(isset($this->default)) {
-		    return $this->get($this->default);	
-		}
-		$iterator = $this->getIterator();
-		if($iterator->count()) {
-			$this->log->info("using first engine as default.");
-		    return $iterator->current();	
-		}
-		throw new RegistryException("There are no registered engines.");
-	}
+        if (isset($this->default)) {
+            return $this->get($this->default);
+        }
+        $iterator = $this->getIterator();
+        if ($iterator->count()) {
+            $this->log->info('using first engine as default.');
+
+            return $iterator->current();
+        }
+        throw new RegistryException('There are no registered engines.');
+    }
 }

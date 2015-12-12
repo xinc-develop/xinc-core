@@ -2,10 +2,7 @@
 /**
  * Xinc - Continuous Integration.
  *
- * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Plugin.Task
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -24,25 +21,23 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * 
- * @homepage  http://code.google.com/p/xinc/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Task;
 
 use Xinc\Core\Build\BuildInterface;
 
 /**
  * Interface for plugin tasks that want to implement
- * the listener for all "setValue"'s on the project tasks
+ * the listener for all "setValue"'s on the project tasks.
  */
 interface SetterInterface
 {
-
     /**
-     * is called whenever a value is set on a task
+     * is called whenever a value is set on a task.
      *
      * @param Xinc_Build_Interface $build
-     * @param string $value
+     * @param string               $value
      *
      * @return string modified $value
      */

@@ -1,10 +1,10 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Engine to build projects
+ * Engine to build projects.
  *
- *
- * @author    Arno Schneider <username@example.org>
+ * @author    Sebastian Knapp
+ * @author    Arno Schneider
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -24,26 +24,42 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Traits\Logger;
 use Xinc\Core\Project\Project;
+use Xinc\Core\Traits\Config;
+use Xinc\Core\Traits\Logger;
 
 /**
  * Base class for engines with common functionality.
+ *
+ * @ingroup config
  * @ingroup logger
  */
 abstract class Base implements EngineInterface
 {
-	use Logger;
-	
-	protected function setupBuildProperties(BuildInterface $build)
-	{
-		$project = $build->getProject();
-		$build->setProperty('project.name', $project->getName());
+    use Config;
+    use Logger;
+
+    public function getLogger()
+    {
+        return $this->log;
+    }
+
+    protected function setupBuildProperties(BuildInterface $build)
+    {
+        $project = $build->getProject();
+        $build->setProperty('project.name', $project->getName());
         $build->setProperty('build.number', $build->getNumber());
         $build->setProperty('build.label', $build->getLabel());
+    }
+
+    protected function setupConfigProperties(BuildInterface $build)
+    {
+        $options = array('workingdir', 'projectdir', 'statusdir');
+        foreach ($options as $option) {
+            $build->setProperty($option, $this->config->getOption($option));
+        }
     }
 }

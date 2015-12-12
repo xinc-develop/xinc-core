@@ -20,15 +20,15 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Validation\Exception\NotNumerical;
 
 /**
- * Collects statistics from a build
+ * Collects statistics from a build.
  * 
  * Build Statistics carry numerical values for certain build aspects, like:
  * - build time
@@ -37,19 +37,19 @@ use Xinc\Core\Validation\Exception\NotNumerical;
  */
 class Statistics
 {
-    
     /**
-     * Associative Array holding the nvp for the build statistics
+     * Associative Array holding the nvp for the build statistics.
      *
      * @var array
      */
     private $statistics = array();
-    
+
     /**
-     * set a property
+     * set a property.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @throws Xinc::Core::Build::Exception::NonNumerical
      */
     public function set($name, $value)
@@ -59,11 +59,12 @@ class Statistics
         }
         $this->statistics[$name] = $value;
     }
-    
+
     /**
-     * Returns the property value of the questioned keyname
+     * Returns the property value of the questioned keyname.
      *
-     * @param String $name
+     * @param string $name
+     *
      * @return mixed String or null if not found
      */
     public function get($name)
@@ -71,12 +72,12 @@ class Statistics
         if (isset($this->statistics[$name])) {
             return $this->statistics[$name];
         } else {
-            return null;
+            return;
         }
     }
-    
+
     /**
-     * returns all the properties in an array
+     * returns all the properties in an array.
      *
      * @return array
      */

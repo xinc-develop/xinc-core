@@ -21,7 +21,6 @@
  *             Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @homepage   https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Exception;
 
 use Xinc\Core\Exception;
@@ -31,12 +30,13 @@ use Xinc\Core\Exception;
  * 
  * For example this could happen if a plugin is configured, but the class
  * is not avaiable.
+ *
  * @ingroup exceptions
  */
 class ClassLoaderException extends Exception
 {
-	public function __construct($class)
-	{
-		parent::__construct("Class $class could not be loaded.");
-	}
+    public function __construct($class)
+    {
+        parent::__construct("Class $class could not be loaded.");
+    }
 }

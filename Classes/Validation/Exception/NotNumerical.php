@@ -20,13 +20,14 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Validation\Exception;
 
 /**
  * Exception when a value is numerical.
+ *
  * @ingroup exceptions
  */
 class NotNumerical extends ValidationException
@@ -34,7 +35,7 @@ class NotNumerical extends ValidationException
     public function __construct($name, $value)
     {
         parent::__construct(
-            'Validation of value "' . $value . '" for argument "' . $name  . 
+            'Validation of value "'.$value.'" for argument "'.$name.
             '" is not numerical.'
         );
     }

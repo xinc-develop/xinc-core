@@ -19,15 +19,17 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
+/** */
 namespace Xinc\Core;
 
 use Xinc\Core\Validation\Exception\TypeMismatch;
 
 /**
- * Iterator over an array of elements
+ * Iterator over an array of elements.
  */
 class Iterator extends \ArrayIterator
 {
@@ -80,16 +82,17 @@ class Iterator extends \ArrayIterator
             throw new TypeMismatch(get_class($value), $this->typeOf);
         }
     }
-    
+
     /**
      * @deprecated
+     *
      * @throws Xinc::Core::Validation::Exception::TypeMismatch
      */
     public function add($item)
     {
         $this->append($item);
     }
-    
+
     /**
      * @deprecated
      */

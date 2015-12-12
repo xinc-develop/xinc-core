@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Traits\Logger;
@@ -32,7 +32,7 @@ use Xinc\Core\Validation\Exception\TypeMismatch;
  */
 abstract class RegistryAbstract implements RegistryInterface
 {
-	use Logger;
+    use Logger;
     /**
      * @var typeOf The Name of the class this elements should be.
      */
@@ -44,16 +44,16 @@ abstract class RegistryAbstract implements RegistryInterface
     private $registry = array();
 
     /**
-     *
      * @param string $name
      * @param object $object
+     *
      * @throws Xinc\Core\Registry\RegistryException
      * @throws Xinc\Core\Validation\Exception\TypeMismatch
      */
     public function register($name, $object)
     {
         if (isset($this->registry[$name])) {
-            throw new RegistryException('Object with name "' . $name . '" is already registered');
+            throw new RegistryException('Object with name "'.$name.'" is already registered');
         }
         if (!is_a($object, $this->typeOf)) {
             throw new TypeMismatch(get_class($object), $this->typeOf);
@@ -63,49 +63,55 @@ abstract class RegistryAbstract implements RegistryInterface
     }
 
     /**
-     *
      * @param string $name
+     *
      * @return object
+     *
      * @throws Xinc\Core\Registry\RegistryException
      */
     public function unregister($name)
     {
         if (!isset($this->registry[$name])) {
-            throw new Exception('Object with name "' . $name . '" is not registered');
+            throw new Exception('Object with name "'.$name.'" is not registered');
         }
 
         $object = $this->registry[$name];
         unset($this->registry[$name]);
+
         return $object;
     }
 
     /**
-     *
      * @param string $name
+     *
      * @return object
+     *
      * @throws Xinc\Core\Registry\Exception
      */
     public function get($name)
     {
         if (!isset($this->registry[$name])) {
-            throw new RegistryException('Object with name "' . $name . '" is not registered');
+            throw new RegistryException('Object with name "'.$name.'" is not registered');
         }
 
         return $this->registry[$name];
     }
-    
+
     /**
      * Check if a given name was registred.
+     *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function knows($name)
     {
-		return isset($this->registry[$name]);
-	}
-    
+        return isset($this->registry[$name]);
+    }
+
     /**
-     * Made a iterator from stored objects
+     * Made a iterator from stored objects.
+     *
      * @return ArrayIterator
      */
     public function getIterator()

@@ -19,16 +19,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
 
 /**
- * Build interface
+ * Build interface.
  *
  * Used by the engines to process a build
  */
@@ -42,141 +42,131 @@ interface BuildInterface
 
     /**
      * sets the project, engine
-     * and timestamp for the build
+     * and timestamp for the build.
      *
      * @param Xinc_Engine_Interface $engine
-     * @param Xinc_Project $project
-     * @param integer $buildTimestamp
+     * @param Xinc_Project          $project
+     * @param int                   $buildTimestamp
      * 
      * @todo Decouple engine from build
      */
     public function __construct(
-        EngineInterface $engine, 
+        EngineInterface $engine,
         Project $project,
         $buildTimestamp = null
     );
 
     /**
-     * Returns the last build
+     * Returns the last build.
      *
      * @return Xinc_Build_Interface
      */
     public function getLastBuild();
 
     /**
-     * Moves the current build to _lastBuild
-     *
+     * Moves the current build to _lastBuild.
      */
     public function setLastBuild();
 
     /**
-     * returns the build properties
+     * returns the build properties.
      *
      * @return Properties
      */
     public function getProperties();
 
-    public function setProperty($name,$value);
-    
+    public function setProperty($name, $value);
+
     public function getProperty($name);
     /**
-     * returns the internal build properties
+     * returns the internal build properties.
      *
      * @return Xinc_Build_Properties
      */
     public function getInternalProperties();
 
     /**
-     * called before a new build is executed
-     *
+     * called before a new build is executed.
      */
     public function init();
 
     /**
-     * returns the build statistics
+     * returns the build statistics.
      *
      * @return Xinc_Build_Statistics
      */
     public function getStatistics();
 
     /**
-     * sets the build time for this build
+     * sets the build time for this build.
      *
-     * @param integer $buildTime unixtimestamp
+     * @param int $buildTime unixtimestamp
      */
     public function setBuildTime($buildTime);
 
     /**
      * Returns the next build time (unix timestamp)
-     * for this build
-     *
+     * for this build.
      */
     public function getNextBuildTime();
 
     /**
-     * stores the build information
-     *
+     * stores the build information.
      */
     public function serialize();
 
     /**
-     * loads the build information
-     *
+     * loads the build information.
      */
     public static function unserialize(
-         Project $project, 
-         $buildTimestamp = null, 
+         Project $project,
+         $buildTimestamp = null,
          $statusDir = null
     );
 
     /**
-     * returns the label of this build
+     * returns the label of this build.
      *
      * @return string
      */
     public function getLabel();
 
     /**
-     *
      * @param Xinc_Build_Tasks_Registry $taskRegistry
      */
     public function setTaskRegistry(Xinc_Build_Tasks_Registry $taskRegistry);
 
     /**
      * @return Xinc_Build_Tasks_Registry
-     *
      */
     public function getTaskRegistry();
 
     /**
-     * processes the tasks that are registered for the slot
+     * processes the tasks that are registered for the slot.
      *
      * @param mixed $slot
      */
     public function process($slot);
 
     /**
-     * Build
-     *
+     * Build.
      */
     public function build();
 
     /**
      * Updates properties on tasks, after
-     * a change in build status
-     *
+     * a change in build status.
      */
     public function updateTasks();
 
     /**
      * Returns the subdirectory inside the status directory
-     * where the status information of the build is stored
-     *
+     * where the status information of the build is stored.
      */
     public function getStatusSubDir();
 
     /**
-     * Logs a message of severity info
+     * Logs a message of severity info.
      *
      * @param string $message
      */
@@ -186,7 +176,7 @@ interface BuildInterface
     public function debug($message);
 
     /**
-     * Sets custom config value for the current build
+     * Sets custom config value for the current build.
      *
      * @param string $name
      * @param string $value
@@ -195,7 +185,6 @@ interface BuildInterface
 
     public function resetConfigDirective();
     /**
-     *
      * @param string $name
      */
     public function getConfigDirective($name);

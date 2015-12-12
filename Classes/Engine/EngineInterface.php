@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Engine to build projects
+ * Engine to build projects.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -24,7 +24,6 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
@@ -33,40 +32,41 @@ use Xinc\Core\Project\Project;
 
 interface EngineInterface extends LoggerInterface
 {
-	/**
-	 * Get the log which will be used in a build
-	 * @return Xinc::Core::Logger
-	 */
-    public function getLogger();
-    
     /**
-     * get the name of the engine
+     * Get the log which will be used in a build.
+     *
+     * @return Xinc::Core::Logger
+     */
+    public function getLogger();
+
+    /**
+     * get the name of the engine.
      *
      * @return string Name of the engine.
      */
     public function getName();
-    
-    /**
-     * interprets the project config
-     */
-    public function setupBuild(Project $proj); 
 
     /**
-     * process the build
+     * interprets the project config.
+     */
+    public function setupBuild(Project $proj);
+
+    /**
+     * process the build.
      *
      * @param BuildInterface $build
      */
     public function build(BuildInterface $build);
 
     /**
-     * returns the interval in seconds in which the engine checks for new builds
+     * returns the interval in seconds in which the engine checks for new builds.
      *
-     * @return integer
+     * @return int
      */
     public function getHeartBeat();
 
     /**
-     * Set the interval in which the engine checks for modified builds, necessary builds etc
+     * Set the interval in which the engine checks for modified builds, necessary builds etc.
      *
      * @param string $seconds
      *

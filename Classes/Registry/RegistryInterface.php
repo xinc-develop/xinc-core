@@ -19,15 +19,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Logger\LoggerInterface;
 
 /**
- * Xinc Registry Interface
+ * Xinc Registry Interface.
+ *
  * @ingroup interfaces
  * @ingroup registry
  */
@@ -37,28 +38,33 @@ interface RegistryInterface extends LoggerInterface
 
     /**
      * generates an array of all configured projects
-     * Unregisters an Object
+     * Unregisters an Object.
      *
      * @param string $name
+     *
      * @return object the unregistered Object
+     *
      * @throws Xinc\Core\Registry\RegistryException
      */
     public function unregister($name);
 
     /**
-     * Returns the registered object
+     * Returns the registered object.
      *
      * @param string $name
+     *
      * @return object
+     *
      * @throws Xinc\Core\Registry\Exception
      */
     public function get($name);
-    
+
     /**
-     * Is the name registered
+     * Is the name registered.
      * 
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function knows($name);
 }

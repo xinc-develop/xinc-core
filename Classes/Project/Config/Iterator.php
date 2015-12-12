@@ -1,6 +1,6 @@
 <?php
 /**
- * Iterator over an array of SimpleXMLElement objects defining Projects
+ * Iterator over an array of SimpleXMLElement objects defining Projects.
  *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -19,9 +19,9 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Project\Config;
 
 class Iterator extends \Xinc\Core\Iterator

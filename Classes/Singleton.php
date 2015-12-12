@@ -27,7 +27,7 @@
  */
 
 /** 
- * A Singleton Pattern Implementation 
+ * A Singleton Pattern Implementation.
  */
 namespace Xinc\Core;
 
@@ -57,7 +57,7 @@ class Singleton
     }
 
     /**
-     * Get an instance of the Singleton Object
+     * Get an instance of the Singleton Object.
      *
      * @return \Xinc\Core\Singleton
      */

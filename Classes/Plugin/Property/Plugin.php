@@ -20,27 +20,28 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Plugin\Property;
 
 use Xinc\Core\Plugin\Base;
 use Xinc\Core\Build\BuildInterface;
+
 #require_once 'Xinc/Plugin/Repos/Property/SetTask.php';
 #require_once 'Xinc/Plugin/Repos/Property/SubstituteTask.php';
 
 /**
  * Properties plugin, allows to set properties on a project
- * and substitutes values of the property in the form ${name}
+ * and substitutes values of the property in the form ${name}.
  */
 class Plugin extends Base
 {
     /**
-     * loads properties from a property file
+     * loads properties from a property file.
      * 
      * @param Xinc_Build_Interface $build
-     * @param string $fileName
+     * @param string               $fileName
      */
     public function parsePropertyFile(BuildInterface $build, $fileName)
     {
@@ -52,50 +53,49 @@ class Plugin extends Base
             while ($line = fgets($fh)) {
                 if (preg_match('/^[!#].*/', $line)) {
                     // comment
-                } else if (preg_match("/^.*?([\._-\w]+?)\s*[=:]+\s*(.*)$/", $line, $matches)) {
+                } elseif (preg_match("/^.*?([\._-\w]+?)\s*[=:]+\s*(.*)$/", $line, $matches)) {
                     // we have a key definition
                     $activeProperty = true;
                     $key = $matches[1];
                     $valuePart = $matches[2];
                     $arr[$key] = trim($valuePart);
-                    if ($arr[$key]{strlen($arr[$key])-1} == '\\') {
+                    if ($arr[$key]{strlen($arr[$key]) - 1} == '\\') {
                         $arr[$key] = substr($arr[$key], 0, -1);
                         $trimNextLine = true;
                     } else {
                         $trimNextLine = false;
                     }
-                } else if ($activeProperty) {
+                } elseif ($activeProperty) {
                     $trimmed = trim($line);
                     if (empty($trimmed)) {
                         $activeProperty = false;
                         continue;
-                    } else if ($trimNextLine) {
+                    } elseif ($trimNextLine) {
                         $line = $trimmed;
                     } else {
                         $line = rtrim($line);
                     }
-                    $arr[$key] .= "\n" . $line;
-                    if ($arr[$key]{strlen($arr[$key])-1} == '\\') {
+                    $arr[$key] .= "\n".$line;
+                    if ($arr[$key]{strlen($arr[$key]) - 1} == '\\') {
                         $arr[$key] = substr($arr[$key], 0, -1);
                         $trimNextLine = true;
                     } else {
                         $trimNextLine = false;
                     }
-                    
                 }
             }
             foreach ($arr as $key => $value) {
-                $build->debug('Setting property "${' . $key . '}" to "' . $value . '"');
+                $build->debug('Setting property "${'.$key.'}" to "'.$value.'"');
                 $build->getProperties()->set($key, stripcslashes($value));
             }
         } else {
-            $build->error('Cannot read from property file: ' . $fileName);
+            $build->error('Cannot read from property file: '.$fileName);
         }
     }
 
     public function getTaskDefinitions()
     {
         return array(new SetTask($this),
-                     new SubstituteTask($this));
+                     new SubstituteTask($this), );
     }
 }

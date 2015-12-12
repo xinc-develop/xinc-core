@@ -21,9 +21,11 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
+/** */
 namespace Xinc\Core;
 
 class Logger
@@ -50,7 +52,7 @@ class Logger
     private $logQueue;
 
     /**
-     * Maximum messages in queue
+     * Maximum messages in queue.
      */
     private $max = 50;
 
@@ -69,16 +71,15 @@ class Logger
     const INFO = self::LOG_LEVEL_INFO;
     const WARN = self::LOG_LEVEL_WARN;
     const ERROR = self::LOG_LEVEL_ERROR;
-    
-    /**
-     * Log levels
-     */
-    static $logLevelError = array(self::LOG_LEVEL_ERROR, 'error');
-    static $logLevelWarn = array(self::LOG_LEVEL_WARN, 'warn');
-    static $logLevelInfo = array(self::LOG_LEVEL_INFO, 'info');
-    static $logLevelDebug = array(self::LOG_LEVEL_DEBUG, 'debug');
-    static $logLevelVerbose = array(self::LOG_LEVEL_VERBOSE, 'verbose');
 
+    /**
+     * Log levels.
+     */
+    public static $logLevelError = array(self::LOG_LEVEL_ERROR, 'error');
+    public static $logLevelWarn = array(self::LOG_LEVEL_WARN, 'warn');
+    public static $logLevelInfo = array(self::LOG_LEVEL_INFO, 'info');
+    public static $logLevelDebug = array(self::LOG_LEVEL_DEBUG, 'debug');
+    public static $logLevelVerbose = array(self::LOG_LEVEL_VERBOSE, 'verbose');
 
     private $logLevelSet = false;
 
@@ -90,15 +91,10 @@ class Logger
     public function setLogLevel($level)
     {
         $this->logLevelSet = true;
-        if($level != $this->getLogLevel()) {
+        if ($level != $this->getLogLevel()) {
             $this->logLevel = $level;
             $this->info("Setting loglevel to $level");
         }
-    }
-
-    public function logLevelSet()
-    {
-        return $this->logLevelSet;
     }
 
     public function getLogLevel()
@@ -109,9 +105,10 @@ class Logger
     /**
      * Add a new log message to the logger queue.
      *
-     * @param string $priority
-     * @param string $msg
+     * @param string   $priority
+     * @param string   $msg
      * @param resource $fileHandle to write to instead of logfile
+     *
      * @todo parse log level to display from a config
      */
     private function log($priority, $msg, $fileHandle = null)
@@ -124,19 +121,19 @@ class Logger
 
         $this->logQueue[] = new Logger\Message($priority[1], $logTime, $msg);
 
-        /** ensure the output messages line up vertically */
-        $prioritystr = '[' . $priority[1] . ']';
-        $timestr = '[' . date('Y-m-d H:i:s - T', $logTime) . ']';
+        /* ensure the output messages line up vertically */
+        $prioritystr = '['.$priority[1].']';
+        $timestr = '['.date('Y-m-d H:i:s - T', $logTime).']';
         while (strlen($prioritystr) < 7) {
             $prioritystr .= ' ';
         }
-        $message = $prioritystr . '  ' . $timestr . ' ' . $msg . "\n";
-        $message = getmypid() . ': ' . $message;
+        $message = $prioritystr.'  '.$timestr.' '.$msg."\n";
+        $message = getmypid().': '.$message;
 
         if (defined('STDERR')) {
-            fputs(STDERR, getmypid() . ': ' . $prioritystr . '  ' . $msg . "\n");
+            fputs(STDERR, getmypid().': '.$prioritystr.'  '.$msg."\n");
         } else {
-            echo '<!-- LogMessage: ' . $message . " -->\n";
+            echo '<!-- LogMessage: '.$message." -->\n";
         }
 
         if ($this->file != null) {
@@ -210,8 +207,7 @@ class Logger
     }
 
     /**
-     * Empty the log queue
-     *
+     * Empty the log queue.
      */
     public function emptyLogQueue()
     {
@@ -220,20 +216,20 @@ class Logger
 
     /**
      * Flush the log queue to the log file.
-     *
      */
     public function flush()
     {
         if (null == $this->buildLogFile) {
             $this->resetLogQueue();
+
             return;
         }
         $messageElements = array();
-        for ($i = count($this->logQueue)-1; $i >= 0; $i--) {
+        for ($i = count($this->logQueue) - 1; $i >= 0; --$i) {
             $message = $this->logQueue[$i];
-            $messageString  = '<message priority="' . $message->priority . '" ';
-            $messageString .= 'timestamp="' . $message->timestamp . '" ';
-            $messageString .= 'time="' . date('Y-m-d H:i:s - T', $message->timestamp) . '"><![CDATA[';
+            $messageString = '<message priority="'.$message->priority.'" ';
+            $messageString .= 'timestamp="'.$message->timestamp.'" ';
+            $messageString .= 'time="'.date('Y-m-d H:i:s - T', $message->timestamp).'"><![CDATA[';
             $messageString .= base64_encode($message->message);
             $messageString .= ']]></message>';
 
@@ -248,7 +244,7 @@ class Logger
         }
         if (file_exists($this->buildLogFile)) {
             // copying to temporary file for later inclusion via fgets, less memory consuming
-            copy($this->buildLogFile, $this->buildLogFile . '.temp');
+            copy($this->buildLogFile, $this->buildLogFile.'.temp');
         }
         $fh = fopen($this->buildLogFile, 'w+');
         if (is_resource($fh)) {
@@ -258,19 +254,19 @@ class Logger
             fputs($fh, "\n");
             fputs($fh, implode("\n", $messageElements));
             fputs($fh, "\n");
-            if (file_exists($this->buildLogFile . '.temp')) {
-                $fht = fopen($this->buildLogFile . '.temp', 'r');
+            if (file_exists($this->buildLogFile.'.temp')) {
+                $fht = fopen($this->buildLogFile.'.temp', 'r');
                 if (is_resource($fht)) {
                     $lineCounter = 0;
                     while ($line = fgets($fht)) {
                         // skip first two lines (xml decl and build opening element
-                        if ($lineCounter>2) {
+                        if ($lineCounter > 2) {
                             fputs($fh, $line);
                         }
-                        $lineCounter++;
+                        ++$lineCounter;
                     }
                     fclose($fht);
-                    unlink($this->buildLogFile . '.temp');
+                    unlink($this->buildLogFile.'.temp');
                 } else {
                     self::error('Cannot include previous log messages');
                 }
@@ -281,7 +277,7 @@ class Logger
             fclose($fh);
             //file_put_contents($this->buildLogFile, $buildXml);
         } else {
-            self::error('Cannot open: ' . $this->buildLogFile . ' for writing.');
+            self::error('Cannot open: '.$this->buildLogFile.' for writing.');
         }
         $this->resetLogQueue();
     }
@@ -303,6 +299,7 @@ class Logger
 
     /**
      * @param string $logFile
+     *
      * @throws Xinc\Core\Logger\Exception\NonWriteable
      */
     public function setXincLogFile($logFile)
@@ -310,7 +307,7 @@ class Logger
         $parentDir = dirname($logFile);
 
         if (!is_writeable($logFile) && !is_writeable($parentDir)) {
-            $this->error('Cannot open "' . $logFile . '" for writing', STDERR);
+            $this->error('Cannot open "'.$logFile.'" for writing', STDERR);
             throw new Logger\Exception\NonWriteableException($logFile);
         }
         $this->file = $logFile;
