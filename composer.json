@@ -12,9 +12,9 @@
         { "name": "Sebastian Knapp", "email": "news@young-workers.de" }
     ],
     "require": {
-        "xinc/packager": "3.0.0",
         "php": ">=5.4.4",
-	"ulrichsg/getopt-php": "~2.3"
+	"xinc/getopt": "~3.0.0",
+        "xinc/packager": "~3.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",

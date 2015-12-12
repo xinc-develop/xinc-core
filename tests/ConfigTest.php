@@ -37,6 +37,7 @@ class TestConfig extends Xinc\Core\Test\BaseTest
 		$this->assertEquals($fn,$conf->getOption('configfile'));
 		$this->assertEquals($fn,$conf->get('config-file'));
 		$this->assertEquals($fn,$conf->get('configfile'));
+		$this->assertTrue(is_array($conf->getOptions()));
     }
     
     public function testGetException()

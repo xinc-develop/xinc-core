@@ -26,8 +26,8 @@
  */
 namespace Xinc\Core\Config;
 
-use Ulrichsg\Getopt\Getopt;
-use Ulrichsg\Getopt\Option;
+use Xinc\Getopt\Getopt;
+use Xinc\Getopt\Option;
 use Xinc\Core\Registry\XincRegistryInterface;
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
@@ -44,7 +44,6 @@ class Xml extends Loader implements ConfigLoaderInterface
         $options['configfile']->setDescription('the config file to use');
         $options['configdir'] = new Option('d', 'config-dir', Getopt::REQUIRED_ARGUMENT);
         $options['configdir']->setDescription('the directory with main configuration(s)');
-
         return $options;
     }
     /**

@@ -34,7 +34,7 @@ interface ConfigLoaderInterface extends LoggerInterface
     /**
    * Get Commandline Options.
    *
-   * @return array with Ulrichsg\Option
+   * @return array with Xinc::Getopt::Option
    */
   public function getCommandlineOptions();
 
