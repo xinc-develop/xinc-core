@@ -21,62 +21,70 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
-
 namespace Xinc\Core\Config;
 
 use Xinc\Core\Properties;
 
 /**
- * Xinc Configuration Object
+ * Xinc Configuration Object.
  */
 class Config implements ConfigInterface
 {
     private $options;
     private $settings;
-    
+
     public function __construct()
     {
-		$this->options = new Properties();
-		$this->settings = new Properties();
-	}
-	
-	public function get($key)
-	{
-		if($this->options->has($key)) {
-			return $this->options[$key];
-		}
-		return $this->settings[$key];
-	}
+        $this->options = new Properties();
+        $this->settings = new Properties();
+    }
+
+    public function get($key)
+    {
+        if ($this->options->has($key)) {
+            return $this->options[$key];
+        }
+
+        return $this->settings[$key];
+    }
 
     public function getOption($key)
     {
-		return $this->options[$key];
-	}
-		
-	public function getOptions()
-	{
-		return $this->options;
-	}
-	
+        return $this->options[$key];
+    }
+
+    /**
+     * @return array with all options
+     */
+    public function getOptions()
+    {
+        return $this->options->getAllProperties();
+    }
+
     public function setOptions($opts)
     {
-		$this->options->set($opts);
-	}
-	
-	public function setOption($key,$value)
-	{
-		$this->options->set($key,$value);
-	}
-	
+        $this->options->set($opts);
+    }
+
+    public function setOption($key, $value)
+    {
+        $key2 = str_replace(array('-'), '', $key, $cnt);
+        if ($cnt > 0) {
+            $this->options->set($key2, $value);
+        }
+        $this->options->set($key, $value);
+    }
+
     public function setSettings($opts)
     {
-		$this->settings->set($opts);
-	}
-	
-	public function setSetting($key,$value)
-	{
-		$this->settings->set($key,$value);
-	}
+        $this->settings->set($opts);
+    }
+
+    public function setSetting($key, $value)
+    {
+        $this->settings->set($key, $value);
+    }
 }
