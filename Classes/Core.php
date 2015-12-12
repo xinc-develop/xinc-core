@@ -2,8 +2,24 @@
 /**
  * Xinc - Continuous Integration.
  *
- * @author     Sebastian Knapp <news@young-workers.de>
- * @copyright  2015 Xinc Development Team, https://github.com/xinc-develop/
+ * This namespace contains core functionality used by every part of
+ * Xinc countinuous integration service.
+ *
+ * @author    Alexander Opitz <opitz.alexander@gmail.com>
+ * @author    Andrei Zmievski <andrei@php.net>
+ * @author    Arno Schneider
+ * @author    David Ellis
+ * @author    Gavin Foster
+ * @author    Jamie Talbot
+ * @author    Olivier Hoareau
+ * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author    Sebastian Knapp <news@young-workers.de>
+ * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2007 David Ellis, One Degree Square
+ * @copyright 2007 Jamie Talbot, England
+ * @copyright 2008 Arno Schneider, Barcelona
+ * @copyright 2011-2014 Alexander Opitz, Leipzig
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -11,19 +27,28 @@
  *            published by the Free Software Foundation; either version 2.1 of
  *            the License, or (at your option) any later version.
  *
- *            Xinc is distributed in the hope that it will be useful,
+ * @license   Xinc is distributed in the hope that it will be useful,
  *            but WITHOUT ANY WARRANTY; without even the implied warranty of
  *            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *            GNU Lesser General Public License for more details.
  *
- *            You should have received a copy of the GNU Lesser General Public
+ * @license   You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core;
 
+/**
+ * @defgroup config Classes with a reference to config object
+ */
+ 
+/**
+ * @defgroup exceptions Exceptions
+ */
+ 
 /**
  * @defgroup interfaces Interfaces
  */
