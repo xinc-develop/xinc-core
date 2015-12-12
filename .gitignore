@@ -4,6 +4,7 @@ vendor/
 composer
 composer.lock
 phpunit
+php-cs-fixer
+docs/
+coverage/
 
-docs
-coverage
