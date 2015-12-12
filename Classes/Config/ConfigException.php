@@ -22,7 +22,7 @@
  *
  * @link       https://github.com/xinc-develop/xinc-core/
  */
-namespace Xinc\Core\Exception;
+namespace Xinc\Core\Config;
 
 /**
  * Exception for incomplete or wrong config settings. 

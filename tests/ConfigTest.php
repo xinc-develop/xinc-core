@@ -21,6 +21,7 @@
  */
  
 use Xinc\Core\Config\Config;
+use Xinc\Core\Config\ConfigException;
 
 /**
  * @test Test Class for Xinc::Core::Iterator and subclasses
@@ -37,4 +38,16 @@ class TestConfig extends Xinc\Core\Test\BaseTest
 		$this->assertEquals($fn,$conf->get('config-file'));
 		$this->assertEquals($fn,$conf->get('configfile'));
     }
+    
+    public function testGetException()
+    {
+		$conf = new Config();
+		try {
+			$conf->getOption('not-set');
+			$this->assertTrue(False,'unknown option should not be ignored');
+		}
+		catch(ConfigException $e) {
+			$this->assertTrue(true,'Expected exception thrown');
+		}
+	}
 }
