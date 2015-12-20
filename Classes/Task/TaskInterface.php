@@ -26,8 +26,9 @@ namespace Xinc\Core\Task;
 
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Logger\LoggerInterface;
 
-interface TaskInterface
+interface TaskInterface extends LoggerInterface
 {
     /**
      * Constructor.
@@ -35,9 +36,14 @@ interface TaskInterface
     public function __construct(PluginInterface $plugin);
 
     /**
-     * Initialize the task.
+     * @return Xinc::Core::Plugin::PluginInterface
      */
-    public function init(BuildInterface $build = null);
+    public function getPlugin();
+
+    /**
+     * Create a new task for a concrete build.
+     */
+    public function createTask(BuildInterface $build = null);
 
     /**
      * Validates if a task can run by checking configs, directries and so on.
@@ -71,7 +77,7 @@ interface TaskInterface
 
     /**
      * Gets registered subtask for this task.
-     *
+     * @todo rename to getSubTasksIterator
      * @return Xinc_Build_Tasks_Iterator
      */
     public function getTasks();

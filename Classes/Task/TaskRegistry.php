@@ -46,7 +46,15 @@ class TaskRegistry extends RegistryAbstract
 
     public function registerTasks($tasks)
     {
+		foreach($tasks as $task) {
+			$this->registerTask($task);
+		}
     }
+    
+    public function registerTask(TaskInterface $task)
+    {
+		$this->register($task->getName(),$task);
+	}
 
     /**
      * @param string $name
@@ -57,7 +65,6 @@ class TaskRegistry extends RegistryAbstract
     public function register($name, $task)
     {
         parent::register($name, $task);
-
         $this->slot[$task->getPluginSlot()][$name] = $task;
     }
 
@@ -81,16 +88,27 @@ class TaskRegistry extends RegistryAbstract
      * Returns all tasks that are registered
      * for a specific slot.
      *
-     * @param int $slot @see Xinc_Plugin_Slot
+     * @param int $slot @see Xinc::Core::Plugin::Slot
      *
-     * @return Xinc_Iterator
+     * @return Xinc::Core::Task::Iterator
      */
     public function getTasksForSlot($slot)
     {
         if (!isset($this->slot[$slot])) {
-            return new \Xinc\Core\Iterator\Task();
+            return new Iterator();
         } else {
-            return new \Xinc\Core\Iterator\Task($this->slot[$slot]);
+            return new Iterator($this->slot[$slot]);
         }
+    }    
+    
+    public function getTask($taskname, $parentElement = null)
+    {
+        if ($parentElement !== null) {
+            $taskname2  = $parentElement . '/' . $taskname;
+            if($this->knows($taskname2)) {
+			    return $this->get($taskname2);	
+            }
+        }
+        return $this->get($taskname);
     }
 }

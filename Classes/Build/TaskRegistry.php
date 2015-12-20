@@ -2,8 +2,8 @@
 /**
  * Xinc - Continuous Integration.
  *
- * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @author    Arno Schneider <username@example.org>
+ * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -22,17 +22,14 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-namespace Xinc\Core\Traits;
+namespace Xinc\Core\Build;
+
+use Xinc\Core\Task\TaskRegistry as Base;
 
 /**
- * A trait for objects which contain the config.
+ * A build contains a kind of this registry to store the concrete task objects.
  */
-trait Config
+class TaskRegistry extends Base
 {
-    protected $config;
-
-    public function setConfig($conf)
-    {
-        $this->config = $conf;
-    }
+	
 }

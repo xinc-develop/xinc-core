@@ -49,17 +49,12 @@ class Xml extends Loader implements ConfigLoaderInterface
 
     public function getConfigurationSources(ConfigInterface $conf)
     {
-        return array();
-    }
-
-    public function load(ConfigInterface $conf, XincRegistryInterface $reg)
-    {
         $file = $conf->getOption('project-file');
         if (isset($file)) {
             if (!strstr($file, '/')) {
                 $file = $conf->getOption('project-dir').$file;
             }
-            $this->loadFile($file, $conf, $reg);
+            return array($file);
         }
         // load every xml file in project dir
         else {
@@ -71,9 +66,15 @@ class Xml extends Loader implements ConfigLoaderInterface
             if (empty($list)) {
                 throw new IOException($dir, null, null, IOException::FAILURE_NOT_FOUND);
             }
-            foreach ($list as $file) {
-                $this->loadFile($file, $conf, $reg);
-            }
+            return $list;
+        }
+    }
+
+    public function load(ConfigInterface $conf, XincRegistryInterface $reg)
+    {
+        $sources = $this->getConfigurationSources($conf);
+        foreach($sources as $file) {
+            $this->loadFile($file,$conf,$reg);
         }
     }
 
@@ -83,7 +84,7 @@ class Xml extends Loader implements ConfigLoaderInterface
             throw new IOException($file, null, null, IOException::FAILURE_NOT_FOUND);
         }
         libxml_use_internal_errors(true);
-        $this->log->verbose("Loading configuration file $file");
+        $this->log->verbose("Loading project configuration file $file");
         $xml = simplexml_load_file($file);
 
         if (!$xml) {

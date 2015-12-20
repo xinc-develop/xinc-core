@@ -24,15 +24,23 @@
  */
 namespace Xinc\Core\Traits;
 
-/**
- * A trait for objects which contain the config.
- */
-trait Config
-{
-    protected $config;
+use Xinc\Core\Task\TaskInterface;
+use Xinc\Core\Task\TaskRegistry as TaskReg;
 
-    public function setConfig($conf)
+/**
+ * A trait for objects which use the task registry.
+ */
+trait TaskRegistry
+{
+    protected $taskRegistry;
+
+    public function setTaskRegistry(TaskReg $reg)
     {
-        $this->config = $conf;
+        $this->taskRegistry = $reg;
     }
+    
+    public function registerTask(TaskInterface $task)
+    {
+		$this->taskRegistry->registerTask($task);
+	}
 }

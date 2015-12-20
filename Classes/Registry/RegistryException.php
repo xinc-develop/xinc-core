@@ -29,7 +29,7 @@ use Xinc\Core\Exception;
 /**
  * Exception thrown when a detects an invalid state.
  *
- * @ingroup excptions
+ * @ingroup exceptions
  */
 class RegistryException extends Exception
 {

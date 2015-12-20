@@ -28,9 +28,12 @@ namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Logger\LoggerInterface;
+use Xinc\Core\Plugin\PluginRegistryInterface;
+use Xinc\Core\Task\TaskRegistryInterface;
 use Xinc\Core\Project\Project;
 
-interface EngineInterface extends LoggerInterface
+interface EngineInterface extends LoggerInterface,
+  PluginRegistryInterface, TaskRegistryInterface
 {
     /**
      * Get the log which will be used in a build.

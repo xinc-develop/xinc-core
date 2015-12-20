@@ -25,11 +25,13 @@
  */
 namespace Xinc\Core\Build;
 
+use Xinc\Core\Build\TaskRegistry as BuildTaskRegistry;
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
 use Xinc\Core\Properties as BuildProperties;
 use Xinc\Core\Traits\Logger;
+use Xinc\Core\Traits\TaskRegistry;
 
 /**
  * This class represents the build that is going to be run with Xinc.
@@ -39,6 +41,7 @@ use Xinc\Core\Traits\Logger;
 class Build implements BuildInterface
 {
     use Logger;
+    use TaskRegistry;
     /**
      * Are we queued?
      *
@@ -52,7 +55,7 @@ class Build implements BuildInterface
     private $engine;
 
     /**
-     * @var Xinc::Core::Models::Project
+     * @var Xinc::Core::Project::Project
      */
     private $project;
 
@@ -108,13 +111,6 @@ class Build implements BuildInterface
     private $label;
 
     /**
-     * Contains tasks that need to be executed for each Process Step.
-     *
-     * @var Xinc_Build_Tasks_Registry
-     */
-    private $taskRegistry;
-
-    /**
      * Build scheduler.
      *
      * @var Xinc_Build_Scheduler_Interface
@@ -159,6 +155,10 @@ class Build implements BuildInterface
         $this->statistics = new Statistics();
         $this->setLabeler(new Labeler\DefaultLabeler());
         $this->setScheduler(new Scheduler\DefaultScheduler());
+        
+        $taskRegistry = new BuildTaskRegistry;
+        $taskRegistry->setLogger($engine->getLogger());
+        $this->setTaskRegistry($taskRegistry);
     }
 
     public function setLabeler(Labeler\LabelerInterface $labeler)
@@ -479,14 +479,6 @@ class Build implements BuildInterface
     }
 
     /**
-     * @param Xinc_Build_Tasks_Registry $taskRegistry
-     */
-    public function setTaskRegistry(Xinc_Build_Tasks_Registry $taskRegistry)
-    {
-        $this->taskRegistry = $taskRegistry;
-    }
-
-    /**
      * Sets a build scheduler,
      * which calculates the next build time based
      * on the configuration.
@@ -507,6 +499,7 @@ class Build implements BuildInterface
     }
 
     /**
+     * @deprecated - should be deprecated
      * @return Xinc_Build_Tasks_Registry
      */
     public function getTaskRegistry()

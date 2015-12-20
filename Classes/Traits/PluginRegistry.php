@@ -24,15 +24,17 @@
  */
 namespace Xinc\Core\Traits;
 
-/**
- * A trait for objects which contain the config.
- */
-trait Config
-{
-    protected $config;
+use Xinc\Core\Plugin\PluginRegistry as PluginReg;
 
-    public function setConfig($conf)
+/**
+ * A trait for objects which use the plugin registry.
+ */
+trait PluginRegistry
+{
+    protected $pluginRegistry;
+
+    public function setPluginRegistry(PluginReg $reg)
     {
-        $this->config = $conf;
+        $this->pluginRegistry = $reg;
     }
 }

@@ -19,20 +19,25 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * 
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-namespace Xinc\Core\Traits;
+ 
+/**
+ * 
+ */
+namespace Xinc\Core\Plugin;
+
+use Xinc\Core\Plugin\PluginRegistry;
 
 /**
- * A trait for objects which contain the config.
+ * Interface for objects which are using the plugin registry.
+ *
+ * @see Xinc::Core::Traits::PluginRegistry;
+ * @ingroup registry
+ * @ingroup interfaces
  */
-trait Config
+interface PluginRegistryInterface
 {
-    protected $config;
-
-    public function setConfig($conf)
-    {
-        $this->config = $conf;
-    }
+    public function setPluginRegistry(PluginRegistry $reg);
 }

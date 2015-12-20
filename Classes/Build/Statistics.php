@@ -2,7 +2,6 @@
 /**
  * Xinc - Continuous Integration.
  *
- *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -21,7 +20,7 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Build;
 

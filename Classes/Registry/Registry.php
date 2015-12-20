@@ -69,6 +69,8 @@ class Registry implements XincRegistryInterface
         $this->taskRegistry = new TaskRegistry();
         $this->widgetRegistry = new WidgetRegistry();
         #$this->apiRegistry = new ApiRegistry();
+        
+        $this->pluginRegistry->setTaskRegistry($this->taskRegistry);
     }
 
     public function setLogger($log)
@@ -111,13 +113,15 @@ class Registry implements XincRegistryInterface
             throw new ClassLoaderException($class);
         }
         $engine = new $class();
-        $engine->setLogger($this->log);
-        $engine->setConfig($this->config);
-
         if (!($engine instanceof EngineInterface)) {
             throw new TypeMismatch(get_class($engine),
                 '\Xinc\Core\Engine\EngineInterface');
-        }
+        }        
+        $engine->setLogger($this->log);
+        $engine->setConfig($this->config);
+        $engine->setTaskRegistry($this->taskRegistry);
+        $engine->setPluginRegistry($this->pluginRegistry);
+
         $this->engineRegistry->register($engine->getName(), $engine);
         if ($default) {
             $this->engineRegistry->setDefaultEngine($engine->getName());

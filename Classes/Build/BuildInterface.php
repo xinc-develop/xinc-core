@@ -20,19 +20,21 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
+use Xinc\Core\Task\TaskInterface;
+use Xinc\Core\Task\TaskRegistryInterface;
 
 /**
  * Build interface.
  *
  * Used by the engines to process a build
  */
-interface BuildInterface
+interface BuildInterface extends TaskRegistryInterface
 {
     const INITIALIZED = -2;
     const FAILED = 0;
@@ -132,16 +134,6 @@ interface BuildInterface
     public function getLabel();
 
     /**
-     * @param Xinc_Build_Tasks_Registry $taskRegistry
-     */
-    public function setTaskRegistry(Xinc_Build_Tasks_Registry $taskRegistry);
-
-    /**
-     * @return Xinc_Build_Tasks_Registry
-     */
-    public function getTaskRegistry();
-
-    /**
      * processes the tasks that are registered for the slot.
      *
      * @param mixed $slot
@@ -152,6 +144,11 @@ interface BuildInterface
      * Build.
      */
     public function build();
+
+    /**
+     * Store a task object 
+     */
+    public function registerTask(TaskInterface $task);
 
     /**
      * Updates properties on tasks, after

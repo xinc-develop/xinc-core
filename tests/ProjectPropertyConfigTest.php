@@ -45,6 +45,12 @@ class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
 	    $project = $reg->getProject("TestProjectProperty");
 	    $this->assertInstanceOf('Xinc\Core\Project\Project',$project);
 	    $build = $this->aBuildWithConfig($conf);
-	    $this->assertInstanceOf('Xinc\Core\Build\Build',$build);
+  	    $project = $build->getProject();
+        $engine = $build->getEngine();
+        $build2 = $engine->setupBuild($project);
+	    $this->assertInstanceOf('Xinc\Core\Build\Build',$build2);
+	    
+        $this->assertEquals('./',$build2->getProperty('projectdir')); 
+        $this->assertEquals('./',$build2->getProperty('project.name')); 
 	 }
 }

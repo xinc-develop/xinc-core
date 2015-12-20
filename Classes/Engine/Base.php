@@ -28,8 +28,12 @@ namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Project\Project;
+use Xinc\Core\Project\Status;
+use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Config;
 use Xinc\Core\Traits\Logger;
+use Xinc\Core\Traits\PluginRegistry;
+use Xinc\Core\Traits\TaskRegistry;
 
 /**
  * Base class for engines with common functionality.
@@ -41,11 +45,18 @@ abstract class Base implements EngineInterface
 {
     use Config;
     use Logger;
+    use PluginRegistry;
+    use TaskRegistry;
 
     public function getLogger()
     {
         return $this->log;
     }
+    
+    protected final function getTasksForSlot($slot)
+    {
+		return $this->pluginRegistry->getTasksForSlot($slot);
+	}
 
     protected function setupBuildProperties(BuildInterface $build)
     {
@@ -60,6 +71,44 @@ abstract class Base implements EngineInterface
         $options = array('workingdir', 'projectdir', 'statusdir');
         foreach ($options as $option) {
             $build->setProperty($option, $this->config->getOption($option));
+        }
+    }
+    
+    protected function parseProjectConfig(BuildInterface $build, $xml)
+    {
+        $filtertasks = $this->getTasksForSlot(Slot::PROJECT_SET_VALUES);
+
+        print_r($xml);
+        foreach ($xml->children() as $taskName => $task) {            
+            try{
+                $taskObject = $this->taskRegistry->getTask($taskName, (string)$xml);
+                $taskObject = $taskObject->createTask($build);
+                $taskObject->setXml($task);
+            } 
+            catch(Exception $e){
+                $this->log->error('Task "'.$taskName.'" not found.');
+                $build->getProject()->setStatus(Status::MISCONFIGURED);
+                return;
+            }
+            foreach ($task->attributes() as $name => $value) {
+                $setter = 'set'.$name;
+                foreach($filtertasks as $filter) {
+					$value = $filter->set($build,$value);
+				}
+                $taskObject->$setter((string)$value, $build);
+            }
+
+                
+            #$this->_parseTasks($build, $task, $taskObject);
+          
+            $build->registerTask($taskObject);
+
+
+            if ( !$taskObject->validate() ) {
+                // @todo log
+                $build->getProject()->setStatus(Status::MISCONFIGURED);
+                return;
+            }
         }
     }
 }

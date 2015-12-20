@@ -19,20 +19,25 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
+ * 
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-namespace Xinc\Core\Traits;
+ 
+/**
+ * 
+ */
+namespace Xinc\Core\Task;
 
 /**
- * A trait for objects which contain the config.
+ * Interface for objects which are using the task registry.
+ *
+ * @see Xinc::Core::Traits::TaskRegistry;
+ * @ingroup registry
+ * @ingroup interfaces
  */
-trait Config
+interface TaskRegistryInterface
 {
-    protected $config;
-
-    public function setConfig($conf)
-    {
-        $this->config = $conf;
-    }
+    public function setTaskRegistry(TaskRegistry $reg);
+    
+    public function registerTask(TaskInterface $task);
 }

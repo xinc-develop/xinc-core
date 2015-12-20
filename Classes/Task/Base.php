@@ -23,17 +23,23 @@
  */
 namespace Xinc\Core\Task;
 
+use SimpleXmlElement;
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Traits\Logger;
 
+/**
+ * @ingroup logger
+ */
 abstract class Base implements TaskInterface
 {
+	use Logger;
     /**
      * @var array Subtasks for this task
      */
     protected $arSubtasks = array();
 
-    protected $_plugin;
+    protected $plugin;
     protected $_xml;
 
     /**
@@ -44,12 +50,28 @@ abstract class Base implements TaskInterface
      */
     public function __construct(PluginInterface $plugin)
     {
-        $this->_plugin = $plugin;
+        $this->plugin = $plugin;
     }
-
-    public function init(BuildInterface $build = null)
+    
+    /**
+     * @return Xinc::Core::Plugin::PluginInterface
+     */
+    public function getPlugin()
     {
+	    return $this->plugin;	
+	}
+
+    public function createTask(BuildInterface $build = null)
+    {
+		$new = new static($this->getPlugin());
+		$new->init($build);
+		return $new;
     }
+    
+    protected function init(BuildInterface $build = null)
+    {
+		//
+	}
 
     /**
      * Support for subtasks, empty by default.

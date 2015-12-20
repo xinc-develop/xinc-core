@@ -20,15 +20,18 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Plugin;
 
 use Xinc\Core\Registry\RegistryAbstract;
 use Xinc\Core\Registry\RegistryInterface;
+use Xinc\Core\Task\TaskRegistryInterface;
+use Xinc\Core\Task\Iterator;
 use Xinc\Core\Task\SetterInterface;
 use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Logger;
+use Xinc\Core\Traits\TaskRegistry;
 
 /**
  * Registry holding the plugins.
@@ -36,9 +39,11 @@ use Xinc\Core\Traits\Logger;
  * @ingroup registry
  * @ingroup logger
  */
-class PluginRegistry extends RegistryAbstract implements RegistryInterface
+class PluginRegistry extends RegistryAbstract 
+  implements RegistryInterface, TaskRegistryInterface
 {
     use Logger;
+    use TaskRegistry;
 
     protected $typeOf = 'Xinc\Core\Plugin\PluginInterface';
 
@@ -50,7 +55,15 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
      *
      * @var array
      */
-    private $_slotReference = array();
+    private $slotReference = array();
+
+    /**
+     * Register task for the slot
+     */
+    private function registerTaskForSlot($slot,$task)
+    {
+        $this->slotReference[$slot][] = $task;
+    }
 
     public function registerPlugin(PluginInterface $plugin)
     {
@@ -88,16 +101,10 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
                 default:
                     break;
             }
+            $this->registerTaskForSlot($taskSlot,$task);
 
-            /*
-             * Register task for the slot
-             */
-            if (!isset($this->_slotReference[$taskSlot])) {
-                $this->_slotReference[$taskSlot] = array();
-            }
-            $this->_slotReference[$taskSlot][] = &$task;
-
-            $parentTasks = array(); //$task->getAllowedParentElements(); // should return the tasks! not the string
+            $parentTasks = array(); 
+            //$task->getAllowedParentElements(); // should return the tasks! not the string
             if (count($parentTasks) > 0) {
                 $this->_registerTaskDependencies($plugin, $task, $parentTasks);
             } else {
@@ -202,14 +209,14 @@ class PluginRegistry extends RegistryAbstract implements RegistryInterface
      *
      * @param int $slot @see Xinc_Plugin_Slot
      *
-     * @return Xinc_Iterator
+     * @return Xinc::Core::Task::Iterator
      */
     public function getTasksForSlot($slot)
     {
-        if (!isset($this->_slotReference[$slot])) {
-            return new Xinc_Iterator();
+        if (!isset($this->slotReference[$slot])) {
+            return new Iterator();
         } else {
-            return new Xinc_Iterator($this->_slotReference[$slot]);
+            return new Iterator($this->slotReference[$slot]);
         }
     }
 }

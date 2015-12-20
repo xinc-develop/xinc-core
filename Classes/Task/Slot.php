@@ -1,8 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Definition of Plugin Slots.
- *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -22,10 +20,13 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Task;
 
+/**
+ * Definition of Plugin Slots.
+ */
 class Slot
 {
     /**
@@ -72,4 +73,20 @@ class Slot
     const POST_PROCESS = 30;
 
     const SUBTASK = 40;
+    
+    public static function getSlots()
+    {
+	    return array(
+	        GLOBAL_INIT,
+	        GLOBAL_LISTENER,
+	        PROJECT_LISTENER,
+	        PROJECT_INIT,
+	        PROJECT_SET_VALUES,
+	        INIT_PROCESS,
+	        PRE_PROCESS,
+	        PROCESS,
+	        POST_PROCESS,
+	        SUBTASK    
+	    );	
+	}
 }
