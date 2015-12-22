@@ -2,7 +2,10 @@
 /**
  * Xinc - Continuous Integration.
  *
+ * PHP version 5
  *
+ * @category  Development
+ * @package   Xinc.Plugin.Repos.Configuration.Setting
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -20,20 +23,36 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @link      http://xincplus.sourceforge.net
  */
+
 namespace Xinc\Core\Plugin\Configuration;
 
-use Xinc\Core\Plugin\Base;
+use Xinc\Core\Build\BuildInterface;
 
-/**
- * 
- */
-class Plugin extends Base
+class SettingTask extends AbstractTask
 {
-    public function getTaskDefinitions()
+    private $_name;
+
+    private $_value;
+
+    public function setName($value)
     {
-        return array(new Task($this), new SettingTask($this) );
+        $this->_name = $value;
+    }
+
+    public function setValue($value)
+    {
+        $this->_value = $value;
+    }
+
+    public function getName()
+    {
+        return 'setting';
+    }
+
+    public function configure(BuildInterface $build)
+    {
+        $build->setConfigDirective($this->_name, $this->_value);
     }
 }

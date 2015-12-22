@@ -2,7 +2,10 @@
 /**
  * Xinc - Continuous Integration.
  *
+ * PHP version 5
  *
+ * @category  Development
+ * @package   Xinc.Plugin.Repos.Configuration
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -20,20 +23,33 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @link      http://xincplus.sourceforge.net
  */
+
 namespace Xinc\Core\Plugin\Configuration;
 
-use Xinc\Core\Plugin\Base;
+use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Task\Slot;
+use Xinc\Core\Task\Base;
 
-/**
- * 
- */
-class Plugin extends Base
+abstract class AbstractTask extends Base
 {
-    public function getTaskDefinitions()
+    public abstract function configure(BuildInterface $build);
+
+    public function getPluginSlot()
     {
-        return array(new Task($this), new SettingTask($this) );
+        return Slot::PROJECT_INIT;
+    }
+
+    public function validate()
+    {
+        // do all necessary checks here to validate that the plugin
+        // can work properly
+        return true;
+    }
+
+    public function process(BuildInterface $build)
+    {
+        $this->configure($build);
     }
 }

@@ -27,21 +27,14 @@ namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Plugin\Base;
 
-#require_once 'Xinc/Plugin/Repos/Schedule/Task.php';
-#require_once 'Xinc/Plugin/Repos/Cron/Task.php';
-
 class Plugin extends Base
 {
     /**
-     * Returns the defined tasks of the plugin.
-     *
-     * @return Xinc_Plugin_Task[]
+     * Returns the defined tasks of the plugin
      */
     public function getTaskDefinitions()
     {
-        return array();
-
-        return array(new Xinc_Plugin_Repos_Schedule_Task($this),
-                     new Xinc_Plugin_Repos_Cron_Task($this), );
+        return array(new Task($this));
+                    // new Cron($this), );
     }
 }
