@@ -27,13 +27,26 @@
 namespace Xinc\Core\Test;
 
 use Xinc\Core\Build\Build;
-use Xinc\Core\Logger;
+use Xinc\Core\Config\Config;
 use Xinc\Core\Config\Xml as ConfigXml;
+use Xinc\Core\Logger;
 use Xinc\Core\Project\Config\Xml as ProjectXml;
 use Xinc\Core\Registry\Registry;
 
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
+	public function defaultConfig()
+	{
+		$conf = new Config();
+		$conf->setOption('once',false);
+		$conf->setOption('working-dir','./');
+		$conf->setOption('config-dir','./tests/etc/xinc/');
+        $conf->setOption('project-dir','./tests/etc/xinc/projects/');
+        $conf->setOption('status-dir','./tests/status/');
+        $conf->setOption('log-file','./tests/log/xinc.log');
+        return $conf;	
+	}
+	
     public function xincLoglevel()
     {
         $loglevel = getenv('XINC_LOGLEVEL');
@@ -68,8 +81,8 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         $iterator = $reg->getProjectIterator();
         $project = $iterator->current();
         $engine = $reg->getEngine($project->getEngineName());
-        $build = new Build($engine, $project);
-
+        $build = $engine->setupBuild($project);
+	    
         return $build;
     }
 }

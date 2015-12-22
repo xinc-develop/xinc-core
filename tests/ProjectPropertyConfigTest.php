@@ -37,20 +37,21 @@ class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
 {	 
 	public function testProjectProperty()
 	{
-		$conf = new Config();
+		$conf = $this->defaultConfig();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
 	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');
 	    
 	    $this->projectXml($conf,$reg)->load($conf,$reg);
 	    $project = $reg->getProject("TestProjectProperty");
 	    $this->assertInstanceOf('Xinc\Core\Project\Project',$project);
-	    $build = $this->aBuildWithConfig($conf);
-  	    $project = $build->getProject();
-        $engine = $build->getEngine();
-        $build2 = $engine->setupBuild($project);
-	    $this->assertInstanceOf('Xinc\Core\Build\Build',$build2);
+	    $build2 = $this->aBuildWithConfig($conf);
+  	    $this->assertInstanceOf('Xinc\Core\Build\Build',$build2);
 	    
-        $this->assertEquals('./',$build2->getProperty('projectdir')); 
-        $this->assertEquals('./',$build2->getProperty('project.name')); 
+        $this->assertEquals('./tests/etc/xinc/projects/',
+            $build2->getProperty('projectdir')); 
+        $this->assertEquals('TestProjectProperty',
+            $build2->getProperty('project.name'));
+        $this->assertEquals('./tests/etc/xinc/projects/TestProjectProperty/',
+            $build2->getProperty('dir'));
 	 }
 }

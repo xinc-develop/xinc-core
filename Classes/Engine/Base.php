@@ -70,7 +70,7 @@ abstract class Base implements EngineInterface
     {
         $options = array('workingdir', 'projectdir', 'statusdir');
         foreach ($options as $option) {
-            $build->setProperty($option, $this->config->getOption($option));
+            $build->setProperty($option, $this->config->get($option));
         }
     }
     
@@ -78,7 +78,6 @@ abstract class Base implements EngineInterface
     {
         $filtertasks = $this->getTasksForSlot(Slot::PROJECT_SET_VALUES);
 
-        print_r($xml);
         foreach ($xml->children() as $taskName => $task) {            
             try{
                 $taskObject = $this->taskRegistry->getTask($taskName, (string)$xml);

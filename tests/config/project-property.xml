@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xinc>
 <project name="TestProjectProperty">
-<property name="dir" value="${projectdir}/${project.name}" />
+<property name="dir" value="${projectdir}${project.name}/" />
 </project>
 </xinc>
