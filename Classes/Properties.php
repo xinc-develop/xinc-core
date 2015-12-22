@@ -34,19 +34,16 @@ class Properties implements ArrayAccess
 {
     private $properties = array();
 
+    private $dynamic = array();
+    
     public function offsetExists($offset)
     {
         return $this->has($offset);
     }
 
-    public function has($offset)
-    {
-        return array_key_exists($offset, $this->properties);
-    }
-
     public function offsetGet($offset)
     {
-        return $this->properties[$offset];
+        return $this->get($offset);
     }
 
     public function offsetSet($offset, $value)
@@ -56,7 +53,13 @@ class Properties implements ArrayAccess
 
     public function offsetUnset($offset)
     {
-        unset($this->properties[$offset]);
+        throw new Mistake('Properties should not be unset as arrays!');
+    }
+    
+    public function has($offset)
+    {
+        return array_key_exists($offset, $this->properties) ||
+            array_key_exists($offset, $this->dynamic);
     }
 
     /**
@@ -69,10 +72,15 @@ class Properties implements ArrayAccess
     {
         if (is_array($name)) {
             foreach ($name as $k => $v) {
-                $this->properties[$k] = $v;
+                $this->set($k, $v);
             }
         } else {
-            $this->properties[$name] = $value;
+			if(is_callable($value)) {
+				$this->dynamic[$name] = $value;
+			}
+			else {
+                $this->properties[$name] = $value;
+            }
         }
     }
 
@@ -85,9 +93,12 @@ class Properties implements ArrayAccess
      */
     public function get($name)
     {
-        if (isset($this->properties[$name])) {
+        if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
-        } else {
+        } elseif (array_key_exists($name, $this->dynamic)) {
+			return $this->dynamic[$name]();
+		}
+		else {
             return;
         }
     }
@@ -99,7 +110,12 @@ class Properties implements ArrayAccess
      */
     public function getAllProperties()
     {
-        return $this->properties;
+		$props = array();
+		foreach($this->dynamic as $k => $c) {
+			$props[$k] = $c();
+		}
+        return array_merge($props,$this->properties);
+        
     }
     /**
      * Parses a string and substitutes ${name} with $value
@@ -111,7 +127,7 @@ class Properties implements ArrayAccess
     {
         $string = (string) $string;
         $string = preg_replace_callback("/\\$\{(.*?)\}/",
-            function ($k) { return $this->properties[$k[1]]; }, $string);
+            function ($k) { return $this->get($k[1]); }, $string);
 
         return $string;
     }

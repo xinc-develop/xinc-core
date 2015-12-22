@@ -36,6 +36,7 @@ use Xinc\Core\Task\TaskRegistryInterface;
  */
 interface BuildInterface extends TaskRegistryInterface
 {
+	const UNINITIALIZED = -3;
     const INITIALIZED = -2;
     const FAILED = 0;
     const PASSED = 1;

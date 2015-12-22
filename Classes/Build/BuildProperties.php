@@ -1,13 +1,12 @@
 <?php
 /**
  * Xinc - Continuous Integration.
+ * Build Properties carry additional information about a build.
  *
- * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Plugin.Repos.Configuration.Setting
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015 Xinc Developers, Leipzig
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -23,36 +22,21 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://xincplus.sourceforge.net
+ *
+ * @link  @rel team https://github.com/xinc-develop
  */
+namespace Xinc\Core\Build;
 
-namespace Xinc\Core\Plugin\Configuration;
+use Xinc\Core\Properties;
 
-use Xinc\Core\Build\BuildInterface;
-
-class SettingTask extends AbstractTask
+class BuildProperties extends Properties
 {
-    private $name;
-
-    private $value;
-
-    public function setName($value)
-    {
-        $this->name = $value;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
-    }
-
-    public function getName()
-    {
-        return 'setting';
-    }
-
-    public function configure(BuildInterface $build)
-    {
-        $build->setConfigDirective($this->name, $this->value);
-    }
+	public function __construct()
+	{
+		$this->set('cctimestamp',function () {
+			$ts = $this->get('build.timestamp');
+			return $ts === null ? null : 
+			    date('YmdHis',$this->get('build.timestamp'));
+	    });
+	 }
 }

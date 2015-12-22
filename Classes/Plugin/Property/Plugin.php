@@ -28,9 +28,6 @@ namespace Xinc\Core\Plugin\Property;
 use Xinc\Core\Plugin\Base;
 use Xinc\Core\Build\BuildInterface;
 
-#require_once 'Xinc/Plugin/Repos/Property/SetTask.php';
-#require_once 'Xinc/Plugin/Repos/Property/SubstituteTask.php';
-
 /**
  * Properties plugin, allows to set properties on a project
  * and substitutes values of the property in the form ${name}.
@@ -40,8 +37,8 @@ class Plugin extends Base
     /**
      * loads properties from a property file.
      * 
-     * @param Xinc_Build_Interface $build
-     * @param string               $fileName
+     * @param BuildInterface $build
+     * @param string $fileName
      */
     public function parsePropertyFile(BuildInterface $build, $fileName)
     {
@@ -86,7 +83,7 @@ class Plugin extends Base
             }
             foreach ($arr as $key => $value) {
                 $build->debug('Setting property "${'.$key.'}" to "'.$value.'"');
-                $build->getProperties()->set($key, stripcslashes($value));
+                $build->setProperty($key, stripcslashes($value));
             }
         } else {
             $build->error('Cannot read from property file: '.$fileName);

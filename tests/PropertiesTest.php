@@ -77,9 +77,13 @@ class TestProperties extends Xinc\Core\Test\BaseTest
 		$this->assertFalse(isset($properties['XYZ']));
 		
 		$this->assertEquals('123',$properties['unset-option']);
-		unset($properties['unset-option']);
-		$this->assertFalse(isset($properties['unset-option']));
-		
+		try {
+			unset($properties['unset-option']);
+			$this->assertTrue(false,'Unset keys is not allowed.');
+		}
+		catch(\Xinc\Core\Exception\Mistake $e) {
+		    $this->assertTrue(true,'Unset not possible');
+		}
 		try {
 			$properties['grrh'] = true;
 			$this->assertTrue(false,'Write access is not allowed.');

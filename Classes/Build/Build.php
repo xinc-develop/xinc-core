@@ -29,7 +29,7 @@ use Xinc\Core\Build\TaskRegistry as BuildTaskRegistry;
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
-use Xinc\Core\Properties as BuildProperties;
+use Xinc\Core\Build\BuildProperties;
 use Xinc\Core\Traits\Logger;
 use Xinc\Core\Traits\TaskRegistry;
 
@@ -135,6 +135,7 @@ class Build implements BuildInterface
                                 Project $project,
                                 $buildTimestamp = null
     ) {
+		$this->setStatus(BuildInterface::UNINITIALIZED);
         $this->engine = $engine;
         $this->setLogger($engine->getLogger());
         $this->project = $project;

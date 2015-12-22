@@ -27,8 +27,10 @@ use SimpleXmlElement;
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Traits\Logger;
+use Xinc\Core\Task\TaskInterface;
 
 /**
+ * @todo getName method 
  * @ingroup logger
  */
 abstract class Base implements TaskInterface
@@ -40,7 +42,7 @@ abstract class Base implements TaskInterface
     protected $arSubtasks = array();
 
     protected $plugin;
-    protected $_xml;
+    protected $xml;
 
     /**
      * Constructor, stores a reference to the plugin for
@@ -78,15 +80,14 @@ abstract class Base implements TaskInterface
      *
      * @param Xinc_Plugin_Task_Interface $task Task to register
      */
-    public function registerTask(Xinc_Plugin_Task_Interface $task)
+    public function registerTask(TaskInterface $task)
     {
-        Xinc_Logger::getInstance()->debug('Registering Task: '.get_class($task));
+        $this->log->debug('Registering Task: '.get_class($task));
         $this->arSubtasks[] = $task;
     }
 
     /**
      * Returns name of task by lowercasing class name.
-     *
      * @return string Name of task.
      */
     public function getName()
@@ -101,17 +102,16 @@ abstract class Base implements TaskInterface
 
     public function getXml()
     {
-        return $this->_xml;
+        return $this->xml;
     }
 
     public function setXml(SimpleXMLElement $element)
     {
-        $this->_xml = $element;
+        $this->xml = $element;
     }
 
     /**
      * Validates if a task can run by checking configs, directories and so on.
-     *
      * @return bool Is true if task can run.
      */
     public function validate()
