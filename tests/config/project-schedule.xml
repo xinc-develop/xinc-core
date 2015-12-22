@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<xinc>
+<project name="TestProjectSchedule">
+	<schedule interval="500"/>
+</project>
+</xinc>

@@ -33,25 +33,18 @@ use Xinc\Core\Exception\XmlException;
 /**
  * @test Test Class for loading a xml configuration
  */
-class TestProjectPropertyConfig extends Xinc\Core\Test\BaseTest
+class TestProjectSchedule extends Xinc\Core\Test\BaseTest
 {	 
 	public function testProjectProperty()
 	{
 		$conf = $this->defaultConfig();
-	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
-	    $conf->setOption('project-file', __DIR__ . '/config/project-property.xml');
+	    $conf->setOption('config-file', __DIR__ . '/../config/plugins2.xml');
+	    $conf->setOption('project-file', __DIR__ . '/../config/project-schedule.xml');
 	    
 	    $this->projectXml($conf,$reg)->load($conf,$reg);
-	    $project = $reg->getProject("TestProjectProperty");
-	    $this->assertInstanceOf('Xinc\Core\Project\Project',$project);
 	    $build2 = $this->aBuildWithConfig($conf);
-  	    $this->assertInstanceOf('Xinc\Core\Build\Build',$build2);
-	    
-        $this->assertEquals('./tests/etc/xinc/projects/',
-            $build2->getProperty('projectdir')); 
-        $this->assertEquals('TestProjectProperty',
-            $build2->getProperty('project.name'));
-        $this->assertEquals('./tests/etc/xinc/projects/TestProjectProperty/',
-            $build2->getProperty('dir'));
+	    $scheduler = $build2->getScheduler();
+        $this->assertInstanceOf('Xinc\Core\Plugin\Schedule\Task',$scheduler);
+        $this->assertEquals(500,$scheduler->getInterval());	    
 	 }
 }

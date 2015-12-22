@@ -21,6 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @homepage  http://code.google.com/p/xinc/
  */
 
@@ -29,42 +30,29 @@ namespace Xinc\Core\Plugin\Schedule;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
+use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Build\Scheduler\SchedulerInterface;
 
 class Task extends Base implements SchedulerInterface
 {
 
-    private $_interval;
+    private $interval;
     
-    /**
-     * Enter description here...
-     *
-     * @var Xinc_Build_Interface
-     */
-    private $_build;
-
     public function process(BuildInterface $build)
     {
-        /**if (!isset($this->_project)) {
-            $build->setScheduler($this);
-            $this->_build = $build;
-            if (time() < $this->getNextBuildTime()) {
-                $this->_build->setStatus(Xinc_Build_Interface::STOPPED);
-            }
-        }*/
     }
 
     public function setInterval($interval)
     {
-        $this->_interval = $interval;
+        $this->interval = $interval;
     }
     
     public function getInterval()
     {
-        return $this->_interval;
+        return $this->interval;
     }
     
-    public function registerTask(Xinc_Plugin_Task_Interface $task)
+    public function registerTask(TaskInterface $task)
     {
         
     }
@@ -84,10 +72,9 @@ class Task extends Base implements SchedulerInterface
         if ($build->getStatus() == BuildInterface::STOPPED) {
             return null;
         }
-        //var_dump($build);
         $lastBuild = $build->getLastBuild()->getBuildTime();
         
-        if ($lastBuild != null ) {
+        if ($lastBuild !== null ) {
             $nextBuild = $this->getInterval() + $lastBuild;
             /**
              * Make sure that we dont rerun every build if the daemon was paused
@@ -101,7 +88,7 @@ class Task extends Base implements SchedulerInterface
             // never ran, schedule for now
             $nextBuild = time();
         }
-        $build->debug('getNextBuildTime '
+        $this->log->debug('getNextBuildTime '
                               . ': lastbuild: ' 
                               . date('Y-m-d H:i:s', $lastBuild) 
                               . ' nextbuild: ' 
@@ -116,7 +103,7 @@ class Task extends Base implements SchedulerInterface
 
     public function validate()
     {
-        return $this->_interval > 0;
+        return $this->interval > 0;
     }
 
     public function getName()
