@@ -48,7 +48,7 @@ class SettingTask extends AbstractTask
 
     public function getName()
     {
-        return 'setting';
+        return 'configuration/setting';
     }
 
     public function configure(BuildInterface $build)

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<xinc>
+<project name="TestProjectSchedule">
+	<configuration>
+	    <setting name="optionA" value="A"/>
+	    <setting name="optionB" value="B"/>
+	</configuration>
+</project>
+</xinc>

@@ -30,6 +30,7 @@ use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
 use Xinc\Core\Build\BuildProperties;
+use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Logger;
 use Xinc\Core\Traits\TaskRegistry;
 
@@ -495,25 +496,25 @@ class Build implements BuildInterface
     }
 
     /**
-     * @deprecated - should be deprecated
+     * @deprecated - should not be public
      * @return Xinc_Build_Tasks_Registry
      */
-    public function getTaskRegistry()
+    protected function getTaskRegistry()
     {
         return $this->taskRegistry;
     }
 
     /**
      * processes the tasks that are registered for the slot.
-     *
+     * @todo exception handling
      * @param mixed $slot
      */
     public function process($slot)
     {
-        $tasks = $this->getTaskRegistry()->getTasksForSlot($slot);
-        while ($tasks->hasNext()) {
-            $task = $tasks->next();
-            Xinc_Logger::getInstance()->info('Processing task: '.$task->getName());
+        $tasks = $this->taskRegistry->getTasksForSlot($slot);
+        while ($tasks->valid()) {
+            $task = $tasks->current();
+            $this->log->info('Processing task: '.$task->getName());
             try {
                 $task->process($this);
             } catch (Exception $e) {
@@ -522,13 +523,15 @@ class Build implements BuildInterface
 
             /*
              * The Post-Process continues on failure
-             */
-            if ($slot != Xinc_Plugin_Slot::POST_PROCESS) {
-                if ($this->getStatus() != Xinc_Build_Interface::PASSED) {
+             
+            if ($slot != Slot::POST_PROCESS) {
+                if ($this->getStatus() != BuildInterface::PASSED) {
                     $tasks->rewind();
                     break;
                 }
             }
+            */
+            $tasks->next();
         }
         $tasks->rewind();
     }

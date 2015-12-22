@@ -74,13 +74,13 @@ abstract class Base implements EngineInterface
         }
     }
     
-    protected function parseProjectConfig(BuildInterface $build, $xml)
+    protected function parseProjectConfig(BuildInterface $build, $xml, $parent=null)
     {
         $filtertasks = $this->getTasksForSlot(Slot::PROJECT_SET_VALUES);
 
         foreach ($xml->children() as $taskName => $task) {            
             try{
-                $taskObject = $this->taskRegistry->getTask($taskName, (string)$xml);
+                $taskObject = $this->taskRegistry->getTask($taskName, (string)$parent);
                 $taskObject = $taskObject->createTask($build);
                 $taskObject->setXml($task);
             } 
@@ -97,14 +97,12 @@ abstract class Base implements EngineInterface
                 $taskObject->$setter((string)$value, $build);
             }
 
-                
-            #$this->_parseTasks($build, $task, $taskObject);
+            $this->parseProjectConfig($build, $task, $taskObject);
           
             $build->registerTask($taskObject);
-
-
+            
             if ( !$taskObject->validate() ) {
-                // @todo log
+				$this->log->warn("Task {$taskObject->getName()} is invalid.");
                 $build->getProject()->setStatus(Status::MISCONFIGURED);
                 return;
             }

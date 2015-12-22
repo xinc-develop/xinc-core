@@ -78,7 +78,7 @@ abstract class Base implements TaskInterface
     /**
      * Support for subtasks, empty by default.
      *
-     * @param Xinc_Plugin_Task_Interface $task Task to register
+     * @param TaskInterface $task Task to register
      */
     public function registerTask(TaskInterface $task)
     {
@@ -94,10 +94,15 @@ abstract class Base implements TaskInterface
     {
         return strtolower(get_class($this));
     }
+    
+    public function __toString()
+    {
+		return $this->getName();
+	}
 
     public function getTasks()
     {
-        return new Xinc_Build_Tasks_Iterator($this->arSubtasks);
+        return new Iterator($this->arSubtasks);
     }
 
     public function getXml()

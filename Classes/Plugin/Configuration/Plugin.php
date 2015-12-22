@@ -34,6 +34,7 @@ class Plugin extends Base
 {
     public function getTaskDefinitions()
     {
-        return array(new Task($this), new SettingTask($this) );
+        return array(new Task($this), 
+                     new SettingTask($this) );
     }
 }

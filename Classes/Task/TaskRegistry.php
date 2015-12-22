@@ -64,22 +64,24 @@ class TaskRegistry extends RegistryAbstract
      */
     public function register($name, $task)
     {
-        parent::register($name, $task);
-        $this->slot[$task->getPluginSlot()][$name] = $task;
+        parent::register($name, $task, true);
+        $this->slot[$task->getPluginSlot()][] = $task;
     }
 
     /**
+     * @todo this does not work correctly in BuildTaskRegistry
      * @param string $name
-     *
-     * @return object
-     *
+     * @return Xinc::Core::Task::TaskInterface - the deleted task
      * @throws Xinc\Core\Registry\Exception
      */
     public function unregister($name)
     {
         $task = $parent::unregister($name);
-
-        unset($this->slot[$task->getPluginSlot()][$name]);
+        foreach($this->slot[$task->getPluginSlot()] as $i => $check) {
+			if($check === $task) {
+				unset($this->slot[$task->getPluginSlot()][$i]);
+			}
+		}
 
         return $task;
     }

@@ -52,11 +52,6 @@ class Task extends Base
      */
     public function validate()
     {
-        foreach ($this->arSubtasks as $task) {
-            if (!$task instanceof Xinc_Plugin_Repos_Configuration_AbstractTask) {
-                return false;
-            }
-        }
         return true;
     }
 
@@ -72,8 +67,6 @@ class Task extends Base
 
     public function process(BuildInterface $build)
     {
-        foreach ($this->arSubtasks as $task) {
-            $task->configure($build);
-        }
+		
     }
 }
