@@ -21,7 +21,7 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Build;
 
@@ -44,7 +44,6 @@ class Build implements BuildInterface
     use TaskRegistry;
     /**
      * Are we queued?
-     *
      * @var bool
      */
     private $isQueued = false;
@@ -60,17 +59,17 @@ class Build implements BuildInterface
     private $project;
 
     /**
-     * @var Xinc_Build_Properties
+     * @var Xinc::Core::Properties
      */
     private $properties;
 
     /**
-     * @var Xinc_Build_Properties
+     * @var Xinc::Core::Properties
      */
     private $internalProperties;
 
     /**
-     * @var Xinc_Build_Statistics
+     * @var Xinc::Core::Build::Statistics
      */
     private $statistics;
 
@@ -86,45 +85,40 @@ class Build implements BuildInterface
 
     /**
      * Build status, as defined in Xinc_Build_Interface.
-     *
      * @var int
      */
     private $status;
 
     /**
-     * @var Xinc_Build_Interface
+     * @var Xinc::Core::Build::BuildInterface
      */
     private $lastBuild;
 
     /**
      * The build no of this build.
-     *
      * @var int
      */
     private $no;
 
     /**
      * The label for this build.
-     *
      * @var string
      */
     private $label;
 
     /**
      * Build scheduler.
-     *
-     * @var Xinc_Build_Scheduler_Interface
+     * @var Xinc::Core::Build::Scheduler::SchedulerInterface
      */
     private $scheduler;
 
     /**
-     * @var Xinc_Build_Labeler_Interface
+     * @var Xinc::Core::Build::Labeler::LabelerInterface
      */
     private $labeler;
 
     /**
      * Holding config values for this build.
-     *
      * @var array
      */
     private $config = array();
@@ -169,7 +163,7 @@ class Build implements BuildInterface
     /**
      * Returns the last build.
      *
-     * @return Xinc_Build_Interface
+     * @return BuildInterface
      */
     public function getLastBuild()
     {
@@ -183,6 +177,7 @@ class Build implements BuildInterface
     }
 
     /**
+     * @deprecated
      * @return Xinc::Core::Properties
      */
     public function getProperties()
@@ -226,7 +221,7 @@ class Build implements BuildInterface
      */
     public function setBuildTime($buildTime)
     {
-        $this->getProperties()->set('build.timestamp', $buildTime);
+        $this->setProperty('build.timestamp', $buildTime);
         $this->buildTimestamp = $buildTime;
     }
 
@@ -444,7 +439,7 @@ class Build implements BuildInterface
     public function setNumber($no)
     {
         $this->info('Setting Buildnumber to:'.$no);
-        $this->getProperties()->set('build.number', $no);
+        $this->setProperty('build.number', $no);
         $this->no = $no;
     }
 
@@ -622,14 +617,14 @@ class Build implements BuildInterface
     {
         $this->setters = Xinc_Plugin_Repository::getInstance()->getTasksForSlot(Xinc_Plugin_Slot::PROJECT_SET_VALUES);
 
-        $this->getProperties()->set('project.name', $this->getProject()->getName());
-        $this->getProperties()->set('build.number', $this->getNumber());
-        $this->getProperties()->set('build.label', $this->getLabel());
+        $this->setProperty('project.name', $this->getProject()->getName());
+        $this->setProperty('build.number', $this->getNumber());
+        $this->setProperty('build.label', $this->getLabel());
 
         $builtinProps = Xinc::getInstance()->getBuiltinProperties();
 
         foreach ($builtinProps as $prop => $value) {
-            $this->getProperties()->set($prop, $value);
+            $this->setProperty($prop, $value);
         }
 
         $tasks = $this->getTaskRegistry()->getTasks();
@@ -729,7 +724,7 @@ class Build implements BuildInterface
      */
     public function getConfigDirective($name)
     {
-        return isset($this->_config[$name]) ? $this->_config[$name] : null;
+        return isset($this->config[$name]) ? $this->config[$name] : null;
     }
 
     public function resetConfigDirective()
