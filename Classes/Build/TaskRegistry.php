@@ -25,11 +25,20 @@
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Task\TaskRegistry as Base;
+use Xinc\Core\Task\Slot;
 
 /**
  * A build contains a kind of this registry to store the concrete task objects.
  */
 class TaskRegistry extends Base
 {
-	
+	/**
+	 * available slots
+	 */
+	private $slots;
+    
+    public function __construct()
+    {
+		$this->slots = Slot::getSlots();
+	}	
 }

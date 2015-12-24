@@ -43,7 +43,8 @@ abstract class Base implements TaskInterface
 
     protected $plugin;
     protected $xml;
-
+    protected $frame;
+    
     /**
      * Constructor, stores a reference to the plugin for
      * usage of functionality.
@@ -54,6 +55,11 @@ abstract class Base implements TaskInterface
     {
         $this->plugin = $plugin;
     }
+    
+    public function setFrame(TaskInterface $task)
+    {
+		$this->frame = $task;
+	}
     
     /**
      * @return Xinc::Core::Plugin::PluginInterface

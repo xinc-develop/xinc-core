@@ -26,6 +26,7 @@
 namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Plugin\Base;
+use Xinc\Core\Plugin\Cron\Task as Cron;
 
 class Plugin extends Base
 {
@@ -34,7 +35,7 @@ class Plugin extends Base
      */
     public function getTaskDefinitions()
     {
-        return array(new Task($this));
-                    // new Cron($this), );
+        return array(new Task($this),
+                     new Cron($this) );
     }
 }

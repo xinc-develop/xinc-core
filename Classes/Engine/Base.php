@@ -29,6 +29,7 @@ namespace Xinc\Core\Engine;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status;
+use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Config;
 use Xinc\Core\Traits\Logger;
@@ -98,7 +99,10 @@ abstract class Base implements EngineInterface
             }
 
             $this->parseProjectConfig($build, $task, $taskObject);
-          
+            
+            if($parent instanceof TaskInterface) {
+                $taskObject->setFrame($parent);
+            }
             $build->registerTask($taskObject);
             
             if ( !$taskObject->validate() ) {

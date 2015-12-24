@@ -77,16 +77,16 @@ class Slot
     public static function getSlots()
     {
 	    return array(
-	        GLOBAL_INIT,
-	        GLOBAL_LISTENER,
-	        PROJECT_LISTENER,
-	        PROJECT_INIT,
-	        PROJECT_SET_VALUES,
-	        INIT_PROCESS,
-	        PRE_PROCESS,
-	        PROCESS,
-	        POST_PROCESS,
-	        SUBTASK    
+	        self::GLOBAL_INIT,
+	        self::GLOBAL_LISTENER,
+	        self::PROJECT_LISTENER,
+	        self::PROJECT_INIT,
+	        self::PROJECT_SET_VALUES,
+	        self::INIT_PROCESS,
+	        self::PRE_PROCESS,
+	        self::PROCESS,
+	        self::POST_PROCESS,
+	        self::SUBTASK    
 	    );	
 	}
 }

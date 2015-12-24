@@ -71,16 +71,14 @@ interface TaskInterface extends LoggerInterface
      *
      * @return int The slot number.
      *
-     * @see Xinc/Plugin/Slot.php for available slots
+     * @see Xinc::Core::Plugin::Slot for available slots
      */
     public function getPluginSlot();
-
+    
     /**
-     * Gets registered subtask for this task.
-     * @todo rename to getSubTasksIterator
-     * @return Xinc_Build_Tasks_Iterator
+     * the parent frame
      */
-    public function getTasks();
+    public function setFrame(TaskInterface $task);
 
     public function getXml();
     public function setXml(\SimpleXMLElement $element);
