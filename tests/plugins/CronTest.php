@@ -24,7 +24,7 @@
  */
 
 use Xinc\Core\Plugin\Schedule\Plugin;
-use Xinc\Core\Plugin\Cron\Task as Cron;
+use Xinc\Core\Plugin\Schedule\Cron;
 
 class CronTest extends Xinc\Core\Test\BaseTest
 {
@@ -57,6 +57,9 @@ class CronTest extends Xinc\Core\Test\BaseTest
         $nowHour = date('H', $now);
         $nowMinute = date('i', $now);
         $nowHour++;
+        if($nowHour>23) {
+			$nowHour=0;
+		}
         $task = new Cron(new Plugin());
         $task->setTimer($nowMinute . ' ' . $nowHour . ' * * *');
         $nextTime = $task->getTimeFromCron($now);

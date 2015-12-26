@@ -26,7 +26,7 @@
  * @link      http://xincplus.sourceforge.net
  */
 
-namespace Xinc\Core\Plugin\Cron;
+namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Build\Scheduler\SchedulerInterface;
@@ -42,7 +42,7 @@ use Xinc\Core\Task\Slot;
  * www.bitfolge.de/pseudocron
  * kaib@bitfolge.de
  */
-class Task extends Base implements SchedulerInterface
+class Cron extends Base implements SchedulerInterface
 {
     const PC_MINUTE=1;
     const PC_HOUR=2;

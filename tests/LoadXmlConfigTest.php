@@ -137,7 +137,22 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
 	    
+	    $this->xml($reg)->load($conf,$reg);  
+	    $this->assertInstanceOf(
+	        'Xinc\Core\Plugin\ModificationSet\Plugin',
+	        $reg->getPlugin('ModificationSet'));
+	 }
+	 
+	 
+	public function testPlugins3()
+	{
+		$conf = new Config();
+	    $conf->setOption('config-file', __DIR__ . '/config/plugins3.xml');
+	    
 	    $this->xml($reg)->load($conf,$reg);
+	    $this->assertInstanceOf(
+	        'Xinc\Core\Plugin\ModificationSet\Plugin',
+	        $reg->getPlugin('ModificationSet'));
 	 }
 	 
 	public function testEngines()

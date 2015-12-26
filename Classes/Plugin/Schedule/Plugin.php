@@ -26,7 +26,6 @@
 namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Plugin\Base;
-use Xinc\Core\Plugin\Cron\Task as Cron;
 
 class Plugin extends Base
 {
