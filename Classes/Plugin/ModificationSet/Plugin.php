@@ -36,7 +36,9 @@ class Plugin extends Base
 
     public function getTaskDefinitions()
     {
-        return array(new Task($this));
+        return array(new Task($this),
+                     new BuildAlways($this)
+        );
     }
 
     public function getGuiWidgets()

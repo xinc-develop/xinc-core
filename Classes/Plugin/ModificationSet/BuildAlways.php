@@ -5,7 +5,7 @@
  * PHP version 5
  *
  * @category  Development
- * @package   Xinc.Plugin.Repos.ModificationSet
+ * @package   Xinc.Plugin.Repos.ModificationSet.BuildAlways
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -23,34 +23,45 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://xincplus.sourceforge.net
+ * @link      http://code.google.com/p/xinc/
  */
 
-namespace Xinc\Core\Plugin\BuildAlways;
+namespace Xinc\Core\Plugin\ModificationSet;
 
-use Xinc\Core\Plugin\Base;
+use Xinc\Core\Build\BuildInterface;
 
-class Plugin extends Base
+class BuildAlways extends BaseTask
 {
-    public function getTaskDefinitions()
+    /**
+     * Returns name of task.
+     *
+     * @return string Name of task.
+     */
+    public function getName()
     {
-        return array(new Task($this));
+        return 'buildalways';
     }
 
     /**
-     * Checks whether the Subversion project has been modified.
+     * Check if this modification set has been modified
      *
-     * @return boolean
+     * @return Xinc_Plugin_Repos_ModificationSet_Result
      */
-    public function checkModified()
+    public function checkModified(BuildInterface $build)
     {
-        $result = new Xinc_Plugin_Repos_ModificationSet_Result();
+		
+        $result = new Result();
         $result->setChanged(true);
         $result->setStatus(Xinc_Plugin_Repos_ModificationSet_AbstractTask::CHANGED);
         return $result;
     }
 
-    public function validate()
+    /**
+     * Validates if a task can run by checking configs, directries and so on.
+     *
+     * @return boolean Is true if task can run.
+     */
+    public function validateTask()
     {
         return true;
     }

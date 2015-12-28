@@ -27,14 +27,10 @@ namespace Xinc\Core\Plugin\Publisher;
 
 use Xinc\Core\Plugin\Base;
 
-#require_once 'Xinc/Plugin/Repos/Publisher/Task.php';
-
 class Plugin  extends Base
 {
     public function getTaskDefinitions()
     {
-        return array();
-
-        return array(new Xinc_Plugin_Repos_Publisher_Task($this));
+        return array(new Task($this), new Email($this));
     }
 }

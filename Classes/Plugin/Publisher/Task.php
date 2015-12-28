@@ -1,11 +1,12 @@
 <?php
 /**
  * Xinc - Continuous Integration.
+ * This interface represents a publishing mechanism to publish build results
  *
  * PHP version 5
  *
  * @category  Development
- * @package   Xinc.Plugin.Repos.ModificationSet.BuildAlways
+ * @package   Xinc.Plugin.Publisher
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -26,39 +27,57 @@
  * @link      http://code.google.com/p/xinc/
  */
 
-namespace Xinc\Core\Plugin\BuildAlways;
+namespace Xinc\Core\Plugin\Publisher;
 
+use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
+use Xinc\Core\Task\Slot;
 
-class Task extends Xinc_Plugin_Repos_ModificationSet_AbstractTask
+class Task extends Base
 {
-    /**
-     * Returns name of task.
-     *
-     * @return string Name of task.
-     */
-    public function getName()
-    {
-        return 'buildalways';
-    }
-
-    /**
-     * Check if this modification set has been modified
-     *
-     * @return Xinc_Plugin_Repos_ModificationSet_Result
-     */
-    public function checkModified(Xinc_Build_Interface $build)
-    {
-        return $this->plugin->checkModified();
-    }
-
     /**
      * Validates if a task can run by checking configs, directries and so on.
      *
      * @return boolean Is true if task can run.
      */
-    public function validateTask()
+    public function validate()
     {
+        foreach ( $this->arSubtasks as $task ) {
+            if (!$task instanceof Xinc_Plugin_Repos_Publisher_AbstractTask) {
+                return false;
+            }
+        }
         return true;
+    }
+
+    /**
+     * Returns name of task by lowercasing class name.
+     *
+     * @return string Name of task.
+     */
+    public function getName()
+    {
+        return 'publishers';
+    }
+
+    /**
+     * Returns the slot of this task inside a build.
+     *
+     * @return integer The slot number.
+     * @see Xinc/Plugin/Slot.php for available slots
+     */
+    public function getPluginSlot()
+    {
+        return Slot::POST_PROCESS;
+    }
+
+    public function process(BuildInterface $build)
+    {
+        $build->info('Processing publishers');
+
+        foreach ($this->arSubtasks as $task) {
+            $task->publish($build);
+        }
+        $build->info('Processing publishers done');
     }
 }
