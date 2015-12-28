@@ -45,24 +45,14 @@ class BuildAlways extends BaseTask
     /**
      * Check if this modification set has been modified
      *
-     * @return Xinc_Plugin_Repos_ModificationSet_Result
+     * @return Xinc::Core::Plugin::ModificationSet::Result
      */
     public function checkModified(BuildInterface $build)
     {
 		
         $result = new Result();
-        $result->setChanged(true);
-        $result->setStatus(Xinc_Plugin_Repos_ModificationSet_AbstractTask::CHANGED);
+        $result->setSource('build always task');
+        $result->setStatus(Result::CHANGED);
         return $result;
-    }
-
-    /**
-     * Validates if a task can run by checking configs, directries and so on.
-     *
-     * @return boolean Is true if task can run.
-     */
-    public function validateTask()
-    {
-        return true;
     }
 }

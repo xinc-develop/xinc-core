@@ -37,13 +37,7 @@ class Task extends Base
      */
     public function validate()
     {
-        foreach ($this->arSubtasks as $task) {
-            if (!$task instanceof Xinc_Plugin_Repos_ModificationSet_AbstractTask) {
-                return false;
-            }
-        }
-
-        return true;
+		return true;
     }
 
     /**
@@ -68,18 +62,6 @@ class Task extends Base
 
     public function process(BuildInterface $build)
     {
-        foreach ($this->arSubtasks as $task) {
-            $task->process($build);
-            if ($build->getStatus() == BuildInterface::PASSED) {
-                return;
-            } elseif ($build->getStatus() == Xinc_Build_Interface::FAILED) {
-                /*
-                 * if the modification cannot be detected make the build fail
-                 * See Issue 79
-                 */
-                return;
-            }
-        }
-        $build->setStatus(BuildInterface::STOPPED);
+		return;
     }
 }

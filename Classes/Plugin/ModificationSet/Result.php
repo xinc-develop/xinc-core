@@ -30,18 +30,24 @@ namespace Xinc\Core\Plugin\ModificationSet;
 
 class Result
 {
-    /**
-     * @deprecated You should check $_status
-     */
-    private $_changed = false;
 
+    const STOPPED = -1;
+
+    const FAILED = -2;
+
+    const CHANGED = 1;
+
+    const ERROR = 0;
+    
     private $_previousRevision;
 
     private $_currentRevision;
 
     private $_basePath;
 
-    private $_status;
+    private $status;
+
+    private $source;
 
     private $_updatedResources = array();
 
@@ -59,8 +65,13 @@ class Result
 
     public function setStatus($status)
     {
-        $this->_status = $status;
+        $this->status = $status;
     }
+    
+    public function setSource($source)
+    {
+		$this->source = $source;
+	}
 
     public function setBasePath($path)
     {
@@ -74,7 +85,7 @@ class Result
 
     public function getStatus()
     {
-        return $this->_status;
+        return $this->status;
     }
 
     public function setLocalRevision($oldRevision)
@@ -98,20 +109,11 @@ class Result
     }
 
     /**
-     * @deprecated use Check status
+     * does change happen
      */
     public function isChanged()
     {
-        if ($this->_changed == true) return true;
-        else return $this->_previousRevision < $this->_currentRevision;
-    }
-
-    /**
-     * @deprecated use Set status
-     */
-    public function setChanged($bool)
-    {
-        $this->_changed = $bool;
+		return $this->status === Result::CHANGED;
     }
 
     private function _getRelativeFileName($fileName)
@@ -259,6 +261,7 @@ class Result
     public function __toString()
     {
         $output  = "ModificationSet\n";
+        $output .= "Source: " . $this->source . "\n";
         $output .= "Previous Revision: " . $this->_previousRevision . "\n";
         $output .= "New Revision: " . $this->_currentRevision . "\n";
         $output .= "Change detected: " . ($this->isChanged() ? 'yes':'no') . "\n";

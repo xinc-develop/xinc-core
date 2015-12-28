@@ -91,19 +91,6 @@ abstract class BaseTask extends Base
      */
     public function validate()
     {
-        try {
-            return $this->validateTask();
-        } catch(Exception $e) {
-            Xinc_Logger::getInstance()->error('Could not validate: '
-                                             . $e->getMessage());
-            return false;
-        }
+		return true;
     }
-
-    /**
-     * Validates if a task can run by checking configs, directries and so on.
-     *
-     * @return boolean Is true if task can run.
-     */
-    public abstract function validateTask();
 }
