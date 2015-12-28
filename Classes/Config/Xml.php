@@ -29,8 +29,10 @@ namespace Xinc\Core\Config;
 use Xinc\Getopt\Getopt;
 use Xinc\Getopt\Option;
 use Xinc\Core\Registry\XincRegistryInterface;
+use Xinc\Core\Plugin\PluginGroupInterface;
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
+use Xinc\Core\Validation\Exception\TypeMismatch;
 
 /**
  * Xinc System Configuration File in XML Format.
@@ -118,6 +120,19 @@ class Xml extends Loader implements ConfigLoaderInterface
     protected function loadPlugins($xml, $reg)
     {
         foreach ($xml->xpath('/xinc/plugins') as $element) {
+			if(isset($element['group'])) {
+				$class = "{$element['group']}";
+				$this->log->verbose("Load plugin group from class $class");
+				$group = new $class();
+				if(!($group instanceof PluginGroupInterface)) {
+				    throw new TypeMismatch($class,'Xinc\Core\Plugin\PluginGroupInterface');	
+				}
+				foreach($group->getPluginClasses() as $class) {
+					$reg->registerPluginClass($class);
+				}
+				continue;
+			}
+			
             $plugins = $element->xpath('plugin');
 
             if (isset($element['namespace'])) {

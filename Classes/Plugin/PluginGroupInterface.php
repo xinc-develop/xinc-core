@@ -1,11 +1,10 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * Iterator over an array of Xinc_Plugin_Interface objects.
- *
- *
- * @author    Arno Schneider <username@example.org>
+ * 
+ * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -22,28 +21,11 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-require_once 'Xinc/Iterator.php';
-require_once 'Xinc/Plugin/Exception.php';
-require_once 'Xinc/Plugin/Interface.php';
+namespace Xinc\Core\Plugin;
 
-class Xinc_Plugin_Iterator extends Xinc_Iterator
+interface PluginGroupInterface
 {
-    /**
-     * Constructor.
-     *
-     * @param array $array
-     *
-     * @throws Xinc_Plugin_Exception
-     */
-    public function __construct(array $array)
-    {
-        foreach ($array as $xmlElement) {
-            if (!$xmlElement instanceof Xinc_Plugin_Interface) {
-                throw new Xinc_Plugin_Exception();
-            }
-        }
-        parent::__construct($array);
-    }
+	public function getPluginClasses();
 }
