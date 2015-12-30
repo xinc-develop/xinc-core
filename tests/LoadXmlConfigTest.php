@@ -144,7 +144,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	 }
 	 
 	 
-	public function testPlugins3()
+	public function testPluginsGroup()
 	{
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins3.xml');
@@ -153,6 +153,20 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $this->assertInstanceOf(
 	        'Xinc\Core\Plugin\ModificationSet\Plugin',
 	        $reg->getPlugin('ModificationSet'));
+	 }
+	 
+	public function testPluginsUnloadableGroup()
+	{
+		$conf = new Config();
+	    $conf->setOption('config-file', __DIR__ . '/config/unknown-group.xml');
+	    
+	    try {
+	        $this->xml($reg)->load($conf,$reg);
+	        $this->assertTrue(false,"ClassLoader exception expected");
+	    }
+	    catch(ClassLoaderException $e) {
+		    $this->assertTrue(true,"ok exception thrown");	
+		}
 	 }
 	 
 	public function testEngines()

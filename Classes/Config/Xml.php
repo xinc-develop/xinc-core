@@ -30,6 +30,7 @@ use Xinc\Getopt\Getopt;
 use Xinc\Getopt\Option;
 use Xinc\Core\Registry\XincRegistryInterface;
 use Xinc\Core\Plugin\PluginGroupInterface;
+use Xinc\Core\Exception\ClassLoaderException;
 use Xinc\Core\Exception\IOException;
 use Xinc\Core\Exception\XmlException;
 use Xinc\Core\Validation\Exception\TypeMismatch;
@@ -117,11 +118,17 @@ class Xml extends Loader implements ConfigLoaderInterface
         }
     }
 
+    /**
+     * @throw Xinc::Core::Exception::ClassLoaderException
+     */
     protected function loadPlugins($xml, $reg)
     {
         foreach ($xml->xpath('/xinc/plugins') as $element) {
 			if(isset($element['group'])) {
 				$class = "{$element['group']}";
+				if(!class_exists($class,true)) {
+				    throw new ClassLoaderException($class);	
+				}
 				$this->log->verbose("Load plugin group from class $class");
 				$group = new $class();
 				if(!($group instanceof PluginGroupInterface)) {
