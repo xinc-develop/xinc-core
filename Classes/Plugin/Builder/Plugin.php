@@ -1,10 +1,13 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * 
- * @author    Sebastian Knapp <news@young-workers.de>
+ *
+ * PHP version 5
+ *
+ * @category  Development
+ * @package   Xinc.Plugin.Repos
+ * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -20,25 +23,23 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @homepage  https://github.com/xinc-develop/xinc-core/
+ * @link      http://code.google.com/p/xinc/
  */
-namespace Xinc\Core\Plugin;
 
-class Group implements PluginGroupInterface
+namespace Xinc\Core\Plugin\Builder;
+
+use Xinc\Core\Plugin\Base;
+
+class Plugin extends Base
 {
-	public function getPluginClasses()
-	{
-	    $base = __NAMESPACE__;
-	    $plugins = array(
-	        'Configuration',
-	        'Builder',
-	        'ModificationSet',
-	        'Property',
-	        'Schedule'
-	    );
-	    return array_map(function ($name) use ($base) { 
-			return join("\\",[$base,$name,'Plugin']); 
-		}, $plugins);	
-	}
+    public function validate(&$msg = null)
+    {
+        return true;
+    }
+
+    public function getTaskDefinitions()
+    {
+        return array(new Task($this),
+                     new Process($this));
+    }
 }
