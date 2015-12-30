@@ -28,8 +28,15 @@ use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
 use Xinc\Core\Build\BuildInterface;
 
-class Task extends Base
+class Task extends Base implements ModificationSetInterface
 {
+	protected $results = array();
+	
+	public function addResult(Result $result)
+	{
+	    $this->results[] = $result;	
+	}
+	
     /**
      * Validates if a task can run by checking configs, directories and so on.
      *
@@ -62,6 +69,26 @@ class Task extends Base
 
     public function process(BuildInterface $build)
     {
-		return;
+		foreach($this->results as $result) {       
+            $build->info($result);
+            if ( $result->getStatus() == Result::CHANGED ) {
+                $build->setStatus(BuildInterface::PASSED);
+                break;
+            }
+            else if ( $result->getStatus() === Result::STOPPED ) {
+                $build->setStatus(BuildInterface::STOPPED);
+            }
+            else if ( $result->getStatus() === Result::FAILED ) {
+                $build->setStatus(BuildInterface::FAILED);
+            } 
+            else if ( $result->getStatus() === self::ERROR ) {
+                $build->setStatus(BuildInterface::STOPPED);
+                break;
+            }
+            else {
+                $build->setStatus(BuildInterface::STOPPED);
+            }
+		    return;
+		}
     }
 }

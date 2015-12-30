@@ -20,6 +20,7 @@
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use Xinc\Core\Exception\MalformedConfigException;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Slot;
 
@@ -39,5 +40,22 @@ class TestProjectModificationSet extends Xinc\Core\Test\BaseTest
 	    $build2->process(Slot::PRE_PROCESS);
 	    
 	    $this->assertEquals($build2->getStatus(), BuildInterface::PASSED);
+	 }
+	 
+	 
+	public function testErrorBuildAlways()
+	{
+		$conf = $this->defaultConfig();
+	    $conf->setOption('config-file', __DIR__ . '/../config/plugins3.xml');
+	    $conf->setOption('project-file', __DIR__ . '/../config/error-buildalways.xml');
+	    
+	    $this->projectXml($conf,$reg)->load($conf,$reg);
+	    try {
+	        $build2 = $this->aBuildWithConfig($conf);
+	        $this->assertTrue(false,'Should throw exception');
+	    }
+	    catch(MalformedConfigException $e) {
+			$this->assertTrue(true,"Exception: " . $e->getMessage());
+		}
 	 }
 }

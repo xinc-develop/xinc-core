@@ -29,6 +29,7 @@
 namespace Xinc\Core\Plugin\ModificationSet;
 
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Exception\MalformedConfigException;
 use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
 
@@ -52,19 +53,7 @@ abstract class BaseTask extends Base
     public final function process(BuildInterface $build)
     {
         $result = $this->checkModified($build);
-        $build->info($result);
-        if ( $result->getStatus() == self::CHANGED ) {
-            $build->getProperties()->set('changeset', $result);
-            $build->setStatus(BuildInterface::PASSED);
-        } else if ( $result->getStatus() === self::STOPPED ) {
-            $build->setStatus(BuildInterface::STOPPED);
-        } else if ( $result->getStatus() === self::FAILED ) {
-            $build->setStatus(BuildInterface::FAILED);
-        } else if ( $result->getStatus() === self::ERROR ) {
-            $build->setStatus(BuildInterface::STOPPED);
-        } else {
-            $build->setStatus(BuildInterface::STOPPED);
-        }
+        $this->frame->addResult($result);
     }
 
     /**
@@ -87,10 +76,14 @@ abstract class BaseTask extends Base
     /**
      * Check necessary variables are set
      * 
-     * @throws Xinc_Exception_MalformedConfig
+     * @throws Xinc::Core::Exception::MalformedConfigException
      */
     public function validate()
     {
-		return true;
+		if($this->frame instanceof ModificationSetInterface) {
+		    return true;
+		}
+		throw new MalformedConfigException($this->getName() .
+		    ' must be inside of a "modificationset".');
     }
 }

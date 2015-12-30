@@ -30,6 +30,7 @@ class TestExceptions extends Xinc\Core\Test\BaseTest
 		$e[] = new Xinc\Core\Exception;
 		$e[] = new Xinc\Core\Exception\ClassLoaderException('not\found');
 		$e[] = new Xinc\Core\Exception\IOException('Ooh');
+		$e[] = new Xinc\Core\Exception\MalformedConfigException;
 		$e[] = new Xinc\Core\Exception\Mistake;
 		$e[] = new Xinc\Core\Exception\XmlException(array());
 		$e[] = new Xinc\Core\Validation\Exception\ValidationException;
