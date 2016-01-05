@@ -54,26 +54,5 @@ abstract class BaseTask extends Base
         return Xinc_Plugin_Slot::PROCESS;
     }
 
-    public function validate()
-    {
-        try {
-            return $this->validateTask();
-        } catch(Exception $e){
-            Xinc_Logger::getInstance()->error(
-                'Could not validate: ' . $e->getMessage()
-            );
-            return false;
-        }
-    }
-
-
-    /**
-     * Validate if all information the task needs to run
-     * properly have been set
-     *
-     * @return boolean
-     */
-    public abstract function validateTask();
-
     public abstract function build(BuildInterface $build);
 }

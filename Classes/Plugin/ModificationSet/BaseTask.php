@@ -78,7 +78,7 @@ abstract class BaseTask extends Base
      * 
      * @throws Xinc::Core::Exception::MalformedConfigException
      */
-    public function validate()
+    public function validate(&$msg = null)
     {
 		if($this->frame instanceof ModificationSetInterface) {
 		    return true;

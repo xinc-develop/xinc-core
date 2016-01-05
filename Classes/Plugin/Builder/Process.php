@@ -23,7 +23,8 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      http://code.google.com/p/xinc/
+ * 
+ * @homepage  http://code.google.com/p/xinc/
  */
 
 namespace Xinc\Core\Plugin\Builder;
@@ -46,7 +47,7 @@ class Process extends BaseTask
      *
      * @return boolean Is true if task can run.
      */
-    public function validate()
+    public function validateTask()
     {
         return true;
     }
@@ -72,8 +73,13 @@ class Process extends BaseTask
         return Slot::PROCESS;
     }
 
-    public function process(BuildInterface $build)
+    public function processX(BuildInterface $build)
     {
         $build->info('Processing builders done');
     }
+    
+    public function build(BuildInterface $build)
+    {
+		  
+	}
 }

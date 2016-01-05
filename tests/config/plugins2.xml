@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <xinc>
 <plugins namespace="Xinc\Core\Plugin">
-	<plugin name="ModificationSet"/>
+	<plugin name="Builder"/>
 	<plugin name="Configuration"/>
+	<plugin name="ModificationSet"/>
 	<plugin name="Schedule"/>
 	<plugin name="Phpunit"/>
 	<plugin name="Property"/>

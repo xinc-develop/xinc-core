@@ -102,95 +102,7 @@ class PluginRegistry extends RegistryAbstract
                     break;
             }
             $this->registerTaskForSlot($taskSlot,$task);
-
-            $parentTasks = array(); 
-            //$task->getAllowedParentElements(); // should return the tasks! not the string
-            if (count($parentTasks) > 0) {
-                $this->_registerTaskDependencies($plugin, $task, $parentTasks);
-            } else {
-                $fullTaskName = strtolower($fullTaskName);
-
-                if (isset($this->_definedTasks[$fullTaskName])) {
-                    throw new Xinc_Plugin_Task_Exception();
-                }
-                $this->definedTasks[$fullTaskName] = array(
-                    'classname' => $taskClass,
-                    'plugin' => array('classname' => $pluginClass),
-                );
-
-                    // register default classname as task
-                $classNameTask = strtolower($taskClass);
-                if (isset($this->definedTasks[$classNameTask])) {
-                    throw new Xinc_Plugin_Task_Exception();
-                }
-                $this->definedTasks[$classNameTask] = array(
-                    'classname' => $taskClass,
-                    'plugin' => array('classname' => $pluginClass),
-                );
-            }
         }
-    }
-
-    /**
-     * @param Xinc_Plugin_Interface      $plugin
-     * @param Xinc_Plugin_Task_Interface $task
-     * @param array                      $parentTasks
-     *
-     * @throws Xinc_Plugin_Task_Exception
-     */
-    private function _registerTaskDependencies(Xinc_Plugin_Interface $plugin,
-                                               Xinc_Plugin_Task_Interface $task,
-                                               array $parentTasks
-    ) {
-        $taskClass = get_class($task);
-        $pluginClass = get_class($plugin);
-        $fullTaskNames = array();
-        foreach ($parentTasks as $parentTask) {
-            if ($parentTask instanceof Xinc_Plugin_Task_Interface) {
-                $parentTaskClass = get_class($parentTask);
-                $fullTaskNames[] = $parentTask->getName().'/'.$task->getName();
-                $fullTaskNames[] = $parentTaskClass.'/'.$taskClass;
-            }
-        }
-        foreach ($fullTaskNames as $fullTaskName) {
-            $fullTaskName = strtolower($fullTaskName);
-
-            if (isset($this->definedTasks[$fullTaskName])) {
-                throw new Xinc_Plugin_Task_Exception();
-            }
-            $this->definedTasks[$fullTaskName] = array(
-                'classname' => $taskClass,
-                'plugin' => array('classname' => $pluginClass),
-            );
-        }
-    }
-
-    public function getTask($taskname, $parentElement = null)
-    {
-        $taskname = strtolower($taskname);
-        if ($parentElement !== null) {
-            $taskname2 = $parentElement.'/'.$taskname;
-        }
-
-        if (isset($this->definedTasks[$taskname2])) {
-            $taskData = $this->definedTasks[$taskname2];
-        } elseif (isset($this->definedTasks[$taskname])) {
-            $taskData = $this->definedTasks[$taskname];
-        } else {
-            throw new Xinc_Plugin_Task_Exception('undefined task '.$taskname);
-        }
-
-        if (!isset($this->_plugins[$taskData['plugin']['classname']])) {
-            $plugin = new $taskData['plugin']['classname']();
-            $this->_plugins[$taskData['plugin']['classname']] = &$plugin;
-        } else {
-            $plugin = $this->_plugins[$taskData['plugin']['classname']];
-        }
-
-        $className = $taskData['classname'];
-        $object = new $className($plugin);
-
-        return $object;
     }
 
     /**
@@ -200,7 +112,7 @@ class PluginRegistry extends RegistryAbstract
      */
     public function getPlugins()
     {
-        return new Xinc_Plugin_Iterator($this->_plugins);
+        return $this->getIterator();
     }
 
     /**
