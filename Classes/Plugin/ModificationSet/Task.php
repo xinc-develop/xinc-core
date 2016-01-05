@@ -36,16 +36,6 @@ class Task extends Base implements ModificationSetInterface
 	{
 	    $this->results[] = $result;	
 	}
-	
-    /**
-     * Validates if a task can run by checking configs, directories and so on.
-     *
-     * @return bool Is true if task can run.
-     */
-    public function validate()
-    {
-		return true;
-    }
 
     /**
      * Returns name of Task.

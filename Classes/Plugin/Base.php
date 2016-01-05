@@ -32,6 +32,11 @@ abstract class Base implements PluginInterface
 {
 	use Config;
 	
+	public function getConfig()
+	{
+		return $this->config;
+	}
+	
     public function getName()
     {
         $class = get_class($this);

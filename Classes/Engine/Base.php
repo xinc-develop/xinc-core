@@ -106,7 +106,9 @@ abstract class Base implements EngineInterface
             $build->registerTask($taskObject);
             
             if ( !$taskObject->validate() ) {
-				$this->log->warn("Task {$taskObject->getName()} is invalid.");
+				$this->log->warn("Task {$taskObject->getName()} is invalid.".
+				    ($msg ? "\nError message: $msg" : '') 
+				);
                 $build->getProject()->setStatus(Status::MISCONFIGURED);
                 return;
             }

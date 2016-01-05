@@ -29,5 +29,6 @@ namespace Xinc\Core\Config;
  */
 interface ConfigInterface
 {
-    public function getOption($key);
+    public function get($key);
+    public function has($key);
 }

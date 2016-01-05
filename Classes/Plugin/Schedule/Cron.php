@@ -108,7 +108,10 @@ class Cron extends Base implements SchedulerInterface
         return Slot::INIT_PROCESS;
     }
 
-    public function validate()
+    /**
+     * @todo improve validation
+     */
+    public function validate(&$msg = null)
     {
         $parts = preg_split('/\s+/', $this->timer);
         return count($parts)==5;

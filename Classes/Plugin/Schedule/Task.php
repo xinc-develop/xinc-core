@@ -99,9 +99,13 @@ class Task extends Base implements SchedulerInterface
         return Slot::INIT_PROCESS;
     }
 
-    public function validate()
+    public function validate(&$msg = null)
     {
-        return $this->interval > 0;
+        if($this->interval > 0) {
+			return true;
+		}
+		$msg = "Invalid schedule interval value '{$this->interval}'";
+		return false;
     }
 
     public function getName()

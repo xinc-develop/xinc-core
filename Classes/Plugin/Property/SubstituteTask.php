@@ -61,7 +61,7 @@ class SubstituteTask extends Base implements SetterInterface
 
     public function set(BuildInterface $build, $value)
     {
-        $newvalue = $build->getProperties()->parseString($value);
+        $newvalue = $build->parseProperty($value);
 
         return $newvalue;
     }

@@ -59,7 +59,7 @@ class DefaultLabeler implements LabelerInterface
         }
 
         $buildLabel = $this->_prefix.$buildNo;
-        $build->getProperties()->set('build.label', $buildLabel);
+        $build->setProperty('build.label', $buildLabel);
 
         return $buildLabel;
     }

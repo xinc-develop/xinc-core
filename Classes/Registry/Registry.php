@@ -95,6 +95,7 @@ class Registry implements XincRegistryInterface
             throw new TypeMismatch(get_class($plugin),
                 '\Xinc\Core\Plugin\PluginInterface');
         }
+        $plugin->setConfig($this->config);
         $this->pluginRegistry->registerPlugin($plugin);
         $this->taskRegistry->registerTasks($plugin->getTaskDefinitions());
         $this->widgetRegistry->registerWidgets($plugin->getGuiWidgets());

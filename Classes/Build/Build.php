@@ -178,19 +178,15 @@ class Build implements BuildInterface
         return $this->lastBuild;
     }
 
-    /**
-     * @deprecated
-     * @return Xinc::Core::Properties
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
     public function getProperty($name)
     {
         return $this->properties->get($name);
     }
+    
+    public function parseProperty($value)
+    {
+		return $this->properties->parseString($value);
+	}
 
     /**
      * @param string $name

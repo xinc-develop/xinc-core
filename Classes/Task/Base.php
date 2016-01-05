@@ -125,7 +125,7 @@ abstract class Base implements TaskInterface
      * Validates if a task can run by checking configs, directories and so on.
      * @return bool Is true if task can run.
      */
-    public function validate()
+    public function validate(&$msg = null)
     {
         return true;
     }

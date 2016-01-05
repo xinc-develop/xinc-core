@@ -77,7 +77,7 @@ class SetTask extends Base
     {
         $this->_value = (string) $value;
         if (isset($this->_name) && isset($this->_value)) {
-            $build->getProperties()->set($this->_name, $this->_value);
+            $build->setProperty($this->_name, $this->_value);
         }
     }
 
@@ -96,14 +96,8 @@ class SetTask extends Base
      *
      * @return bool Is true if task can run.
      */
-    public function validate()
+    public function validate(&$msg = null)
     {
-        if (count($this->arSubtasks) > 0) {
-            /*
-             * cannot have subtasks
-             */
-            return false;
-        }
         if (!isset($this->_name) && !isset($this->_value) && !isset($this->_file)) {
             return false;
         } elseif (isset($this->_file) && (isset($this->_name) || isset($this->_value))) {
@@ -141,7 +135,7 @@ class SetTask extends Base
             /*
              * If we have a condition, we need to check
              */
-            $property = $build->getProperties()->get($this->_if);
+            $property = $build->getProperty($this->_if);
             if ($property !== true) {
                 $build->info('Property: '.$this->_name.' does not apply, '.$this->_if.' == false');
                 $build->setStatus(BuildInterface::PASSED);

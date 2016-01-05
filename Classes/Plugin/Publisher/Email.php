@@ -35,6 +35,12 @@ use Xinc\Core\Task\Slot;
 
 class Email extends Base
 {
+    private $defaultFrom = 'xinc@localhost';
+	
+	private $to;
+    private $from;
+    private $subject;
+    private $message;
 	
     public final function process(BuildInterface $build)
     {
@@ -56,8 +62,6 @@ class Email extends Base
     {
         return Slot::POST_PROCESS;
     }
-
-	    private $_defaultFrom = 'xinc@localhost';
 
     private function _sendPearMail($from, $to, $subject, $message)
     {
@@ -90,14 +94,6 @@ class Email extends Base
         }
     }
 
-    public function validate()
-    {
-        return true;
-    }
-    public function getTaskDefinitions()
-    {
-        return array(new Xinc_Plugin_Repos_Publisher_Email_Task($this));
-    }
     public function email(
         Xinc_Project $project, $to, $subject, $message, $from = 'Xinc'
     ) {
@@ -128,11 +124,6 @@ class Email extends Base
         }
     }
 	
-    private $_to;
-    private $_from;
-    private $_subject;
-    private $_message;
-
     public function getName()
     {
         return 'email';
@@ -176,7 +167,7 @@ class Email extends Base
         $this->_message = (string)$message;
     }
 
-    public function validateTask()
+    public function validate(&$msg = null)
     {
         if (!isset($this->_to)) {
               throw new Xinc_Exception_MalformedConfig(

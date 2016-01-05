@@ -43,16 +43,6 @@ class Task extends Base
     }
 
     /**
-     * Validates if a task can run by checking configs, directries and so on.
-     *
-     * @return boolean Is true if task can run.
-     */
-    public function validate()
-    {
-        return true;
-    }
-
-    /**
      * Returns name of task.
      *
      * @return string Name of task.

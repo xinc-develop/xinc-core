@@ -50,7 +50,7 @@ interface TaskInterface extends UseLoggerInterface
      *
      * @return bool Is true if task can run.
      */
-    public function validate();
+    public function validate(&$msg = null);
 
     /**
      * Process the task.

@@ -71,13 +71,6 @@ interface BuildInterface extends TaskRegistryInterface
      */
     public function setLastBuild();
 
-    /**
-     * returns the build properties.
-     *
-     * @return Properties
-     */
-    public function getProperties();
-
     public function setProperty($name, $value);
 
     public function getProperty($name);

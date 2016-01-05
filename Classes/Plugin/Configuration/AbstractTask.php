@@ -38,13 +38,6 @@ abstract class AbstractTask extends Base
         return Slot::PROJECT_INIT;
     }
 
-    public function validate()
-    {
-        // do all necessary checks here to validate that the plugin
-        // can work properly
-        return true;
-    }
-
     public function process(BuildInterface $build)
     {
         $this->configure($build);

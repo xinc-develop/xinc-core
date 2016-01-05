@@ -36,21 +36,6 @@ use Xinc\Core\Task\Slot;
 class Task extends Base
 {
     /**
-     * Validates if a task can run by checking configs, directries and so on.
-     *
-     * @return boolean Is true if task can run.
-     */
-    public function validate()
-    {
-        foreach ( $this->arSubtasks as $task ) {
-            if (!$task instanceof Xinc_Plugin_Repos_Publisher_AbstractTask) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Returns name of task by lowercasing class name.
      *
      * @return string Name of task.
@@ -64,7 +49,7 @@ class Task extends Base
      * Returns the slot of this task inside a build.
      *
      * @return integer The slot number.
-     * @see Xinc/Plugin/Slot.php for available slots
+     * @see Xinc::Core::Task::Slot for available slots
      */
     public function getPluginSlot()
     {
@@ -73,11 +58,6 @@ class Task extends Base
 
     public function process(BuildInterface $build)
     {
-        $build->info('Processing publishers');
-
-        foreach ($this->arSubtasks as $task) {
-            $task->publish($build);
-        }
         $build->info('Processing publishers done');
     }
 }
