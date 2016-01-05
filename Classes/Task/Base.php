@@ -36,10 +36,6 @@ use Xinc\Core\Task\TaskInterface;
 abstract class Base implements TaskInterface
 {
 	use Logger;
-    /**
-     * @var array Subtasks for this task
-     */
-    protected $arSubtasks = array();
 
     protected $plugin;
     protected $xml;
@@ -81,16 +77,10 @@ abstract class Base implements TaskInterface
 		//
 	}
 
-    /**
-     * Support for subtasks, empty by default.
-     *
-     * @param TaskInterface $task Task to register
-     */
-    public function registerTask(TaskInterface $task)
+    protected function getConfigValue($key)
     {
-        $this->log->debug('Registering Task: '.get_class($task));
-        $this->arSubtasks[] = $task;
-    }
+		return $this->getPlugin()->getConfigValue($key);
+	}
 
     /**
      * Returns name of task by lowercasing class name.

@@ -32,9 +32,9 @@ abstract class Base implements PluginInterface
 {
 	use Config;
 	
-	public function getConfig()
+	public function getConfigValue($key)
 	{
-		return $this->config;
+		return $this->config->get($key);
 	}
 	
     public function getName()

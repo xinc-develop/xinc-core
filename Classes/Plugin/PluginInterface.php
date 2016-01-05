@@ -51,5 +51,5 @@ interface PluginInterface extends UseConfigInterface
      *
      * @return bool True if plugin can run properly otherwise false.
      */
-    public function validate();
+    public function validate(&$msg = true);
 }

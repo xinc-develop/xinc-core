@@ -27,6 +27,7 @@
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Exception\MalformedConfigException;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status;
 use Xinc\Core\Task\TaskInterface;
@@ -105,13 +106,29 @@ abstract class Base implements EngineInterface
             }
             $build->registerTask($taskObject);
             
-            if ( !$taskObject->validate() ) {
-				$this->log->warn("Task {$taskObject->getName()} is invalid.".
-				    ($msg ? "\nError message: $msg" : '') 
-				);
-                $build->getProject()->setStatus(Status::MISCONFIGURED);
+            if(!$this->validateTask($taskObject)) {
+				$build->getProject()->setStatus(Status::MISCONFIGURED);
                 return;
             }
         }
     }
+    
+    protected function validateTask($taskObject)
+    {
+		try {
+            if ( !$taskObject->validate($msg) ) {
+				$this->log->warn("Task {$taskObject->getName()} is invalid.".
+				    ($msg ? "\nError message: $msg" : '') 
+				);
+                return false;   
+            }
+            return true;
+        }
+        catch(MalformedConfigException $e) {
+			$this->log->error("Error in task {$taskObject->getName()} configuration: " .
+			    $e->getMessage()
+			);
+			return false;
+		}
+	}
 }
