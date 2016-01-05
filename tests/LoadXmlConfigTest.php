@@ -35,7 +35,7 @@ use Xinc\Core\Registry\RegistryException;
  */
 class TestLoadXml extends Xinc\Core\Test\BaseTest
 {
-	public function xml(&$reg = null)
+	public function xml($conf, &$reg = null)
 	{
 		$xml = new Xml;
 		$log = new Logger();
@@ -43,6 +43,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 		$xml->setLogger($log);
 		$reg = new Registry();
 		$reg->setLogger($log);
+		$reg->setConfig($conf);
 		return $xml;
 	}
 	
@@ -50,7 +51,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	{
 	    $conf = new Config();
 	    $conf->setOption('config-file','./config/sample-settings.xml');
-	    $files = $this->xml()->getConfigurationSources($conf);
+	    $files = $this->xml($conf)->getConfigurationSources($conf);
 	    $expect = array('./config/sample-settings.xml');
 	    $this->assertEquals($expect,$files);
     }
@@ -59,7 +60,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
     {	    
 	    $conf = new Config();
 	    $conf->setOption('config-dir',__DIR__ . '/config/test1/');
-	    $files = $this->xml()->getConfigurationSources($conf);
+	    $files = $this->xml($conf)->getConfigurationSources($conf);
 	    $expect = array(
 	        __DIR__ .'/config/test1/1.xml',
 	        __DIR__ .'/config/test1/2.xml',
@@ -73,7 +74,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file','./x-files-unknown.xml');
 	    try {
-			$this->xml()->load($conf,(new Registry));
+			$this->xml($conf)->load($conf,(new Registry));
 			$this->assertTrue(false,'IO exception expected');
 		}
 		catch(IOException $e) {
@@ -86,7 +87,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/broken-settings.xml');
 	    try {
-			$this->xml()->load($conf,(new Registry));
+			$this->xml($conf)->load($conf,(new Registry));
 			$this->assertTrue(false,'XML exception expected');
 		}
 		catch(XmlException $e) {
@@ -99,7 +100,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/sample-settings.xml');
 	    
-	    $this->xml()->load($conf,(new Registry));
+	    $this->xml($conf)->load($conf,(new Registry));
 	    $this->assertEquals($conf->get('heartbeat'),30);
 	    $this->assertEquals($conf->get('timezone'),'Europe/Berlin');
 	    $this->assertEquals($conf->get('loglevel'),2);	
@@ -111,7 +112,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf->setOption('config-file', __DIR__ . '/config/unknown-plugin.xml');
 	    
 	    try {
-	        $this->xml($reg)->load($conf,$reg);
+	        $this->xml($conf, $reg)->load($conf,$reg);
 	        $this->assertTrue(false,"Unknown plugin class should throw exception");
 	    }
 	    catch(ClassLoaderException $exp) {
@@ -124,7 +125,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins.xml');
 	    
-	    $this->xml($reg)->load($conf,$reg);
+	    $this->xml($conf, $reg)->load($conf,$reg);
 	    
 	    $this->assertInstanceOf(
 	        'Xinc\Core\Plugin\ModificationSet\Plugin',
@@ -137,7 +138,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
 	    
-	    $this->xml($reg)->load($conf,$reg);  
+	    $this->xml($conf, $reg)->load($conf,$reg);  
 	    $this->assertInstanceOf(
 	        'Xinc\Core\Plugin\ModificationSet\Plugin',
 	        $reg->getPlugin('ModificationSet'));
@@ -149,7 +150,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/plugins3.xml');
 	    
-	    $this->xml($reg)->load($conf,$reg);
+	    $this->xml($conf, $reg)->load($conf,$reg);
 	    $this->assertInstanceOf(
 	        'Xinc\Core\Plugin\ModificationSet\Plugin',
 	        $reg->getPlugin('ModificationSet'));
@@ -161,7 +162,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	    $conf->setOption('config-file', __DIR__ . '/config/unknown-group.xml');
 	    
 	    try {
-	        $this->xml($reg)->load($conf,$reg);
+	        $this->xml($conf, $reg)->load($conf,$reg);
 	        $this->assertTrue(false,"ClassLoader exception expected");
 	    }
 	    catch(ClassLoaderException $e) {
@@ -174,7 +175,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 		$conf = new Config();
 	    $conf->setOption('config-file', __DIR__ . '/config/sample-engines.xml');
 	    
-	    $this->xml($reg)->load($conf,$reg);
+	    $this->xml($conf, $reg)->load($conf,$reg);
 	    $this->assertInstanceOf('Xinc\Core\Test\Engine',$reg->getDefaultEngine());
 	    $this->assertInstanceOf('Xinc\Core\Test\Engine',$reg->getEngine('TestEngine'));
 	    try {

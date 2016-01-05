@@ -24,12 +24,14 @@
  */
 namespace Xinc\Core\Plugin;
 
+use Xinc\Core\Config\UseConfigInterface;
+
 /**
  * This interface represents a publishing mechanism to publish build results.
  *
  * @ingroup interfaces
  */
-interface PluginInterface
+interface PluginInterface extends UseConfigInterface
 {
     public function getName();
 
@@ -40,7 +42,7 @@ interface PluginInterface
     /**
      * Returns the defined tasks of the plugin.
      *
-     * @return Xinc_Plugin_Task[]
+     * @return array of Xinc::Core::Task::TaskInterface
      */
     public function getTaskDefinitions();
 

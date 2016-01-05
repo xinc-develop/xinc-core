@@ -2,8 +2,8 @@
 /**
  * Xinc - Continuous Integration.
  *
- * @author    Arno Schneider <username@example.com>
- * @copyright 2014 Alexander Opitz, Leipzig
+ * @author    Sebastian Knapp <news@young-workers.de>
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -19,52 +19,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
-namespace Xinc\Core\Registry;
-
-use Xinc\Core\Logger\UseLoggerInterface;
+namespace Xinc\Core\Config;
 
 /**
- * Xinc Registry Interface.
+ * Interface for objects which are using the config.
  *
  * @ingroup interfaces
- * @ingroup registry
  */
-interface RegistryInterface extends UseLoggerInterface
+interface UseConfigInterface
 {
-    public function register($name, $object);
-
-    /**
-     * generates an array of all configured projects
-     * Unregisters an Object.
-     *
-     * @param string $name
-     *
-     * @return object the unregistered Object
-     *
-     * @throws Xinc\Core\Registry\RegistryException
-     */
-    public function unregister($name);
-
-    /**
-     * Returns the registered object.
-     *
-     * @param string $name
-     *
-     * @return object
-     *
-     * @throws Xinc\Core\Registry\Exception
-     */
-    public function get($name);
-
-    /**
-     * Is the name registered.
-     * 
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function knows($name);
+    public function setConfig(ConfigInterface $config);
 }

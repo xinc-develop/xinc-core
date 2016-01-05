@@ -26,8 +26,12 @@
  */
 namespace Xinc\Core\Plugin;
 
+use Xinc\Core\Traits\Config;
+
 abstract class Base implements PluginInterface
 {
+	use Config;
+	
     public function getName()
     {
         $class = get_class($this);

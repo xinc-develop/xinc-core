@@ -26,9 +26,9 @@ namespace Xinc\Core\Task;
 
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Logger\LoggerInterface;
+use Xinc\Core\Logger\UseLoggerInterface;
 
-interface TaskInterface extends LoggerInterface
+interface TaskInterface extends UseLoggerInterface
 {
     /**
      * Constructor.

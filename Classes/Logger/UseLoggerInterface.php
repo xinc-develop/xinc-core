@@ -28,7 +28,7 @@ namespace Xinc\Core\Logger;
  *
  * @ingroup interfaces
  */
-interface LoggerInterface
+interface UseLoggerInterface
 {
     public function setLogger($log);
 }

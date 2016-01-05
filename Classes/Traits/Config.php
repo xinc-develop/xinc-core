@@ -24,6 +24,8 @@
  */
 namespace Xinc\Core\Traits;
 
+use Xinc\Core\Config\ConfigInterface;
+
 /**
  * A trait for objects which contain the config.
  */
@@ -31,7 +33,7 @@ trait Config
 {
     protected $config;
 
-    public function setConfig($conf)
+    public function setConfig(ConfigInterface $conf)
     {
         $this->config = $conf;
     }

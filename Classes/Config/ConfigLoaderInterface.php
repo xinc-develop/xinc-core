@@ -23,13 +23,13 @@
  */
 namespace Xinc\Core\Config;
 
-use Xinc\Core\Logger\LoggerInterface;
+use Xinc\Core\Logger\UseLoggerInterface;
 use Xinc\Core\Registry\XincRegistryInterface;
 
 /**
  * Interface for Xinc Configuration Object(s).
  */
-interface ConfigLoaderInterface extends LoggerInterface
+interface ConfigLoaderInterface extends UseLoggerInterface
 {
     /**
    * Get Commandline Options.
