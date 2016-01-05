@@ -71,7 +71,7 @@ class Task extends Base implements ModificationSetInterface
             else if ( $result->getStatus() === Result::FAILED ) {
                 $build->setStatus(BuildInterface::FAILED);
             } 
-            else if ( $result->getStatus() === self::ERROR ) {
+            else if ( $result->getStatus() === Result::ERROR ) {
                 $build->setStatus(BuildInterface::STOPPED);
                 break;
             }
