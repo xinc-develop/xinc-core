@@ -25,6 +25,7 @@
  */
 namespace Xinc\Core\Build;
 
+use Exception;
 use Xinc\Core\Build\TaskRegistry as BuildTaskRegistry;
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
@@ -490,24 +491,20 @@ class Build implements BuildInterface
     {
         return $this->scheduler;
     }
-
-    /**
-     * @deprecated - should not be public
-     * @return Xinc_Build_Tasks_Registry
-     */
-    protected function getTaskRegistry()
+    
+    public function getTasksForSlot($slot)
     {
-        return $this->taskRegistry;
-    }
+		return $this->taskRegistry->getTasksForSlot($slot);
+	}
 
     /**
      * processes the tasks that are registered for the slot.
-     * @todo exception handling
+     * @todo exception handling & maybe move to engine
      * @param mixed $slot
      */
     public function process($slot)
     {
-        $tasks = $this->taskRegistry->getTasksForSlot($slot);
+        $tasks = $this->getTasksForSlot($slot);
         while ($tasks->valid()) {
             $task = $tasks->current();
             $this->log->info('Processing task: '.$task->getName());
