@@ -1,7 +1,6 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This exception is thrown when there is a problem found with the ModificationSet.
  *
  *
  * @author    David Ellis <username@example.org>
@@ -27,6 +26,9 @@
  */
 namespace Xinc\Core\Exception;
 
+/**
+ * This exception is thrown when there is a problem found with the ModificationSet.
+ */
 class ModificationSetException extends \Xinc\Core\Exception
 {
 }
