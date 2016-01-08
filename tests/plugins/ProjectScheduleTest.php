@@ -20,15 +20,9 @@
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-use Xinc\Core\Logger;
-use Xinc\Core\Config\Config;
-use Xinc\Core\Config\Xml as ConfigXml;
-use Xinc\Core\Project\Config\Xml as ProjectXml;
-use Xinc\Core\Registry\Registry;
 
-use Xinc\Core\Exception\ClassLoaderException;
-use Xinc\Core\Exception\IOException;
-use Xinc\Core\Exception\XmlException;
+use Xinc\Core\Plugin\Schedule\Plugin;
+use Xinc\Core\Plugin\Schedule\Task;
 
 /**
  * @test Test Class for loading a xml configuration
@@ -47,4 +41,20 @@ class TestProjectSchedule extends Xinc\Core\Test\BaseTest
         $this->assertInstanceOf('Xinc\Core\Plugin\Schedule\Task',$scheduler);
         $this->assertEquals(500,$scheduler->getInterval());	    
 	 }
+	 
+	 public function testTaskValidation()
+	 {
+		  $ok = new Task(new Plugin());
+		  $ok->setInterval(55);
+		  $this->assertTrue($ok->validate());
+		  
+		  $default = new Task(new Plugin());
+		  $this->assertTrue($default->validate());
+		  $this->assertEquals(60,$default->getInterval());
+		  
+		  $wrong = new Task(new Plugin());
+		  $wrong->setInterval('daily');
+		  $this->assertFalse($wrong->validate($msg));
+		  $this->assertEquals('Invalid schedule interval value \'daily\'',$msg);
+     }		 
 }

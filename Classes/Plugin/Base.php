@@ -55,10 +55,7 @@ abstract class Base implements PluginInterface
         return array();
     }
 
-    public function getTaskDefinitions()
-    {
-        return array();
-    }
+    abstract public function getTaskDefinitions();
 
     public function validate(&$msg = null)
     {

@@ -34,7 +34,7 @@ use Xinc\Core\Build\Scheduler\SchedulerInterface;
 class Task extends Base implements SchedulerInterface
 {
 
-    private $interval;
+    private $interval = 60;
     
     public function process(BuildInterface $build)
     {
@@ -49,17 +49,7 @@ class Task extends Base implements SchedulerInterface
     {
         return $this->interval;
     }
-    
-    public function registerTask(TaskInterface $task)
-    {
         
-    }
-    
-    public function setLastBuildTime($time)
-    {
-        
-    }
-    
     public function init(BuildInterface $build)
     {
         $build->setScheduler($this);
