@@ -114,7 +114,7 @@ class Properties implements ArrayAccess
 		foreach($this->dynamic as $k => $c) {
 			$props[$k] = $c();
 		}
-        return array_merge($props,$this->properties);
+        return array_replace($props,$this->properties);
         
     }
     /**

@@ -2,10 +2,7 @@
 /**
  * Xinc - Continuous Integration.
  *
- * PHP version 5
  *
- * @category  Development
- * @package   Xinc.Plugin.Repos.Builder
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -24,7 +21,7 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * 
- * @homepage  http://code.google.com/p/xinc/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin\Builder;

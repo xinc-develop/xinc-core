@@ -61,6 +61,7 @@ class TestProperties extends Xinc\Core\Test\BaseTest
         foreach ($propertiesArr as $key => $value) {
             $properties->set($key, $value);
         }
+        $properties->set('50',function () { return 'in the middle of the road'; });
         
         $allProperties = $properties->getAllProperties();
         
