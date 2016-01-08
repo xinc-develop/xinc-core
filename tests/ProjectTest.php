@@ -63,4 +63,19 @@ class TestProject extends BaseTest
 	    $engine = $reg->getEngine($project->getEngineName());
 	    $this->assertInstanceOf('Xinc\Core\Engine\EngineInterface',$engine);
 	 }
+	 
+	public function testProjectWithoutName()
+	{
+		$conf = new Config();
+	    $conf->setOption('config-file', __DIR__ . '/config/plugins2.xml');
+	    $conf->setOption('project-file', __DIR__ . '/config/project-anonym.xml');
+	    
+	    $this->projectXml($conf,$reg)->load($conf,$reg);
+	    
+	    $projects = $reg->getProjectIterator();
+	    $this->assertEquals(1,$projects->count());
+	    $project = $projects->current();
+	    
+	    $this->assertEquals('3ff74917e5698d0e418b55b592416df2',$project->getName());
+	 }
 }

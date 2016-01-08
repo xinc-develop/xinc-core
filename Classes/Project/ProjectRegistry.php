@@ -36,7 +36,7 @@ class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
     public function register($name, $project)
     {
         if (empty($name)) {
-            $name = md5($project->getConfig()->toXml());
+            $name = md5($project->getConfigXml()->asXml());
             $this->log->info("Automatic project name $name given.");
             $project->setName($name);
         }
