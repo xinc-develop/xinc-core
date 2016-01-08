@@ -114,7 +114,7 @@ class Xml extends Loader implements ConfigLoaderInterface
                     );
             }
         }
-        $project->setConfig($element);
+        $project->setConfigXml($element);
 
         if ($project->getEngineName() === '') {
             $project->setEngineName($xincreg->getDefaultEngine()->getName());

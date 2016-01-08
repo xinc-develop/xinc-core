@@ -25,6 +25,8 @@
  */
 namespace Xinc\Core\Project;
 
+use SimpleXMLElement;
+
 /**
  * This class represents one project with its processes.
  *
@@ -46,16 +48,11 @@ class Project
      * @var Xinc::Core::Project::Status
      */
     private $status;
-
+    
     /**
-     * @see Xinc::Core::Task::Slot
-     *
-     * @var array Used Processes
+     * @var SimpleXMLElement
      */
-    private $processes = array();
-
-    // TODO: Not the right direction.
-    private $config;
+    private $configXML;
 
     public function __construct()
     {
@@ -105,8 +102,7 @@ class Project
     /**
      * sets the status of the project.
      *
-     * @see Xinc\Core\Project\Status
-     *
+     * @see Xinc::Core::Project::Status
      * @param int $status
      */
     public function setStatus($status)
@@ -117,8 +113,7 @@ class Project
     /**
      * Retrieves the status of the current project.
      *
-     * @see Xinc\Core\Project\Status
-     *
+     * @see Xinc::Core::Project::Status
      * @return int
      */
     public function getStatus()
@@ -126,34 +121,13 @@ class Project
         return $this->status->getValue();
     }
 
-    public function setGroup(ProjectGroup $group)
+    public function setConfigXml(SimpleXMLElement $config)
     {
-        $this->group = $group;
+        $this->configXML = $config;
     }
 
-    public function getGroup()
+    public function getConfigXml()
     {
-        return $this->group;
-    }
-
-    /**
-     * Adds a process with appropriate slot to the project.
-     *
-     * @param int $slot
-     * @param ?   $process
-     */
-    public function addProcess($slot, $process)
-    {
-        $this->processes[$slot][] = $process;
-    }
-
-    public function setConfig($config)
-    {
-        $this->config = $config;
-    }
-
-    public function getConfig()
-    {
-        return $this->config;
+        return $this->configXML;
     }
 }

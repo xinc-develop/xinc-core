@@ -67,7 +67,7 @@ class Engine extends Base implements EngineInterface
         $build->setNumber(1);
         $this->setupBuildProperties($build);
         $this->setupConfigProperties($build);
-        $this->parseProjectConfig($build,$project->getConfig());
+        $this->parseProjectConfig($build,$project->getConfigXml());
         return $build;
     }
 
