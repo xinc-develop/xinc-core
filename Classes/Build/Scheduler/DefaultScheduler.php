@@ -1,10 +1,11 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -21,7 +22,7 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Build\Scheduler;
 
@@ -29,6 +30,7 @@ use Xinc\Core\Build\BuildInterface;
 
 /**
  * Build-Scheduler, will only build once if not built yet.
+ * @ingroup scheduler
  */
 class DefaultScheduler implements SchedulerInterface
 {

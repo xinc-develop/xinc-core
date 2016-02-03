@@ -1,14 +1,14 @@
 
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "Xinc Core Library"
-PROJECT_NUMBER         = 3.0.*
-PROJECT_BRIEF          = Rebirth of Xinc Is Not Cruise Control
-PROJECT_LOGO           =
+PROJECT_NUMBER         = 2.5.*
+PROJECT_BRIEF          = Xinc_is_a_eXtensible_continuous_Integration_serviCe
+PROJECT_LOGO           = misc/xinc-logo.jpg
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
-REPEAT_BRIEF           = YES
+REPEAT_BRIEF           = NO
 
 # This tag implements a quasi-intelligent brief description abbreviator
 # that is used to form the text in various listings. Each string
@@ -35,6 +35,9 @@ SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 4
 ALIASES                = license=\copyright
 ALIASES               += homepage="\par Project Homepage: "
+ALIASES               += tag="\par \b Tag name: \c "
+ALIASES               += attribute="\par \b Attribute: \c "
+ALIASES               += slot="\par \b Slot: \c "
 TCL_SUBST              =
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
@@ -336,7 +339,7 @@ FILE_VERSION_FILTER    =
 # You can optionally specify a file name after the option, if omitted
 # DoxygenLayout.xml will be used as the name of the layout file.
 
-LAYOUT_FILE            =
+LAYOUT_FILE            = misc/DoxygenLayout.xml
 
 # The CITE_BIB_FILES tag can be used to specify one or more bib files
 # containing the references data. This must be a list of .bib files. The
@@ -902,7 +905,7 @@ EXTRA_SEARCH_MAPPINGS  =
 # If the GENERATE_LATEX tag is set to YES (the default) Doxygen will
 # generate Latex output.
 
-GENERATE_LATEX         = YES
+GENERATE_LATEX         = NO
 
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be

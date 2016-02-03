@@ -1,10 +1,11 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -20,7 +21,8 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin\Schedule;
@@ -32,12 +34,20 @@ use Xinc\Core\Task\Slot;
 
 /**
  * Cron scheduler, allows you to use cron like expression to schedule builds.
- * based on:
+ * 
+ * This class is  based on:
+ * @verbatim
+         pseudo-cron v1.3
+         (c) 2003,2004 Kai Blankenhorn
+         www.bitfolge.de/pseudocron
+         kaib@bitfolge.de
+   @endverbatim
  *
- * pseudo-cron v1.3
- * (c) 2003,2004 Kai Blankenhorn
- * www.bitfolge.de/pseudocron
- * kaib@bitfolge.de
+ * @tag cron
+ * @attribute timer - a string in crontab format
+ * @slot INIT_PROCESS 
+ * 
+ * @ingroup scheduler
  */
 class Cron extends Base implements SchedulerInterface
 {
@@ -54,7 +64,7 @@ class Cron extends Base implements SchedulerInterface
 
     /**
      *
-     * @var Xinc_Build_Interface
+     * @var Xinc::Core::Build::BuildInterface
      */
     private $build;
 

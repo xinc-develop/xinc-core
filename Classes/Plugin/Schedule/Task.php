@@ -1,9 +1,10 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -31,6 +32,23 @@ use Xinc\Core\Task\Slot;
 use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Build\Scheduler\SchedulerInterface;
 
+/**
+ * Interval scheduler
+ * 
+ * This task simply schedules builds by an interval.
+ * 
+ * @tag schedule
+ * @attribute interval - the interval in seconds with a default of 60
+ * @slot INIT_PROCESS
+ * 
+ * @todo maybe support string intervals @a hourly, @a daily, @a weekly and @a monthly
+ * @todo support attribute @c run with at least three possible values:
+ * 		* @a interval - this is the default
+ * 		* @a continuous - run as often as possible
+ * 		* @a never - this is useful when triggers are used
+ *
+ * @ingroup scheduler
+ */
 class Task extends Base implements SchedulerInterface
 {
 

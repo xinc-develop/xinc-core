@@ -1,9 +1,10 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  *
  * @author    Arno Schneider <username@example.org>
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
@@ -21,12 +22,15 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage      https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Plugin\Base;
 
+/**
+ * Plugin with core schedulers
+ */
 class Plugin extends Base
 {
     /**

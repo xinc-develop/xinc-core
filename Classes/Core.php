@@ -19,7 +19,7 @@
  * @copyright 2007 Jamie Talbot, England
  * @copyright 2008 Arno Schneider, Barcelona
  * @copyright 2011-2014 Alexander Opitz, Leipzig
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -38,22 +38,34 @@
  */
 namespace Xinc\Core;
 
-/*
+/**
  * @defgroup config Classes with a reference to config object
  */
 
-/*
+/**
  * @defgroup exceptions Exceptions
  */
 
-/*
+/**
  * @defgroup interfaces Interfaces
  */
 
-/*
- * @defgroup logger Classes which are using a logger.
+/**
+ * @defgroup logger Classes using a logger
  */
 
-/*
- * @defgroup registry Classes fo registering objects
+/**
+ * @defgroup registry Classes for registering objects
+ */
+
+/**
+ * @defgroup scheduler Project build scheduler
+ * 
+ * A scheduler must implement the Xinc::Core::Build::Scheduler::SchedulerInterface.
+ * Currently a project build contains only one scheduler. When multiple schedulers
+ * are defined the last one will be used.
+ * 
+ * @todo create a schedulers task which allows to contain multible subtasks. This
+ * is most useful with cron entries, because not every senseful schedule scheme
+ * could be expressed with single cron entry.
  */
