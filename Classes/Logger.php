@@ -1,11 +1,12 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    David Ellis <username@example.com>
  * @author    Gavin Foster <username@example.com>
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 David Ellis, One Degree Square
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -22,23 +23,25 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
-/** */
 namespace Xinc\Core;
 
+/**
+ * The Xinc log facility
+ */
 class Logger
 {
     /**
-     * Path to the log file.
+     * Path to the main log file.
      *
      * @var string
      */
     private $file;
 
     /**
-     * Path to the log file.
+     * Path to the build log file.
      *
      * @var string
      */
@@ -47,17 +50,21 @@ class Logger
     /**
      * Queue of logger messages.
      *
-     * @var Xinc\Core\Logger\Message[]
+     * @var array of Xinc::Core::Logger::Message messages
      */
-    private $logQueue;
+    private $logQueue = array();
 
     /**
      * Maximum messages in queue.
      */
     private $max = 50;
 
+    /**
+     * Loglevel
+     */
     private $logLevel = 2;
 
+//! @{
     const LOG_LEVEL_VERBOSE = 0;
     const LOG_LEVEL_DEBUG = 1;
     const LOG_LEVEL_INFO = 2;
@@ -72,9 +79,6 @@ class Logger
     const WARN = self::LOG_LEVEL_WARN;
     const ERROR = self::LOG_LEVEL_ERROR;
 
-    /**
-     * Log levels.
-     */
     public static $logLevelError = array(self::LOG_LEVEL_ERROR, 'error');
     public static $logLevelWarn = array(self::LOG_LEVEL_WARN, 'warn');
     public static $logLevelInfo = array(self::LOG_LEVEL_INFO, 'info');
@@ -82,12 +86,11 @@ class Logger
     public static $logLevelVerbose = array(self::LOG_LEVEL_VERBOSE, 'verbose');
 
     private $logLevelSet = false;
+//! @}
 
-    public function __construct()
-    {
-        $this->logQueue = array();
-    }
-
+    /**
+     * Setter for loglevel
+     */
     public function setLogLevel($level)
     {
         $this->logLevelSet = true;
@@ -97,6 +100,9 @@ class Logger
         }
     }
 
+    /**
+     * getter for the currently used loglevel
+     */
     public function getLogLevel()
     {
         return $this->logLevel;
@@ -282,6 +288,9 @@ class Logger
         $this->resetLogQueue();
     }
 
+    /**
+     * empties the log message queue
+     */
     private function resetLogQueue()
     {
         $this->logQueue = array();

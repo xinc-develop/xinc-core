@@ -1,9 +1,9 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Sebastian Knapp <news@young-workers.de>
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -31,8 +31,15 @@ use Xinc\Core\Config\ConfigInterface;
  */
 trait Config
 {
+	/**
+	 * Xinc::Core::Config::ConfigInterface
+	 */
     protected $config;
 
+    /**
+     * the setter method
+     * @param Xinc::Core::Config::ConfigInterface
+     */
     public function setConfig(ConfigInterface $conf)
     {
         $this->config = $conf;

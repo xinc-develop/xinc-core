@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider <username@example.org>

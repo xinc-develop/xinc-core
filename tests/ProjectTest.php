@@ -31,7 +31,8 @@ use Xinc\Core\Test\BaseTest;
  * @test Test class for Xinc::Core::Project::Project
  */
 class TestProject extends BaseTest
-{  
+{
+//! @{  
     public function testSetters()
     {
         $project = new Project();
@@ -78,4 +79,5 @@ class TestProject extends BaseTest
 	    
 	    $this->assertEquals('3ff74917e5698d0e418b55b592416df2',$project->getName());
 	 }
+//! @}
 }

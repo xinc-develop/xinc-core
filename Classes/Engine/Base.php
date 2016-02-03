@@ -1,11 +1,11 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
- * Engine to build projects.
  *
  * @author    Sebastian Knapp
  * @author    Arno Schneider
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -40,6 +40,7 @@ use Xinc\Core\Traits\TaskRegistry;
 /**
  * Base class for engines with common functionality.
  *
+ * An engine controls a build process.
  * @ingroup config
  * @ingroup logger
  */
@@ -50,16 +51,28 @@ abstract class Base implements EngineInterface
     use PluginRegistry;
     use TaskRegistry;
 
+    /**
+     * An engine shares the logger with the controled build
+     * @return Xinc::Core::Logger
+     */
     public function getLogger()
     {
         return $this->log;
     }
     
+    /**
+     * The tasks which are performed during a slot.
+     * @param Xinc::Core::Task::Slot
+     */
     protected final function getTasksForSlot($slot)
     {
 		return $this->pluginRegistry->getTasksForSlot($slot);
 	}
 
+    /**
+     * copies some basic informations to the build object
+     * @param Xinc::Core::Build::BuildInterface
+     */
     protected function setupBuildProperties(BuildInterface $build)
     {
         $project = $build->getProject();
@@ -67,6 +80,7 @@ abstract class Base implements EngineInterface
         $build->setProperty('build.number', $build->getNumber());
         $build->setProperty('build.label', $build->getLabel());
     }
+
 
     protected function setupConfigProperties(BuildInterface $build)
     {
@@ -112,7 +126,10 @@ abstract class Base implements EngineInterface
             }
         }
     }
-    
+
+	/**
+	 * Calls the validate method of a task.
+	 */
     protected function validateTask($taskObject)
     {
 		try {

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Base test.
  * 
  * @author Sebastian Knapp
@@ -33,8 +33,15 @@ use Xinc\Core\Logger;
 use Xinc\Core\Project\Config\Xml as ProjectXml;
 use Xinc\Core\Registry\Registry;
 
+/**
+ * Base class for phpunit tests
+ */
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * setup a basic configuration for tests
+	 * @return Xinc::Core::Config::Config
+	 */
 	public function defaultConfig()
 	{
 		$conf = new Config();
@@ -47,6 +54,12 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         return $conf;	
 	}
 	
+	/**
+	 * the loglevel affects the verbosity of a testrun
+	 * 
+	 * The environment variable @c XINC_LOGLEVEL changes the default which is
+	 * currently @a info.
+	 */
     public function xincLoglevel()
     {
         $loglevel = getenv('XINC_LOGLEVEL');
@@ -57,6 +70,15 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         return $loglevel;
     }
 
+    /**
+     * Setup a project configuration object
+     * 
+     * It registers the test engine class as the default engine.
+     * 
+     * @param $conf Xinc::Core::Config::Config
+     * @param $reg Xinc::Core::Registry::Registry
+     * @return Xinc::Core::Project::Config::Xml
+     */
     public function projectXml($conf, &$reg = null)
     {
         $xml = new ConfigXml();
@@ -74,6 +96,12 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         return $pro;
     }
 
+    /**
+     * Setups a build object from a config
+     * 
+     * @param Xinc::Core::Config::Config
+     * @return Xinc::Core::Build::Build
+     */
     public function aBuildWithConfig($conf)
     {
         $xml = $this->projectXml($conf, $reg);

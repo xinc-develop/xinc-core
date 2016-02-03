@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 3.0
+ * @version 2.5
  * @author Sebastian Knapp
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -27,6 +27,7 @@ use Xinc\Core\Validation\Exception\TypeMismatch;
  */
 class TestIterators extends Xinc\Core\Test\BaseTest
 {
+//! @{
     public function testTypecheck()
     {
 		$iterators = array(
@@ -44,4 +45,5 @@ class TestIterators extends Xinc\Core\Test\BaseTest
 			}
 		}
     }
+//! @}
 }

@@ -1,10 +1,11 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Sebastian Knapp
  * @author    Arno Schneider
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * @version 3.0
  * @author Sebastian Knapp
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
@@ -27,6 +27,7 @@ use Xinc\Core\Properties;
  */
 class TestProperties extends Xinc\Core\Test\BaseTest
 {
+//! @{
     public function testProperties()
     {
         $properties = new Properties();
@@ -104,4 +105,5 @@ class TestProperties extends Xinc\Core\Test\BaseTest
 	    $this->assertEquals(13,$properties['test1']);	
 	    $this->assertEquals(12,$properties['test2']);
 	}
+//! @}
 }

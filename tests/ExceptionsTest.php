@@ -1,6 +1,6 @@
 <?php
-/**
- * @version 3.0
+/*
+ * @version 2.5
  * @author Sebastian Knapp
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -25,6 +25,7 @@
  */
 class TestExceptions extends Xinc\Core\Test\BaseTest
 {
+//! @{
     public function testConstructExceptions()
     {
 		$e[] = new Xinc\Core\Exception;
@@ -51,4 +52,5 @@ class TestExceptions extends Xinc\Core\Test\BaseTest
 	        $e->getMessage());
  	
 	}
+//! @}
 }

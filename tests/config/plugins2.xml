@@ -5,7 +5,6 @@
 	<plugin name="Configuration"/>
 	<plugin name="ModificationSet"/>
 	<plugin name="Schedule"/>
-	<plugin name="Phpunit"/>
 	<plugin name="Property"/>
 	<plugin name="Publisher"/>
 </plugins>

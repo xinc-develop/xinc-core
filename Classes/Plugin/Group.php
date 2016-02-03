@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  * 
  * @author    Sebastian Knapp <news@young-workers.de>
@@ -25,8 +25,19 @@
  */
 namespace Xinc\Core\Plugin;
 
+/**
+ * A group is a list of the available plugins.
+ * 
+ * Each xinc extension should define a group with all provided plugin classes.
+ * This allows to load all plugins with a single configuration line.
+ * 
+ *      <plugins group="Xinc\Core\Plugin\Group"/>
+ */
 class Group implements PluginGroupInterface
 {
+	/**
+	 * @return a list of plugin classes
+	 */
 	public function getPluginClasses()
 	{
 	    $base = __NAMESPACE__;

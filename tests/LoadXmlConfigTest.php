@@ -1,6 +1,6 @@
 <?php
-/**
- * @version 3.0
+/*
+ * @version 2.5
  * @author Sebastian Knapp
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -35,6 +35,7 @@ use Xinc\Core\Registry\RegistryException;
  */
 class TestLoadXml extends Xinc\Core\Test\BaseTest
 {
+//! @{
 	public function xml($conf, &$reg = null)
 	{
 		$xml = new Xml;
@@ -186,5 +187,5 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 			$this->assertTrue(true,"Ok, unknown engine throws exception.");
 		}
 	 }
-
+//! @}
 }
