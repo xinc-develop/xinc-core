@@ -22,6 +22,7 @@
 
 use Xinc\Core\Logger;
 use Xinc\Core\Config\Config;
+use Xinc\Core\Config\ConfigException;
 use Xinc\Core\Config\Xml;
 use Xinc\Core\Registry\Registry;
 
@@ -68,6 +69,18 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	        __DIR__ .'/config/test1/3.xml'
 	    );
 	    $this->assertEquals($expect,$files);
+	}
+	
+	public function testNoConfFiles()
+	{
+		$conf = new Config();
+		try {
+			$this->xml($conf)->load($conf,(new Registry));
+			$this->assertTrue(false,'ConfigException expected');
+		}
+		catch(ConfigException $e) {
+			$this->assertTrue(true,'Exception: ' . $e->getMessage());
+		}	
 	}
 	
 	public function testFileNotFound()
