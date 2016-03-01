@@ -9,7 +9,7 @@
 	    { "name": "Alexander Opitz", "email": "opitz.alexander@googlemail.com" },
 	    { "name": "Arno Schneider" },
 	    { "name": "Gavin Foster" },
-        { "name": "Sebastian Knapp", "email": "news@young-workers.de" }
+            { "name": "Sebastian Knapp", "email": "news@young-workers.de" }
     ],
     "require": {
         "php": ">=5.4.4",
@@ -29,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-	    "dev-master": "2.5.x"
+	    "dev-master": "2.5.x-dev"
         }
     }
 }
