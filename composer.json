@@ -24,5 +24,10 @@
         "psr-4": {
             "Xinc\\Core\\": "Classes"
         }
+    },
+    "extra": {
+        "branch-alias": {
+	    "dev-master": "2.5.x"
+        }
     }
 }
