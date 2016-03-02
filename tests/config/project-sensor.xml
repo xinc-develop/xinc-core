@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<xinc>
+<project name="TestProjectSensor">
+	<sensor file="trigger.project"/>
+</project>
+</xinc>

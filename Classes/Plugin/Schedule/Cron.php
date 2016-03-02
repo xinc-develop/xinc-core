@@ -29,8 +29,6 @@ namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Build\Scheduler\SchedulerInterface;
-use Xinc\Core\Task\Base;
-use Xinc\Core\Task\Slot;
 
 /**
  * Cron scheduler, allows you to use cron like expression to schedule builds.
@@ -70,10 +68,6 @@ class Cron extends Base implements SchedulerInterface
 
     private $lastBuildTime;
 
-    public function process(BuildInterface $build)
-    {
-    }
-
     public function setTimer($timer)
     {
         $this->timer = $timer;
@@ -82,11 +76,6 @@ class Cron extends Base implements SchedulerInterface
     public function setLastBuildTime($time)
     {
         $this->lastBuildTime = $time;
-    }
-
-    public function init(BuildInterface $build)
-    {
-        $build->setScheduler($this);
     }
 
     public function getNextBuildTime(BuildInterface $build)
@@ -108,11 +97,6 @@ class Cron extends Base implements SchedulerInterface
             . ' nextbuild: ' . date('Y-m-d H:i:s', $nextBuild)
         );
         return $nextBuild;
-    }
-
-    public function getPluginSlot()
-    {
-        return Slot::INIT_PROCESS;
     }
 
     /**

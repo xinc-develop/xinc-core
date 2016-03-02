@@ -4,8 +4,8 @@
  *
  *
  * @author    Arno Schneider <username@example.org>
- * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -22,24 +22,30 @@
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @homepage      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Schedule;
 
-use Xinc\Core\Plugin\Base;
+use Xinc\Core\Build\BuildInterface;
+use Xinc\Core\Build\Scheduler\SchedulerInterface;
+use Xinc\Core\Task\Base as BaseTask;
+use Xinc\Core\Task\Slot;
 
-/**
- * Plugin with core schedulers
- */
-class Plugin extends Base
+class Base extends BaseTask
 {
-    /**
-     * Returns the defined tasks of the plugin
-     */
-    public function getTaskDefinitions()
+
+    public function process(BuildInterface $build)
     {
-        return array(new Task($this),
-                     new Cron($this),
-                     new Sensor($this));
+    }
+
+    public function init(BuildInterface $build)
+    {
+        $build->setScheduler($this);
+    }
+
+    public function getPluginSlot()
+    {
+        return Slot::INIT_PROCESS;
     }
 }
