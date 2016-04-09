@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  *
@@ -20,13 +20,14 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin\Builder;
 
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
+use Xinc\Core\Task\Slot;
 
 abstract class BaseTask extends Base
 {
@@ -45,10 +46,16 @@ abstract class BaseTask extends Base
             $build->setStatus(BuildInterface::FAILED);
         }
     }
-
+    
+    /**
+     * Returns the slot of this task inside a build.
+     *
+     * @return integer The slot number.
+     * @see Xinc::Core::Task::Slot for available slots
+     */
     public function getPluginSlot()
     {
-        return Xinc_Plugin_Slot::PROCESS;
+        return Slot::PROCESS;
     }
 
     public abstract function build(BuildInterface $build);

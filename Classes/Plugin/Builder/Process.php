@@ -1,10 +1,10 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  *
- * @author    Arno Schneider <username@example.org>
- * @copyright 2007 Arno Schneider, Barcelona
+ * @author    Sebastian Knapp
+ * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -29,24 +29,41 @@ namespace Xinc\Core\Plugin\Builder;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
+use Symfony\Component\Process\Process as Execute;
 
 class Process extends BaseTask
 {
 	protected $command;
 	
+	protected $timeout;
+	
+	/**
+	 * The commandline for process exection
+	 */
 	public function setCommand($cmd)
 	{
 		$this->command = $cmd;
 	}
 	
+	/**
+	 * An optional timeout in seconds for the process
+	 */
+	public function setTimeout($seconds)
+	{
+	    $this->timeout = $seconds;	
+	}
+	
     /**
-     * Validates if a task can run by checking configs, directries and so on.
+     * Validates if a task can run by checking configs, directories and so on.
      *
      * @return boolean Is true if task can run.
      */
-    public function validateTask()
+    public function validate(&$msg = null)
     {
-        return true;
+		if(!isset($this->command)) {
+			$msg = "Process task - no command given.";
+			return false;
+		}
     }
 
     /**
@@ -59,24 +76,9 @@ class Process extends BaseTask
         return 'process';
     }
 
-    /**
-     * Returns the slot of this task inside a build.
-     *
-     * @return integer The slot number.
-     * @see Xinc::Core::Task::Slot for available slots
-     */
-    public function getPluginSlot()
-    {
-        return Slot::PROCESS;
-    }
-
-    public function processX(BuildInterface $build)
-    {
-        $build->info('Processing builders done');
-    }
-    
     public function build(BuildInterface $build)
     {
-		  
+	    $process = new Execute($this->command);
+	    $process->mustRun();  
 	}
 }

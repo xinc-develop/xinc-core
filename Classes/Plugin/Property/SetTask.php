@@ -1,7 +1,6 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
- * Property setter task.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -30,6 +29,9 @@ use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
 
+/**
+ * Property setter task.
+ */
 class SetTask extends Base
 {
     private $_lastPair = array();
