@@ -4,7 +4,7 @@
  * 
  * @author Sebastian Knapp
  *
- * @version 3.0
+ * @version 2.5
  *
  * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Developer, Leipzig

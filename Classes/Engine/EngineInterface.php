@@ -62,14 +62,16 @@ interface EngineInterface extends UseLoggerInterface,
     public function build(BuildInterface $build);
 
     /**
-     * returns the interval in seconds in which the engine checks for new builds.
+     * returns the interval in seconds in which the engine checks for 
+     * new builds.
      *
      * @return int
      */
     public function getHeartBeat();
 
     /**
-     * Set the interval in which the engine checks for modified builds, necessary builds etc.
+     * Set the interval in which the engine checks for modified builds, 
+     * necessary builds etc.
      *
      * @param string $seconds
      *

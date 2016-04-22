@@ -49,8 +49,8 @@ class Xml extends Loader implements ConfigLoaderInterface
 
     public function getConfigurationSources(ConfigInterface $conf)
     {
-        $file = $conf->getOption('project-file');
-        if (isset($file)) {
+        if ($conf->has('project-file')) {
+			$file = $conf->get('project-file');
             if (!strstr($file, '/')) {
                 $file = $conf->getOption('project-dir').$file;
             }
