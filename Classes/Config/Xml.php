@@ -51,7 +51,7 @@ class Xml extends Loader implements ConfigLoaderInterface
     }
     /**
      * Finds the configured configuration sources.
-     * 
+     *
      * The config needs at least a valid config-dir or config-file
      * option.
      *
@@ -60,17 +60,17 @@ class Xml extends Loader implements ConfigLoaderInterface
      */
     public function getConfigurationSources(ConfigInterface $conf)
     {
-		if($conf->hasOption('config-file')) {
+        if($conf->hasOption('config-file')) {
             $file = $conf->getOption('config-file');
             if (isset($file)) {
                 if (!strstr($file, '/')) {
-                    $file = $conf->getOption('config-dir').$file;
+                    $file = $conf->get('config-dir') . $file;
                 }
                 return array($file);
             }
         }
         // load every xml file in config dir
-        $dir = $conf->getOption('config-dir');
+        $dir = $conf->get('config-dir');
         $list = glob("{$dir}*.xml",GLOB_ERR);
         if ($list === false) {
             throw new IOException($dir, null,
@@ -87,10 +87,10 @@ class Xml extends Loader implements ConfigLoaderInterface
     {
          $files = $this->getConfigurationSources($conf);
          if(empty($files)) {
-			 throw new ConfigException("No configuration sources found.");
-	     }
+             throw new ConfigException("No configuration sources found.");
+         }
          foreach($files as $file) {
-            $this->loadFile($file,$conf,$reg);	
+            $this->loadFile($file,$conf,$reg);
          }
     }
 
@@ -124,22 +124,22 @@ class Xml extends Loader implements ConfigLoaderInterface
     protected function loadPlugins($xml, $reg)
     {
         foreach ($xml->xpath('/xinc/plugins') as $element) {
-			if(isset($element['group'])) {
-				$class = "{$element['group']}";
-				if(!class_exists($class,true)) {
-				    throw new ClassLoaderException($class);	
-				}
-				$this->log->verbose("Load plugin group from class $class");
-				$group = new $class();
-				if(!($group instanceof PluginGroupInterface)) {
-				    throw new TypeMismatch($class,'Xinc\Core\Plugin\PluginGroupInterface');	
-				}
-				foreach($group->getPluginClasses() as $class) {
-					$reg->registerPluginClass($class);
-				}
-				continue;
-			}
-			
+            if(isset($element['group'])) {
+                $class = "{$element['group']}";
+                if(!class_exists($class,true)) {
+                    throw new ClassLoaderException($class);
+                }
+                $this->log->verbose("Load plugin group from class $class");
+                $group = new $class();
+                if(!($group instanceof PluginGroupInterface)) {
+                    throw new TypeMismatch($class,'Xinc\Core\Plugin\PluginGroupInterface');
+                }
+                foreach($group->getPluginClasses() as $class) {
+                    $reg->registerPluginClass($class);
+                }
+                continue;
+            }
+
             $plugins = $element->xpath('plugin');
 
             if (isset($element['namespace'])) {

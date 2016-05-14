@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  *

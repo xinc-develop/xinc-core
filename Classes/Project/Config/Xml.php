@@ -50,7 +50,7 @@ class Xml extends Loader implements ConfigLoaderInterface
     public function getConfigurationSources(ConfigInterface $conf)
     {
         if ($conf->has('project-file')) {
-			$file = $conf->get('project-file');
+            $file = $conf->get('project-file');
             if (!strstr($file, '/')) {
                 $file = $conf->getOption('project-dir').$file;
             }
@@ -58,7 +58,7 @@ class Xml extends Loader implements ConfigLoaderInterface
         }
         // load every xml file in project dir
         else {
-            $dir = $conf->getOption('project-dir');
+            $dir = $conf->get('project-dir');
             $list = glob("{$dir}*.xml");
             if ($list === false) {
                 throw new IOException($dir, null, null, IOException::FAILURE_NOT_READABLE);

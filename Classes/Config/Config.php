@@ -5,7 +5,7 @@
  * @author    Arno Schneider
  * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -53,21 +53,26 @@ class Config implements ConfigInterface
 
     public function hasOption($key)
     {
-      return $this->options->has($key);
+        return $this->options->has($key);
+    }
+
+    public function hasSetting($key)
+    {
+        return $this->settings->has($key);
     }
 
     public function has($key)
     {
-      if($this->hasOption($key)) return true;
-      return $this->settings->has($key);
+        if($this->hasOption($key)) return true;
+        return $this->settings->has($key);
     }
 
     public function getOption($key)
     {
-	if($this->hasOption($key)) {
+    if($this->hasOption($key)) {
             return $this->options[$key];
-	}
-	throw new ConfigException("Option '$key' is undefined.");
+    }
+    throw new ConfigException("Option '$key' is undefined.");
     }
 
     /**
@@ -80,9 +85,9 @@ class Config implements ConfigInterface
 
     public function setOptions($opts)
     {
-      foreach($opts as $opt => $val) {
-	$this->setOption($opt,$val);
-      }
+        foreach($opts as $opt => $val) {
+            $this->setOption($opt,$val);
+        }
     }
 
     public function setOption($key, $value)
@@ -101,6 +106,10 @@ class Config implements ConfigInterface
 
     public function setSetting($key, $value)
     {
+        $key2 = str_replace(array('-'), '', $key, $cnt);
+        if ($cnt > 0) {
+            $this->settings->set($key2, $value);
+        }
         $this->settings->set($key, $value);
     }
 }
