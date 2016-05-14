@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  * Engine to build projects.
  *
@@ -60,22 +60,4 @@ interface EngineInterface extends UseLoggerInterface,
      * @param BuildInterface $build
      */
     public function build(BuildInterface $build);
-
-    /**
-     * returns the interval in seconds in which the engine checks for 
-     * new builds.
-     *
-     * @return int
-     */
-    public function getHeartBeat();
-
-    /**
-     * Set the interval in which the engine checks for modified builds, 
-     * necessary builds etc.
-     *
-     * @param string $seconds
-     *
-     * @see <xinc engine="name" heartbeat="10"/>
-     */
-    public function setHeartBeat($seconds);
 }

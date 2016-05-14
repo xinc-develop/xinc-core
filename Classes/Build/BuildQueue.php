@@ -1,9 +1,11 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
- * @author    Arno Schneider <username@example.org>
+ * @author    Arno Schneider
+ * @author    Sebastian Knapp
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -24,11 +26,16 @@
  */
 namespace Xinc\Core\Build;
 
+use Xinc\Core\Traits\Logger;
+
 /**
  * Queue that is holding all the builds.
+ *
+ * @ingroup logger
  */
 class BuildQueue implements BuildQueueInterface
 {
+    use Logger;
     /**
      * @var Xinc::Core::Build::BuildIterator
      */
@@ -58,19 +65,8 @@ class BuildQueue implements BuildQueueInterface
      */
     public function addBuild(BuildInterface $build)
     {
+        #print_r($build);
         $this->builds->add($build);
-    }
-
-    /**
-     * Adds a number of builds to the queue.
-     *
-     * @param Xinc_Build_Iterator $builds
-     */
-    public function addBuilds(BuildIterator $builds)
-    {
-        foreach ($builds as $build) {
-            $this->builds->add($build);
-        }
     }
 
     /**

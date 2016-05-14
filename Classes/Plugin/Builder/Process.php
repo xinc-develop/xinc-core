@@ -4,7 +4,7 @@
  *
  *
  * @author    Sebastian Knapp
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -20,7 +20,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
@@ -33,26 +33,26 @@ use Symfony\Component\Process\Process as Execute;
 
 class Process extends BaseTask
 {
-	protected $command;
-	
-	protected $timeout;
-	
-	/**
-	 * The commandline for process exection
-	 */
-	public function setCommand($cmd)
-	{
-		$this->command = $cmd;
-	}
-	
-	/**
-	 * An optional timeout in seconds for the process
-	 */
-	public function setTimeout($seconds)
-	{
-	    $this->timeout = $seconds;	
-	}
-	
+    protected $command;
+
+    protected $timeout;
+
+    /**
+     * The commandline for process exection
+     */
+    public function setCommand($cmd)
+    {
+        $this->command = $cmd;
+    }
+
+    /**
+     * An optional timeout in seconds for the process
+     */
+    public function setTimeout($seconds)
+    {
+        $this->timeout = $seconds;
+    }
+
     /**
      * Validates if a task can run by checking configs, directories and so on.
      *
@@ -60,10 +60,10 @@ class Process extends BaseTask
      */
     public function validate(&$msg = null)
     {
-		if(!isset($this->command)) {
-			$msg = "Process task - no command given.";
-			return false;
-		}
+        if(!isset($this->command)) {
+            $msg = "Process task - no command given.";
+            return false;
+        }
     }
 
     /**
@@ -78,7 +78,7 @@ class Process extends BaseTask
 
     public function build(BuildInterface $build)
     {
-	    $process = new Execute($this->command);
-	    $process->mustRun();  
-	}
+        $process = new Execute($this->command);
+        $process->mustRun();
+    }
 }

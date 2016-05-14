@@ -55,7 +55,7 @@ class Engine extends Base implements EngineInterface
 
     /**
      * Setup a project for the engine and setup a build object from
-     * project configuration. 
+     * project configuration.
      *
      * @param Xinc::Core::Project::Project $project A project inside this engine.
      *
@@ -70,26 +70,5 @@ class Engine extends Base implements EngineInterface
         $this->setupConfigProperties($build);
         $this->parseProjectConfig($build,$project->getConfigXml());
         return $build;
-    }
-
-    /**
-     * returns the interval in seconds in which the engine checks for new builds.
-     *
-     * @return int
-     */
-    public function getHeartBeat()
-    {
-        return 30;
-    }
-
-    /**
-     * Set the interval in which the engine checks for modified builds, necessary builds etc.
-     *
-     * @param string $seconds
-     *
-     * @see <xinc engine="name" heartbeat="10"/>
-     */
-    public function setHeartBeat($seconds)
-    {
     }
 }

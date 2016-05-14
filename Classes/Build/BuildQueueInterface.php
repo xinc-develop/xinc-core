@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider <username@example.org>
@@ -26,7 +26,7 @@ namespace Xinc\Core\Build;
 
 /**
  * A Build queue holds all Build Jobs queued for execution.
- * 
+ *
  * Build Jobs are registered with the Build Queue to be
  * executed at a certain time
  */
@@ -34,20 +34,13 @@ interface BuildQueueInterface
 {
     /**
      * adds a build to the queue.
-     * 
+     *
      * Calls the getNextBuildTime() method to put
      * the builds into the right order in the queue
      *
      * @param Xinc_Build_Interface $build
      */
     public function addBuild(BuildInterface $build);
-
-    /**
-     * Adds a number of builds to the queue.
-     *
-     * @param Xinc_Build_Iterator $builds
-     */
-    public function addBuilds(BuildIterator $builds);
 
     /**
      * Returns the next build time of all the builds scheduled

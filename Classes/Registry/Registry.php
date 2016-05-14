@@ -1,11 +1,11 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider
  * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2014 Alexander Opitz, Leipzig
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 namespace Xinc\Core\Registry;
@@ -69,7 +69,7 @@ class Registry implements XincRegistryInterface
         $this->taskRegistry = new TaskRegistry();
         $this->widgetRegistry = new WidgetRegistry();
         #$this->apiRegistry = new ApiRegistry();
-        
+
         $this->pluginRegistry->setTaskRegistry($this->taskRegistry);
     }
 
@@ -117,7 +117,7 @@ class Registry implements XincRegistryInterface
         if (!($engine instanceof EngineInterface)) {
             throw new TypeMismatch(get_class($engine),
                 '\Xinc\Core\Engine\EngineInterface');
-        }        
+        }
         $engine->setLogger($this->log);
         $engine->setConfig($this->config);
         $engine->setTaskRegistry($this->taskRegistry);
@@ -140,7 +140,7 @@ class Registry implements XincRegistryInterface
     }
 
     /**
-     * Get the a project by name.
+     * Get a project by name.
      *
      * @throw Xinc::Core::Registry::RegistryException
      */

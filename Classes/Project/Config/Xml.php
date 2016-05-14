@@ -97,6 +97,8 @@ class Xml extends Loader implements ConfigLoaderInterface
     {
         foreach ($xml->xpath('/xinc/project') as $element) {
             $project = $this->setupProject($element, $reg);
+            $this->log->verbose("Register project '{$project->getName()}' " .
+                "with engine '{$project->getEngineName()}'.");
             $reg->registerProject($project);
         }
     }
@@ -110,8 +112,8 @@ class Xml extends Loader implements ConfigLoaderInterface
                 $project->$method((string) $value);
             } else {
                 $this->log->error(
-                        "Trying to set '{$name}' on Xinc Project '{$element['name']}' failed. No such setter."
-                    );
+                    "Trying to set '{$name}' on Xinc Project '{$element['name']}' failed. No such setter."
+                );
             }
         }
         $project->setConfigXml($element);
