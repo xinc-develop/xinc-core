@@ -4,6 +4,7 @@
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -73,20 +74,20 @@ class Slot
     const POST_PROCESS = 30;
 
     const SUBTASK = 40;
-    
+
     public static function getSlots()
     {
-	    return array(
-	        self::GLOBAL_INIT,
-	        self::GLOBAL_LISTENER,
-	        self::PROJECT_LISTENER,
-	        self::PROJECT_INIT,
-	        self::PROJECT_SET_VALUES,
-	        self::INIT_PROCESS,
-	        self::PRE_PROCESS,
-	        self::PROCESS,
-	        self::POST_PROCESS,
-	        self::SUBTASK    
-	    );	
-	}
+        return array(
+            self::GLOBAL_INIT,
+            self::GLOBAL_LISTENER,
+            self::PROJECT_LISTENER,
+            self::PROJECT_INIT,
+            self::PROJECT_SET_VALUES,
+            self::INIT_PROCESS,
+            self::PRE_PROCESS,
+            self::PROCESS,
+            self::POST_PROCESS,
+            self::SUBTASK
+        );
+    }
 }

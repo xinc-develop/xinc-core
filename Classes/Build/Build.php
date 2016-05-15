@@ -5,6 +5,7 @@
  * @author    Arno Schneider <username@example.org>
  * @author    Sebastian Knapp
  * @copyright 2007 Arno Schneider, Barcelona
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *            This file is part of Xinc.
  *            Xinc is free software; you can redistribute it and/or modify
@@ -44,6 +45,7 @@ class Build implements BuildInterface
 {
     use Logger;
     use TaskRegistry;
+
     /**
      * Are we queued?
      * @var bool
@@ -137,7 +139,7 @@ class Build implements BuildInterface
                                 Project $project,
                                 $buildTimestamp = null
     ) {
-		$this->setStatus(BuildInterface::UNINITIALIZED);
+        $this->setStatus(BuildInterface::UNINITIALIZED);
         $this->engine = $engine;
         $this->setLogger($engine->getLogger());
         $this->project = $project;
@@ -152,7 +154,7 @@ class Build implements BuildInterface
         $this->statistics = new Statistics();
         $this->setLabeler(new Labeler\DefaultLabeler());
         $this->setScheduler(new Scheduler\DefaultScheduler());
-        
+
         $taskRegistry = new BuildTaskRegistry;
         $taskRegistry->setLogger($engine->getLogger());
         $this->setTaskRegistry($taskRegistry);
@@ -183,11 +185,11 @@ class Build implements BuildInterface
     {
         return $this->properties->get($name);
     }
-    
+
     public function parseProperty($value)
     {
-		return $this->properties->parseString($value);
-	}
+        return $this->properties->parseString($value);
+    }
 
     /**
      * @param string $name
@@ -399,6 +401,18 @@ class Build implements BuildInterface
         return $this->status;
     }
 
+    public function getStatusString()
+    {
+        static $status = array(
+            BuildInterface::UNINITIALIZED => 'UNINITIALIZED',
+            BuildInterface::INITIALIZED => 'INITIALIZED',
+            BuildInterface::FAILED => 'FAILED',
+            BuildInterface::PASSED => 'PASSED',
+            BuildInterface::STOPPED => 'STOPPED',
+            BuildInterface::MISCONFIGURED => 'MISCONFIGURED'
+        );
+        return $status[ $this->getStatus() ];
+    }
     /**
      * Set the status of this build.
      *
@@ -427,7 +441,7 @@ class Build implements BuildInterface
 
     public function init()
     {
-        $this->internalProperties = new Xinc_Build_Properties();
+        $this->internalProperties = new BuildProperties();
     }
 
     /**
@@ -491,11 +505,11 @@ class Build implements BuildInterface
     {
         return $this->scheduler;
     }
-    
+
     public function getTasksForSlot($slot)
     {
-		return $this->taskRegistry->getTasksForSlot($slot);
-	}
+        return $this->taskRegistry->getTasksForSlot($slot);
+    }
 
     /**
      * processes the tasks that are registered for the slot.
@@ -516,7 +530,7 @@ class Build implements BuildInterface
 
             /*
              * The Post-Process continues on failure
-             
+
             if ($slot != Slot::POST_PROCESS) {
                 if ($this->getStatus() != BuildInterface::PASSED) {
                     $tasks->rewind();
@@ -586,6 +600,7 @@ class Build implements BuildInterface
 
     public function build()
     {
+        /*
         Xinc_Logger::getInstance()->setBuildLogFile(null);
         Xinc_Logger::getInstance()->emptyLogQueue();
         Xinc::setCurrentBuild($this);
@@ -600,18 +615,23 @@ class Build implements BuildInterface
             unlink($buildLogFile);
         }
         Xinc_Logger::getInstance()->setBuildLogFile($buildLogFile);
-
+*/
         $this->getEngine()->build($this);
+/*
         //Xinc_Logger::getInstance()->flush();
         Xinc_Logger::getInstance()->setBuildLogFile(null);
 
         if (Xinc_Build_Interface::STOPPED != $this->getStatus()) {
             $this->setStatus(Xinc_Build_Interface::INITIALIZED);
         }
+        */
     }
 
     public function updateTasks()
     {
+        #print_r($this);
+        return;
+
         $this->setters = Xinc_Plugin_Repository::getInstance()->getTasksForSlot(Xinc_Plugin_Slot::PROJECT_SET_VALUES);
 
         $this->setProperty('project.name', $this->getProject()->getName());
@@ -702,30 +722,4 @@ class Build implements BuildInterface
         $this->isQueued = false;
     }
 
-    /**
-     * Sets custom config value for the current build.
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function setConfigDirective($name, $value)
-    {
-        $this->config[$name] = $value;
-    }
-    /**
-     * Returns the configuration directive for the name.
-     *
-     * @param string $name
-     *
-     * @return mixed
-     */
-    public function getConfigDirective($name)
-    {
-        return isset($this->config[$name]) ? $this->config[$name] : null;
-    }
-
-    public function resetConfigDirective()
-    {
-        $this->config = array();
-    }
 }

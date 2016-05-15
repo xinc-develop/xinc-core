@@ -36,7 +36,7 @@ use Xinc\Core\Task\TaskRegistryInterface;
  */
 interface BuildInterface extends TaskRegistryInterface
 {
-	const UNINITIALIZED = -3;
+    const UNINITIALIZED = -3;
     const INITIALIZED = -2;
     const FAILED = 0;
     const PASSED = 1;
@@ -50,7 +50,7 @@ interface BuildInterface extends TaskRegistryInterface
      * @param Xinc_Engine_Interface $engine
      * @param Xinc_Project          $project
      * @param int                   $buildTimestamp
-     * 
+     *
      * @todo Decouple engine from build
      */
     public function __construct(
@@ -58,6 +58,16 @@ interface BuildInterface extends TaskRegistryInterface
         Project $project,
         $buildTimestamp = null
     );
+
+    /**
+     * Returns the status of the build
+     */
+    public function getStatus();
+
+    /**
+     * Returns the status of the build as a word.
+     */
+    public function getStatusString();
 
     /**
      * Returns the last build.
@@ -140,7 +150,7 @@ interface BuildInterface extends TaskRegistryInterface
     public function build();
 
     /**
-     * Store a task object 
+     * Store a task object
      */
     public function registerTask(TaskInterface $task);
 
@@ -165,18 +175,4 @@ interface BuildInterface extends TaskRegistryInterface
     public function error($message);
     public function warn($message);
     public function debug($message);
-
-    /**
-     * Sets custom config value for the current build.
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function setConfigDirective($name, $value);
-
-    public function resetConfigDirective();
-    /**
-     * @param string $name
-     */
-    public function getConfigDirective($name);
 }

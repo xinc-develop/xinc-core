@@ -65,16 +65,16 @@ class Logger
     private $logLevel = 2;
 
 //! @{
-    const LOG_LEVEL_VERBOSE = 0;
-    const LOG_LEVEL_DEBUG = 1;
+    const LOG_LEVEL_DEBUG = 0;
+    const LOG_LEVEL_VERBOSE = 1;
     const LOG_LEVEL_INFO = 2;
     const LOG_LEVEL_WARN = 3;
     const LOG_LEVEL_ERROR = 4;
 
     const DEFAULT_LOG_LEVEL = 2;
 
-    const VERBOSE = self::LOG_LEVEL_VERBOSE;
     const DEBUG = self::LOG_LEVEL_DEBUG;
+    const VERBOSE = self::LOG_LEVEL_VERBOSE;
     const INFO = self::LOG_LEVEL_INFO;
     const WARN = self::LOG_LEVEL_WARN;
     const ERROR = self::LOG_LEVEL_ERROR;
@@ -82,8 +82,8 @@ class Logger
     public static $logLevelError = array(self::LOG_LEVEL_ERROR, 'error');
     public static $logLevelWarn = array(self::LOG_LEVEL_WARN, 'warn');
     public static $logLevelInfo = array(self::LOG_LEVEL_INFO, 'info');
-    public static $logLevelDebug = array(self::LOG_LEVEL_DEBUG, 'debug');
     public static $logLevelVerbose = array(self::LOG_LEVEL_VERBOSE, 'verbose');
+    public static $logLevelDebug = array(self::LOG_LEVEL_DEBUG, 'debug');
 
     private $logLevelSet = false;
 //! @}
@@ -315,7 +315,7 @@ class Logger
     {
         $parentDir = dirname($logFile);
 
-        if (!is_writeable($logFile) && !is_writeable($parentDir)) {
+        if (!is_writeable($logFile) || !is_writeable($parentDir)) {
             $this->error('Cannot open "'.$logFile.'" for writing', STDERR);
             throw new Logger\Exception\NonWriteableException($logFile);
         }
