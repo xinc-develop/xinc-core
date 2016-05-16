@@ -52,6 +52,16 @@ abstract class Base implements EngineInterface
     use TaskRegistry;
 
     /**
+     * get the name of this engine
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this::NAME;
+    }
+
+    /**
      * An engine shares the logger with the controled build
      * @return Xinc::Core::Logger
      */
@@ -59,15 +69,15 @@ abstract class Base implements EngineInterface
     {
         return $this->log;
     }
-    
+
     /**
      * The tasks which are performed during a slot.
      * @param Xinc::Core::Task::Slot
      */
     protected final function getTasksForSlot($slot)
     {
-		return $this->pluginRegistry->getTasksForSlot($slot);
-	}
+        return $this->pluginRegistry->getTasksForSlot($slot);
+    }
 
     /**
      * copies some basic informations to the build object
@@ -89,17 +99,17 @@ abstract class Base implements EngineInterface
             $build->setProperty($option, $this->config->get($option));
         }
     }
-    
+
     protected function parseProjectConfig(BuildInterface $build, $xml, $parent=null)
     {
         $filtertasks = $this->getTasksForSlot(Slot::PROJECT_SET_VALUES);
 
-        foreach ($xml->children() as $taskName => $task) {            
+        foreach ($xml->children() as $taskName => $task) {
             try{
                 $taskObject = $this->taskRegistry->getTask($taskName, (string)$parent);
                 $taskObject = $taskObject->createTask($build);
                 $taskObject->setXml($task);
-            } 
+            }
             catch(Exception $e){
                 $this->log->error('Task "'.$taskName.'" not found.');
                 $build->getProject()->setStatus(Status::MISCONFIGURED);
@@ -108,44 +118,65 @@ abstract class Base implements EngineInterface
             foreach ($task->attributes() as $name => $value) {
                 $setter = 'set'.$name;
                 foreach($filtertasks as $filter) {
-					$value = $filter->set($build,$value);
-				}
+                    $value = $filter->set($build,$value);
+                }
                 $taskObject->$setter((string)$value, $build);
             }
 
             $this->parseProjectConfig($build, $task, $taskObject);
-            
+
             if($parent instanceof TaskInterface) {
                 $taskObject->setFrame($parent);
             }
             $build->registerTask($taskObject);
-            
+
             if(!$this->validateTask($taskObject)) {
-				$build->getProject()->setStatus(Status::MISCONFIGURED);
+                $build->getProject()->setStatus(Status::MISCONFIGURED);
                 return;
             }
         }
     }
 
-	/**
-	 * Calls the validate method of a task.
-	 */
+    /**
+     * Calls the validate method of a task.
+     */
     protected function validateTask($taskObject)
     {
-		try {
+        try {
             if ( !$taskObject->validate($msg) ) {
-				$this->log->warn("Task {$taskObject->getName()} is invalid.".
-				    ($msg ? "\nError message: $msg" : '') 
-				);
-                return false;   
+                $this->log->warn("Task {$taskObject->getName()} is invalid.".
+                    ($msg ? "\nError message: $msg" : '')
+                );
+                return false;
             }
             return true;
         }
         catch(MalformedConfigException $e) {
-			$this->log->error("Error in task {$taskObject->getName()} configuration: " .
-			    $e->getMessage()
-			);
-			return false;
-		}
-	}
+            $this->log->error("Error in task {$taskObject->getName()} configuration: " .
+                $e->getMessage()
+            );
+            return false;
+        }
+    }
+
+    /**
+     * Called at the begin of a build
+     * @return boolean false if the build is finished (misconfigured?)
+     */
+    protected function initBuild(BuildInterface $build)
+    {
+        $build->debug("PRE INIT STATUS " . $build->getStatusString());
+        $build->init();
+        $build->debug("POST INIT STATUS " . $build->getStatusString());
+        return !$build->isFinished();
+    }
+
+    /**
+     * Called at the end of a build
+     */
+    protected function endBuild(BuildInterface $build)
+    {
+        $status = $build->getStatusString();
+        $build->info("END BUILD WITH STATUS $status.");
+    }
 }

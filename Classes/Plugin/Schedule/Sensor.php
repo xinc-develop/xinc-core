@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * PHP version 5
@@ -23,7 +23,8 @@
  *             You should have received a copy of the GNU Lesser General Public
  *             License along with Xinc, write to the Free Software Foundation,
  *             Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link       https://github.com/Xinc-org/Xinc.Trigger
+ *
+ * @homepage   https://github.com/Xinc-org/Xinc.Trigger
  */
 
 namespace Xinc\Core\Plugin\Schedule;
@@ -36,8 +37,8 @@ use Xinc\Core\Build\Scheduler\SchedulerInterface;
  *
  * @tag sensor
  * @attribute file - a filename
- * @slot INIT_PROCESS 
- * 
+ * @slot INIT_PROCESS
+ *
  * @ingroup scheduler
  */
 class Sensor extends Base implements SchedulerInterface

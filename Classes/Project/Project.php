@@ -48,7 +48,7 @@ class Project
      * @var Xinc::Core::Project::Status
      */
     private $status;
-    
+
     /**
      * @var SimpleXMLElement
      */
@@ -87,6 +87,14 @@ class Project
     public function setEngineName($engineName)
     {
         $this->engineName = $engineName;
+    }
+
+    /**
+     * Alias for setEngineName
+     */
+    public function setEngine($engineName)
+    {
+        $this->setEngineName($engineName);
     }
 
     /**

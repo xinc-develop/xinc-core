@@ -28,11 +28,9 @@
 
 namespace Xinc\Core\Test;
 
-use Xinc\Core\Singleton as Base;
-
 /**
- * Base class for classes which needs to have a singleton instance.
+ * A Test case for the singleton base class.
  */
-class Singleton extends Base
+class Singleton extends \Xinc\Core\Singleton
 {
 }
