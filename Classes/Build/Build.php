@@ -144,10 +144,6 @@ class Build implements BuildInterface
         $this->setLogger($engine->getLogger());
         $this->project = $project;
 
-        if (ProjectStatus::MISCONFIGURED == $this->project->getStatus()) {
-            $this->setStatus(BuildInterface::MISCONFIGURED);
-        }
-
         $this->buildTimestamp = $buildTimestamp;
         $this->properties = new BuildProperties();
         $this->internalProperties = new BuildProperties();
@@ -442,6 +438,9 @@ class Build implements BuildInterface
     public function init()
     {
         $this->internalProperties = new BuildProperties();
+        if (ProjectStatus::MISCONFIGURED == $this->project->getStatus()) {
+            $this->setStatus(BuildInterface::MISCONFIGURED);
+        }
     }
 
     /**
@@ -707,7 +706,21 @@ class Build implements BuildInterface
     }
 
     /**
-     * check if build is in queue mode.
+     * Check if the build is in a final state.
+     * return boolean
+     */
+    public function isFinished()
+    {
+        $status = $this->getStatus();
+        switch ($status) {
+            case BuildInterface::STOPPED:
+            case BuildInterface::MISCONFIGURED: return true;
+            default: return false;
+        }
+    }
+
+    /**
+     * Check if build is in queue mode.
      */
     public function isQueued()
     {

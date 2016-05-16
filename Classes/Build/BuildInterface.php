@@ -97,6 +97,12 @@ interface BuildInterface extends TaskRegistryInterface
     public function init();
 
     /**
+     * Check if the build is in a final state.
+     * return boolean
+     */
+    public function isFinished();
+
+    /**
      * returns the build statistics.
      *
      * @return Xinc_Build_Statistics
