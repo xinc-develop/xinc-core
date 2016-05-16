@@ -83,7 +83,7 @@ class BuildQueue implements BuildQueueInterface
             $build = $this->builds->current();
             if ($build->getNextBuildTime() <= $nextBuildTime
                || $nextBuildTime === null) {
-                if ($build->getStatus() != BuildInterface::STOPPED) {
+                if (!$build->isFinished()) {
                     $buildTime = $build->getNextBuildTime();
 
                     if ($buildTime !== null && !$build->isQueued()) {
