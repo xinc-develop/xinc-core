@@ -626,29 +626,14 @@ class Build implements BuildInterface
         */
     }
 
-    public function updateTasks()
+    public function setupTasks()
     {
-        #print_r($this);
-        return;
-
-        $this->setters = Xinc_Plugin_Repository::getInstance()->getTasksForSlot(Xinc_Plugin_Slot::PROJECT_SET_VALUES);
-
-        $this->setProperty('project.name', $this->getProject()->getName());
-        $this->setProperty('build.number', $this->getNumber());
-        $this->setProperty('build.label', $this->getLabel());
-
-        $builtinProps = Xinc::getInstance()->getBuiltinProperties();
-
-        foreach ($builtinProps as $prop => $value) {
-            $this->setProperty($prop, $value);
-        }
-
-        $tasks = $this->getTaskRegistry()->getTasks();
-
-        while ($tasks->hasNext()) {
-            $task = $tasks->next();
-
-            $this->_updateTask($task);
+        $tasks = $this->taskRegistry->getTasks();
+        while ($tasks->valid()) {
+            $task = $tasks->current();
+            $this->debug("Setup task {$task->getName()}");
+            $task->setup($this);
+            $tasks->next();
         }
     }
 
@@ -674,30 +659,6 @@ class Build implements BuildInterface
         $subDirectory = self::generateStatusSubDir($this->getProject()->getName(), $this->getBuildTime());
 
         return $subDirectory;
-    }
-
-    private function _updateTask(Xinc_Plugin_Task_Interface &$task)
-    {
-        $element = $task->getXml();
-        foreach ($element->attributes() as $name => $value) {
-            $setter = 'set'.$name;
-
-            /*
-             * Call PROJECT_SET_VALUES plugins
-             */
-            while ($this->_setters->hasNext()) {
-                $setterObj = $this->_setters->next();
-                $value = $setterObj->set($this, $value);
-            }
-            $this->_setters->rewind();
-            $task->$setter((string) $value, $this);
-        }
-
-        $subtasks = $task->getTasks();
-
-        while ($subtasks->hasNext()) {
-            $this->_updateTask($subtasks->next());
-        }
     }
 
     public function enqueue()

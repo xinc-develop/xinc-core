@@ -46,7 +46,6 @@ class BuildAlways extends BaseTask
      */
     public function checkModified(BuildInterface $build)
     {
-		
         $result = new Result();
         $result->setSource('build always task');
         $result->setStatus(Result::CHANGED);

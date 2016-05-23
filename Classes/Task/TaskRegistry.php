@@ -46,15 +46,15 @@ class TaskRegistry extends RegistryAbstract
 
     public function registerTasks($tasks)
     {
-		foreach($tasks as $task) {
-			$this->registerTask($task);
-		}
+        foreach($tasks as $task) {
+            $this->registerTask($task);
+        }
     }
-    
+
     public function registerTask(TaskInterface $task)
     {
-		$this->register($task->getName(),$task);
-	}
+        $this->register($task->getName(),$task);
+    }
 
     /**
      * @param string $name
@@ -78,10 +78,10 @@ class TaskRegistry extends RegistryAbstract
     {
         $task = $parent::unregister($name);
         foreach($this->slot[$task->getPluginSlot()] as $i => $check) {
-			if($check === $task) {
-				unset($this->slot[$task->getPluginSlot()][$i]);
-			}
-		}
+            if($check === $task) {
+                unset($this->slot[$task->getPluginSlot()][$i]);
+            }
+        }
 
         return $task;
     }
@@ -101,16 +101,27 @@ class TaskRegistry extends RegistryAbstract
         } else {
             return new Iterator($this->slot[$slot]);
         }
-    }    
-    
+    }
+
     public function getTask($taskname, $parentElement = null)
     {
         if ($parentElement !== null) {
             $taskname2  = $parentElement . '/' . $taskname;
             if($this->knows($taskname2)) {
-			    return $this->get($taskname2);	
+                return $this->get($taskname2);
             }
         }
         return $this->get($taskname);
+    }
+
+    public function getTasks()
+    {
+        $iter = new Iterator();
+        foreach($this->slot as $slot => $tasks) {
+            foreach($tasks as $task) {
+                $iter->append($task);
+            }
+        }
+        return $iter;
     }
 }

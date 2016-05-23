@@ -315,7 +315,7 @@ class Logger
     {
         $parentDir = dirname($logFile);
 
-        if (!is_writeable($logFile) || !is_writeable($parentDir)) {
+        if (!is_writeable($logFile) && !is_writeable($parentDir)) {
             $this->error('Cannot open "'.$logFile.'" for writing', STDERR);
             throw new Logger\Exception\NonWriteableException($logFile);
         }

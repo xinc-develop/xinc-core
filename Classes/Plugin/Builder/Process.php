@@ -64,6 +64,7 @@ class Process extends BaseTask
             $msg = "Process task - no command given.";
             return false;
         }
+        return true;
     }
 
     /**

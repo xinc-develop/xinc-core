@@ -34,7 +34,6 @@ use Xinc\Core\Task\Slot;
 
 class Base extends BaseTask
 {
-
     public function process(BuildInterface $build)
     {
     }

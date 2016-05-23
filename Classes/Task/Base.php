@@ -30,17 +30,17 @@ use Xinc\Core\Traits\Logger;
 use Xinc\Core\Task\TaskInterface;
 
 /**
- * @todo getName method 
+ * @todo getName method
  * @ingroup logger
  */
 abstract class Base implements TaskInterface
 {
-	use Logger;
+    use Logger;
 
     protected $plugin;
     protected $xml;
     protected $frame;
-    
+
     /**
      * Constructor, stores a reference to the plugin for
      * usage of functionality.
@@ -51,36 +51,41 @@ abstract class Base implements TaskInterface
     {
         $this->plugin = $plugin;
     }
-    
+
     public function setFrame(TaskInterface $task)
     {
-		$this->frame = $task;
-	}
-    
+        $this->frame = $task;
+    }
+
     /**
      * @return Xinc::Core::Plugin::PluginInterface
      */
     public function getPlugin()
     {
-	    return $this->plugin;	
-	}
+        return $this->plugin;
+    }
 
     public function createTask(BuildInterface $build = null)
     {
-		$new = new static($this->getPlugin());
-		$new->init($build);
-		return $new;
+        $new = new static($this->getPlugin());
+        $new->init($build);
+        return $new;
     }
-    
+
+    public function setup(BuildInterface $build = null)
+    {
+        //
+    }
+
     protected function init(BuildInterface $build = null)
     {
-		//
-	}
+        //
+    }
 
     protected function getConfigValue($key)
     {
-		return $this->getPlugin()->getConfigValue($key);
-	}
+        return $this->getPlugin()->getConfigValue($key);
+    }
 
     /**
      * Returns name of task by lowercasing class name.
@@ -90,15 +95,10 @@ abstract class Base implements TaskInterface
     {
         return strtolower(get_class($this));
     }
-    
+
     public function __toString()
     {
-		return $this->getName();
-	}
-
-    public function getTasks()
-    {
-        return new Iterator($this->arSubtasks);
+        return $this->getName();
     }
 
     public function getXml()

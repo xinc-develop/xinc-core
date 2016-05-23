@@ -128,6 +128,7 @@ abstract class Base implements EngineInterface
             if($parent instanceof TaskInterface) {
                 $taskObject->setFrame($parent);
             }
+            $build->debug("Register task {$taskObject->getName()}");
             $build->registerTask($taskObject);
 
             if(!$this->validateTask($taskObject)) {

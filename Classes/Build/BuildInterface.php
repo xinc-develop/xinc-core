@@ -161,10 +161,9 @@ interface BuildInterface extends TaskRegistryInterface
     public function registerTask(TaskInterface $task);
 
     /**
-     * Updates properties on tasks, after
-     * a change in build status.
+     * Setup tasks
      */
-    public function updateTasks();
+    public function setupTasks();
 
     /**
      * Returns the subdirectory inside the status directory

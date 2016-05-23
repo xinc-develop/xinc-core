@@ -53,6 +53,11 @@ interface TaskInterface extends UseLoggerInterface
     public function validate(&$msg = null);
 
     /**
+     * Setup a task once it is created and validated.
+     */
+    public function setup(BuildInterface $build);
+
+    /**
      * Process the task.
      *
      * @param Xinc\Core\Job\JobInterface $job Job to process this task for.
@@ -74,7 +79,7 @@ interface TaskInterface extends UseLoggerInterface
      * @see Xinc::Core::Plugin::Slot for available slots
      */
     public function getPluginSlot();
-    
+
     /**
      * the parent frame
      */

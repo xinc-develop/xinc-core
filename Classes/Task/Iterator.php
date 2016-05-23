@@ -1,6 +1,5 @@
 <?php
-/**
- * Iterator over an array of SimpleXMLElement objects defining Projects.
+/*
  *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -24,6 +23,9 @@
  */
 namespace Xinc\Core\Task;
 
+/**
+ * Iterator over an array of task objects.
+ */
 class Iterator extends \Xinc\Core\Iterator
 {
     /**
