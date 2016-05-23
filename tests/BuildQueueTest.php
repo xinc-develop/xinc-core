@@ -1,10 +1,10 @@
 <?php
-/**
+/*
  * @author Arno Schneider
  * @author Sebastian Knapp
  * @version 3.0
  * @copyright 2007 Arno Schneider, Barcelona
- * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
+ * @copyright 2015-2016 Xinc Development Team, https://github.com/xinc-develop/
  * @license  http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
  *    This file is part of Xinc.
  *    Xinc is free software; you can redistribute it and/or modify
@@ -54,13 +54,11 @@ class BuildQueueTest extends BaseTest
     public function testOneBuildToBuildAddBuilds()
     {
         $build = new Build(new Engine(),new Project());
-        $buildIterator = new BuildIterator();
-        $buildIterator->add($build);;
         $queue = new BuildQueue();
         $scheduler = new DefaultScheduler();
         
         $build->setScheduler($scheduler);
-        $queue->addBuilds($buildIterator);
+        $queue->addBuild($build);
         
         $nextBuildTime = $queue->getNextBuildTime();
         $this->assertTrue($nextBuildTime != null, 

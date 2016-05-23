@@ -71,6 +71,7 @@ class Xml extends Loader implements ConfigLoaderInterface
         }
         // load every xml file in config dir
         $dir = $conf->get('config-dir');
+        $this->log->debug("Use config-dir '{$dir}'.");
         $list = glob("{$dir}*.xml",GLOB_ERR);
         if ($list === false) {
             throw new IOException($dir, null,

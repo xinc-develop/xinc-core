@@ -696,4 +696,25 @@ class Build implements BuildInterface
         $this->isQueued = false;
     }
 
+   /**
+    * Sets custom config value for the current build.
+    *
+    * @param string $name
+    * @param string $value
+    */
+   public function setConfigDirective($name, $value)
+   {
+        $this->config[$name] = $value;
+   }
+   /**
+    * Returns the configuration directive for the name.
+    *
+    * @param string $name
+    *
+    * @return mixed
+    */
+    public function getConfigDirective($name)
+    {
+        return isset($this->config[$name]) ? $this->config[$name] : null;
+    }
 }

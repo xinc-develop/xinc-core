@@ -74,6 +74,7 @@ class TestLoadXml extends Xinc\Core\Test\BaseTest
 	public function testNoConfFiles()
 	{
 		$conf = new Config();
+	    $conf->setOption('config-dir',__DIR__ . '/config/empty/');
 		try {
 			$this->xml($conf)->load($conf,(new Registry));
 			$this->assertTrue(false,'ConfigException expected');
