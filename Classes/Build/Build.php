@@ -63,7 +63,7 @@ class Build implements BuildInterface
     private $project;
 
     /**
-     * @var Xinc::Core::Properties
+     * @var Xinc::Core::Build::BuildProperties
      */
     private $properties;
 
@@ -194,6 +194,14 @@ class Build implements BuildInterface
     public function setProperty($name, $val)
     {
         $this->properties->set($name, $val);
+    }
+
+    /**
+     * Fetches all properties as an array.
+     */
+    public function getAllProperties()
+    {
+        return $this->properties->getAllProperties();
     }
 
     /**

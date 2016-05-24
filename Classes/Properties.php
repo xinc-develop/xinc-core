@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  * Build Properties carry additional information about a build.
  *
@@ -30,12 +30,15 @@ namespace Xinc\Core;
 use ArrayAccess;
 use Xinc\Core\Exception\Mistake;
 
+/**
+ * A simple key value store which allows callbacks for values.
+ */
 class Properties implements ArrayAccess
 {
     private $properties = array();
 
     private $dynamic = array();
-    
+
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -55,7 +58,7 @@ class Properties implements ArrayAccess
     {
         throw new Mistake('Properties should not be unset as arrays!');
     }
-    
+
     public function has($offset)
     {
         return array_key_exists($offset, $this->properties) ||
@@ -75,10 +78,10 @@ class Properties implements ArrayAccess
                 $this->set($k, $v);
             }
         } else {
-			if(is_callable($value)) {
-				$this->dynamic[$name] = $value;
-			}
-			else {
+            if(is_callable($value)) {
+                $this->dynamic[$name] = $value;
+            }
+            else {
                 $this->properties[$name] = $value;
             }
         }
@@ -96,9 +99,9 @@ class Properties implements ArrayAccess
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         } elseif (array_key_exists($name, $this->dynamic)) {
-			return $this->dynamic[$name]();
-		}
-		else {
+            return $this->dynamic[$name]();
+        }
+        else {
             return;
         }
     }
@@ -110,12 +113,12 @@ class Properties implements ArrayAccess
      */
     public function getAllProperties()
     {
-		$props = array();
-		foreach($this->dynamic as $k => $c) {
-			$props[$k] = $c();
-		}
+        $props = array();
+        foreach($this->dynamic as $k => $c) {
+            $props[$k] = $c();
+        }
         return array_replace($props,$this->properties);
-        
+
     }
     /**
      * Parses a string and substitutes ${name} with $value
