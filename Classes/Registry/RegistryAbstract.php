@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider
@@ -23,9 +23,9 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
- 
+
 /**
- * 
+ *
  */
 namespace Xinc\Core\Registry;
 
@@ -58,9 +58,9 @@ abstract class RegistryAbstract implements RegistryInterface
     public function register($name, $object, $allowdups=false)
     {
         if (isset($this->registry[$name])) {
-			if($allowdups) {
-				return;
-			}
+            if($allowdups) {
+                return;
+            }
             throw new RegistryException('Object with name "'.$name.'" is already registered');
         }
         if (!is_a($object, $this->typeOf)) {

@@ -33,6 +33,7 @@ use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
 use Xinc\Core\Build\BuildProperties;
 use Xinc\Core\Task\Slot;
+use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Traits\Logger;
 use Xinc\Core\Traits\TaskRegistry;
 
@@ -634,6 +635,10 @@ class Build implements BuildInterface
         */
     }
 
+    /**
+     * @c setupTasks should be called once after all tasks are
+     * intantiated and before the first build is started.
+     */
     public function setupTasks()
     {
         $tasks = $this->taskRegistry->getTasks();
@@ -643,6 +648,15 @@ class Build implements BuildInterface
             $task->setup($this);
             $tasks->next();
         }
+    }
+
+    /**
+     * Unregister a task helps to avoid runnig task which have only
+     * informational function.
+     */
+    public function unregisterTask(TaskInterface $task)
+    {
+        $this->taskRegistry->unregisterTask($task);
     }
 
     public static function generateStatusSubDir($projectName, $buildTime)

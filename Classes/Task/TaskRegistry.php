@@ -42,7 +42,7 @@ class TaskRegistry extends RegistryAbstract
     /**
      * @var array Array of registered elements
      */
-    private $slot = array();
+    protected $slot = array();
 
     public function registerTasks($tasks)
     {
@@ -69,14 +69,13 @@ class TaskRegistry extends RegistryAbstract
     }
 
     /**
-     * @todo this does not work correctly in BuildTaskRegistry
      * @param string $name
      * @return Xinc::Core::Task::TaskInterface - the deleted task
      * @throws Xinc\Core\Registry\Exception
      */
     public function unregister($name)
     {
-        $task = $parent::unregister($name);
+        $task = parent::unregister($name);
         foreach($this->slot[$task->getPluginSlot()] as $i => $check) {
             if($check === $task) {
                 unset($this->slot[$task->getPluginSlot()][$i]);

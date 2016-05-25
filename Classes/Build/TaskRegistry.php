@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Arno Schneider <username@example.org>
@@ -24,21 +24,66 @@
  */
 namespace Xinc\Core\Build;
 
+use Xinc\Core\Exception\Mistake;
+use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Task\TaskRegistry as Base;
 use Xinc\Core\Task\Slot;
 
 /**
- * A build contains a kind of this registry to store the concrete task objects.
+ * A build contains a kind of this registry to store the concrete
+ * task objects.
  */
 class TaskRegistry extends Base
 {
-	/**
-	 * available slots
-	 */
-	private $slots;
-    
+    /**
+     * available slots
+     */
+    private $slots;
+
     public function __construct()
     {
-		$this->slots = Slot::getSlots();
-	}	
+        $this->slots = Slot::getSlots();
+    }
+
+    /**
+     * Override because this registry can not work by name - the task name
+     * is a class attribute.
+     *
+     * @param string $name
+     * @param object $task
+     */
+    public function register($name, $task)
+    {
+        $this->registerTask($task);
+    }
+
+    /**
+     * Register the object for the slot.
+     */
+    public function registerTask(TaskInterface $task)
+    {
+        $this->slot[$task->getPluginSlot()][] = $task;
+    }
+
+    /**
+     * @param string $name
+     * @throws Xinc\Core\Exception\Mistake
+     */
+    public function unregister($name)
+    {
+        throw new Mistake("This registry does not support unregister by name.");
+    }
+
+    /**
+     * Unregister the task from the slot.
+     */
+    public function unregisterTask(TaskInterface $task)
+    {
+        foreach($this->slot[$task->getPluginSlot()] as $i => $check) {
+            if($check === $task) {
+                unset($this->slot[$task->getPluginSlot()][$i]);
+            }
+        }
+        return $task;
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
  *
  * @author    Sebastian Knapp <news@young-workers.de>
@@ -38,9 +38,9 @@ trait TaskRegistry
     {
         $this->taskRegistry = $reg;
     }
-    
+
     public function registerTask(TaskInterface $task)
     {
-		$this->taskRegistry->registerTask($task);
-	}
+        $this->taskRegistry->registerTask($task);
+    }
 }
