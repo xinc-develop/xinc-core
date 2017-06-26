@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Logger\UseLoggerInterface;

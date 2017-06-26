@@ -21,26 +21,26 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Task;
 
 use SimpleXmlElement;
 use Xinc\Core\Plugin\PluginInterface;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Traits\Logger;
-use Xinc\Core\Task\TaskInterface;
 
 /**
- * @todo getName method 
+ * @todo getName method
  * @ingroup logger
  */
 abstract class Base implements TaskInterface
 {
-	use Logger;
+    use Logger;
 
     protected $plugin;
     protected $xml;
     protected $frame;
-    
+
     /**
      * Constructor, stores a reference to the plugin for
      * usage of functionality.
@@ -51,50 +51,51 @@ abstract class Base implements TaskInterface
     {
         $this->plugin = $plugin;
     }
-    
+
     public function setFrame(TaskInterface $task)
     {
-		$this->frame = $task;
-	}
-    
+        $this->frame = $task;
+    }
+
     /**
      * @return Xinc::Core::Plugin::PluginInterface
      */
     public function getPlugin()
     {
-	    return $this->plugin;	
-	}
+        return $this->plugin;
+    }
 
     public function createTask(BuildInterface $build = null)
     {
-		$new = new static($this->getPlugin());
-		$new->init($build);
-		return $new;
+        $new = new static($this->getPlugin());
+        $new->init($build);
+
+        return $new;
     }
-    
+
     protected function init(BuildInterface $build = null)
     {
-		//
-	}
+    }
 
     protected function getConfigValue($key)
     {
-		return $this->getPlugin()->getConfigValue($key);
-	}
+        return $this->getPlugin()->getConfigValue($key);
+    }
 
     /**
      * Returns name of task by lowercasing class name.
-     * @return string Name of task.
+     *
+     * @return string Name of task
      */
     public function getName()
     {
         return strtolower(get_class($this));
     }
-    
+
     public function __toString()
     {
-		return $this->getName();
-	}
+        return $this->getName();
+    }
 
     public function getTasks()
     {
@@ -113,7 +114,8 @@ abstract class Base implements TaskInterface
 
     /**
      * Validates if a task can run by checking configs, directories and so on.
-     * @return bool Is true if task can run.
+     *
+     * @return bool Is true if task can run
      */
     public function validate(&$msg = null)
     {

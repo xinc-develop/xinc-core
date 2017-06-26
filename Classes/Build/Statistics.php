@@ -22,13 +22,14 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Validation\Exception\NotNumerical;
 
 /**
  * Collects statistics from a build.
- * 
+ *
  * Build Statistics carry numerical values for certain build aspects, like:
  * - build time
  * - number of unittests

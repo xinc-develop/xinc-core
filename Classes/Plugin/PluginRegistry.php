@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin;
 
 use Xinc\Core\Registry\RegistryAbstract;
@@ -39,8 +40,7 @@ use Xinc\Core\Traits\TaskRegistry;
  * @ingroup registry
  * @ingroup logger
  */
-class PluginRegistry extends RegistryAbstract 
-  implements RegistryInterface, TaskRegistryInterface
+class PluginRegistry extends RegistryAbstract implements RegistryInterface, TaskRegistryInterface
 {
     use Logger;
     use TaskRegistry;
@@ -58,9 +58,9 @@ class PluginRegistry extends RegistryAbstract
     private $slotReference = array();
 
     /**
-     * Register task for the slot
+     * Register task for the slot.
      */
-    private function registerTaskForSlot($slot,$task)
+    private function registerTaskForSlot($slot, $task)
     {
         $this->slotReference[$slot][] = $task;
     }
@@ -101,7 +101,7 @@ class PluginRegistry extends RegistryAbstract
                 default:
                     break;
             }
-            $this->registerTaskForSlot($taskSlot,$task);
+            $this->registerTaskForSlot($taskSlot, $task);
         }
     }
 

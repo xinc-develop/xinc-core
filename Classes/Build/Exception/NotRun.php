@@ -24,6 +24,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build\Exception;
 
 class NotRun extends BuildException

@@ -25,6 +25,7 @@
  *
  * @link  @rel team https://github.com/xinc-develop
  */
+
 namespace Xinc\Core;
 
 use ArrayAccess;
@@ -35,7 +36,7 @@ class Properties implements ArrayAccess
     private $properties = array();
 
     private $dynamic = array();
-    
+
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -55,7 +56,7 @@ class Properties implements ArrayAccess
     {
         throw new Mistake('Properties should not be unset as arrays!');
     }
-    
+
     public function has($offset)
     {
         return array_key_exists($offset, $this->properties) ||
@@ -75,10 +76,9 @@ class Properties implements ArrayAccess
                 $this->set($k, $v);
             }
         } else {
-			if(is_callable($value)) {
-				$this->dynamic[$name] = $value;
-			}
-			else {
+            if (is_callable($value)) {
+                $this->dynamic[$name] = $value;
+            } else {
                 $this->properties[$name] = $value;
             }
         }
@@ -96,9 +96,8 @@ class Properties implements ArrayAccess
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         } elseif (array_key_exists($name, $this->dynamic)) {
-			return $this->dynamic[$name]();
-		}
-		else {
+            return $this->dynamic[$name]();
+        } else {
             return;
         }
     }
@@ -110,12 +109,12 @@ class Properties implements ArrayAccess
      */
     public function getAllProperties()
     {
-		$props = array();
-		foreach($this->dynamic as $k => $c) {
-			$props[$k] = $c();
-		}
-        return array_replace($props,$this->properties);
-        
+        $props = array();
+        foreach ($this->dynamic as $k => $c) {
+            $props[$k] = $c();
+        }
+
+        return array_replace($props, $this->properties);
     }
     /**
      * Parses a string and substitutes ${name} with $value
@@ -127,7 +126,9 @@ class Properties implements ArrayAccess
     {
         $string = (string) $string;
         $string = preg_replace_callback("/\\$\{(.*?)\}/",
-            function ($k) { return $this->get($k[1]); }, $string);
+            function ($k) {
+                return $this->get($k[1]);
+            }, $string);
 
         return $string;
     }

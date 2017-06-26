@@ -23,10 +23,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
- 
-/**
- * 
- */
+
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Traits\Logger;
@@ -39,7 +36,7 @@ abstract class RegistryAbstract implements RegistryInterface
 {
     use Logger;
     /**
-     * @var typeOf The Name of the class this elements should be.
+     * @var typeOf The Name of the class this elements should be
      */
     protected $typeOf = null;
 
@@ -55,12 +52,12 @@ abstract class RegistryAbstract implements RegistryInterface
      * @throws Xinc\Core\Registry\RegistryException
      * @throws Xinc\Core\Validation\Exception\TypeMismatch
      */
-    public function register($name, $object, $allowdups=false)
+    public function register($name, $object, $allowdups = false)
     {
         if (isset($this->registry[$name])) {
-			if($allowdups) {
-				return;
-			}
+            if ($allowdups) {
+                return;
+            }
             throw new RegistryException('Object with name "'.$name.'" is already registered');
         }
         if (!is_a($object, $this->typeOf)) {

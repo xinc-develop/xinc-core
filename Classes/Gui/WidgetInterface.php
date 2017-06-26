@@ -24,11 +24,12 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Gui;
 
 use Xinc\Core\Plugin\PluginInterface;
 
-#require_once 'Xinc/Gui/Widget/Extension/Interface.php';
+//require_once 'Xinc/Gui/Widget/Extension/Interface.php';
 
 /**
  * Interface for a GUI element defined  and used by a plugin.
@@ -39,10 +40,10 @@ interface WidgetInterface
 {
     /**
      * Constructor for a Widget.
-     * 
+     *
      * The plugin passed itself as a variable
      * to the constructor.
-     * 
+     *
      * The Widget can access the plugins shared functionality
      *
      * @param Xinc_Plugin_Interface $plugin
@@ -52,7 +53,7 @@ interface WidgetInterface
     /**
      * The Xinc_Gui_Handler fires different events on the
      * Widgets (see Xinc_Gui_Event).
-     * 
+     *
      * The Widget can react differently on the events.
      * A normal page load-event is Xinc_Gui_Event::PAGE_LOAD
      *
@@ -61,11 +62,11 @@ interface WidgetInterface
     public function handleEvent($eventId);
 
     /**
-     * returns the Pathnames for which the Widget 
+     * returns the Pathnames for which the Widget
      * wants to register itself for execution.
-     * 
+     *
      * getPaths() returns array('/dashboard', '/olddashboard');
-     * Widget is called for: 
+     * Widget is called for:
      *   http://mydomain.com/dashboard
      *     AND
      *   http://mydomain.com/olddashboard
@@ -76,14 +77,14 @@ interface WidgetInterface
 
     /**
      * Is called after all widgets have
-     * been registered. This is the place where widgets need 
+     * been registered. This is the place where widgets need
      * to register the hooks for another Widget.
      */
     public function init();
 
     /**
      * get the defined hooks of this widget.
-     * 
+     *
      * Hooks can be used to allow other widgets to
      * extend this widget
      *

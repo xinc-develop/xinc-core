@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Engine\EngineInterface;
@@ -36,7 +37,7 @@ use Xinc\Core\Task\TaskRegistryInterface;
  */
 interface BuildInterface extends TaskRegistryInterface
 {
-	const UNINITIALIZED = -3;
+    const UNINITIALIZED = -3;
     const INITIALIZED = -2;
     const FAILED = 0;
     const PASSED = 1;
@@ -50,7 +51,7 @@ interface BuildInterface extends TaskRegistryInterface
      * @param Xinc_Engine_Interface $engine
      * @param Xinc_Project          $project
      * @param int                   $buildTimestamp
-     * 
+     *
      * @todo Decouple engine from build
      */
     public function __construct(
@@ -140,7 +141,7 @@ interface BuildInterface extends TaskRegistryInterface
     public function build();
 
     /**
-     * Store a task object 
+     * Store a task object.
      */
     public function registerTask(TaskInterface $task);
 

@@ -20,6 +20,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
@@ -34,7 +35,7 @@ class Task extends Base
     /**
      * Returns name of task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName()
     {
@@ -44,7 +45,8 @@ class Task extends Base
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number
+     *
      * @see Xinc::Core::Task::Slot for available slots
      */
     public function getPluginSlot()

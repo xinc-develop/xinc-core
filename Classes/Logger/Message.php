@@ -23,6 +23,7 @@
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Logger;
 
 /**
@@ -31,26 +32,26 @@ namespace Xinc\Core\Logger;
 class Message
 {
     /**
-     * @var string Priority of the message (e.g. 'info').
+     * @var string Priority of the message (e.g. 'info')
      */
     public $priority;
 
     /**
-     * @var string Content of message.
+     * @var string Content of message
      */
     public $message;
 
     /**
-     * @var ? Timestamp of the message.
+     * @var ? Timestamp of the message
      */
     public $timestamp;
 
     /**
      * Constructor sets the priority and message content.
      *
-     * @param string $strPriority Priority of the message.
-     * @param ?      $timestamp   Timestamp of the message.
-     * @param string $strContent  Content of the message.
+     * @param string $strPriority Priority of the message
+     * @param ?      $timestamp   Timestamp of the message
+     * @param string $strContent  Content of the message
      */
     public function __construct($strPriority, $timestamp, $strContent)
     {

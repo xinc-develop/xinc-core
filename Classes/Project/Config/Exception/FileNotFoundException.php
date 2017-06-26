@@ -1,7 +1,7 @@
 <?php
 /**
  * Exception, config file was not found.
- * 
+ *
  * @author    Arno Schneider <username@example.com>
  * @copyright 2007 Arno Schneider, Barcelona
  * @license   http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Project\Config\Exception;
 
 class FileNotFoundException extends \Exception

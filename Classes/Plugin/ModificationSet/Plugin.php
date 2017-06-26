@@ -23,6 +23,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\ModificationSet;
 
 use Xinc\Core\Plugin\Base;
@@ -37,7 +38,7 @@ class Plugin extends Base
     public function getTaskDefinitions()
     {
         return array(new Task($this),
-                     new BuildAlways($this)
+                     new BuildAlways($this),
         );
     }
 

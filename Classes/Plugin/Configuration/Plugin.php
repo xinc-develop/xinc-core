@@ -23,18 +23,16 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Configuration;
 
 use Xinc\Core\Plugin\Base;
 
-/**
- * 
- */
 class Plugin extends Base
 {
     public function getTaskDefinitions()
     {
-        return array(new Task($this), 
-                     new SettingTask($this) );
+        return array(new Task($this),
+                     new SettingTask($this), );
     }
 }

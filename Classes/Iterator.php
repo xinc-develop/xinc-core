@@ -23,7 +23,6 @@
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
-/** */
 namespace Xinc\Core;
 
 use Xinc\Core\Validation\Exception\TypeMismatch;
@@ -34,7 +33,7 @@ use Xinc\Core\Validation\Exception\TypeMismatch;
 class Iterator extends \ArrayIterator
 {
     /**
-     * @var typeOf The Name of the class this elements should be.
+     * @var typeOf The Name of the class this elements should be
      */
     protected $typeOf = null;
 

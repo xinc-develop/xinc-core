@@ -24,6 +24,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Test;
 
 use Xinc\Core\Engine\Base;
@@ -37,7 +38,7 @@ class Engine extends Base implements EngineInterface
     /**
      * get the name of the engine.
      *
-     * @return string Name of the engine.
+     * @return string Name of the engine
      */
     public function getName()
     {
@@ -55,9 +56,9 @@ class Engine extends Base implements EngineInterface
 
     /**
      * Setup a project for the engine and setup a build object from
-     * project configuration. 
+     * project configuration.
      *
-     * @param Xinc::Core::Project::Project $project A project inside this engine.
+     * @param Xinc::Core::Project::Project $project A project inside this engine
      *
      * @return BuildInterface
      */
@@ -68,7 +69,8 @@ class Engine extends Base implements EngineInterface
         $build->setNumber(1);
         $this->setupBuildProperties($build);
         $this->setupConfigProperties($build);
-        $this->parseProjectConfig($build,$project->getConfigXml());
+        $this->parseProjectConfig($build, $project->getConfigXml());
+
         return $build;
     }
 

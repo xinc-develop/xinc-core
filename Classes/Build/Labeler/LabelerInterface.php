@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build\Labeler;
 
 use Xinc\Core\Build\BuildInterface;

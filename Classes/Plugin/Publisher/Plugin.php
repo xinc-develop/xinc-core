@@ -23,11 +23,12 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Publisher;
 
 use Xinc\Core\Plugin\Base;
 
-class Plugin  extends Base
+class Plugin extends Base
 {
     public function getTaskDefinitions()
     {

@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Gui;
 
 use Xinc\Core\Registry\RegistryAbstract;
@@ -35,7 +36,7 @@ use Xinc\Core\Registry\RegistryAbstract;
 class WidgetRegistry extends RegistryAbstract
 {
     /**
-     * @var typeOf The Name of the class this elements should be.
+     * @var typeOf The Name of the class this elements should be
      */
     protected $typeOf = '\Xinc\Core\Gui\WidgetInterface';
 
@@ -97,7 +98,7 @@ class WidgetRegistry extends RegistryAbstract
 
     /**
      * Determines the Widget that should be used
-     * for the specified Http-Request by the Pathname that 
+     * for the specified Http-Request by the Pathname that
      * is called.
      *
      * @param string $path Pathname of the HTTP-Request

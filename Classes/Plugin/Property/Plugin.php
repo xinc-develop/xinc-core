@@ -23,6 +23,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Property;
 
 use Xinc\Core\Plugin\Base;
@@ -36,9 +37,9 @@ class Plugin extends Base
 {
     /**
      * loads properties from a property file.
-     * 
+     *
      * @param BuildInterface $build
-     * @param string $fileName
+     * @param string         $fileName
      */
     public function parsePropertyFile(BuildInterface $build, $fileName)
     {

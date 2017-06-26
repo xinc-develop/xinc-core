@@ -20,29 +20,28 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin\Builder;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
 
 class Process extends BaseTask
 {
-	protected $command;
-	
-	public function setCommand($cmd)
-	{
-		$this->command = $cmd;
-	}
-	
+    protected $command;
+
+    public function setCommand($cmd)
+    {
+        $this->command = $cmd;
+    }
+
     /**
      * Validates if a task can run by checking configs, directries and so on.
      *
-     * @return boolean Is true if task can run.
+     * @return bool Is true if task can run
      */
     public function validateTask()
     {
@@ -52,7 +51,7 @@ class Process extends BaseTask
     /**
      * Returns name of task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName()
     {
@@ -62,7 +61,8 @@ class Process extends BaseTask
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number
+     *
      * @see Xinc::Core::Task::Slot for available slots
      */
     public function getPluginSlot()
@@ -74,9 +74,8 @@ class Process extends BaseTask
     {
         $build->info('Processing builders done');
     }
-    
+
     public function build(BuildInterface $build)
     {
-		  
-	}
+    }
 }

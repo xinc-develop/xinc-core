@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Task;
 
 use Xinc\Core\Registry\RegistryAbstract;
@@ -35,7 +36,7 @@ use Xinc\Core\Registry\RegistryAbstract;
 class TaskRegistry extends RegistryAbstract
 {
     /**
-     * @var typeOf The Name of the class this elements should be.
+     * @var typeOf The Name of the class this elements should be
      */
     protected $typeOf = '\Xinc\Core\Task\TaskInterface';
 
@@ -46,15 +47,15 @@ class TaskRegistry extends RegistryAbstract
 
     public function registerTasks($tasks)
     {
-		foreach($tasks as $task) {
-			$this->registerTask($task);
-		}
+        foreach ($tasks as $task) {
+            $this->registerTask($task);
+        }
     }
-    
+
     public function registerTask(TaskInterface $task)
     {
-		$this->register($task->getName(),$task);
-	}
+        $this->register($task->getName(), $task);
+    }
 
     /**
      * @param string $name
@@ -70,18 +71,21 @@ class TaskRegistry extends RegistryAbstract
 
     /**
      * @todo this does not work correctly in BuildTaskRegistry
+     *
      * @param string $name
+     *
      * @return Xinc::Core::Task::TaskInterface - the deleted task
+     *
      * @throws Xinc\Core\Registry\Exception
      */
     public function unregister($name)
     {
         $task = $parent::unregister($name);
-        foreach($this->slot[$task->getPluginSlot()] as $i => $check) {
-			if($check === $task) {
-				unset($this->slot[$task->getPluginSlot()][$i]);
-			}
-		}
+        foreach ($this->slot[$task->getPluginSlot()] as $i => $check) {
+            if ($check === $task) {
+                unset($this->slot[$task->getPluginSlot()][$i]);
+            }
+        }
 
         return $task;
     }
@@ -101,16 +105,17 @@ class TaskRegistry extends RegistryAbstract
         } else {
             return new Iterator($this->slot[$slot]);
         }
-    }    
-    
+    }
+
     public function getTask($taskname, $parentElement = null)
     {
         if ($parentElement !== null) {
-            $taskname2  = $parentElement . '/' . $taskname;
-            if($this->knows($taskname2)) {
-			    return $this->get($taskname2);	
+            $taskname2 = $parentElement.'/'.$taskname;
+            if ($this->knows($taskname2)) {
+                return $this->get($taskname2);
             }
         }
+
         return $this->get($taskname);
     }
 }

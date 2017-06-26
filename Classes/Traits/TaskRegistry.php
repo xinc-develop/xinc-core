@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Traits;
 
 use Xinc\Core\Task\TaskInterface;
@@ -38,9 +39,9 @@ trait TaskRegistry
     {
         $this->taskRegistry = $reg;
     }
-    
+
     public function registerTask(TaskInterface $task)
     {
-		$this->taskRegistry->registerTask($task);
-	}
+        $this->taskRegistry->registerTask($task);
+    }
 }

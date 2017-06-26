@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Task\TaskRegistry as Base;
@@ -32,13 +33,13 @@ use Xinc\Core\Task\Slot;
  */
 class TaskRegistry extends Base
 {
-	/**
-	 * available slots
-	 */
-	private $slots;
-    
+    /**
+     * available slots.
+     */
+    private $slots;
+
     public function __construct()
     {
-		$this->slots = Slot::getSlots();
-	}	
+        $this->slots = Slot::getSlots();
+    }
 }

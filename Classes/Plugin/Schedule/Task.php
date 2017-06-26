@@ -29,18 +29,17 @@ namespace Xinc\Core\Plugin\Schedule;
 use Xinc\Core\Build\BuildInterface;
 use Xinc\Core\Task\Base;
 use Xinc\Core\Task\Slot;
-use Xinc\Core\Task\TaskInterface;
 use Xinc\Core\Build\Scheduler\SchedulerInterface;
 
 /**
- * Interval scheduler
- * 
+ * Interval scheduler.
+ *
  * This task simply schedules builds by an interval.
- * 
+ *
  * @tag schedule
  * @attribute interval - the interval in seconds with a default of 60
  * @slot INIT_PROCESS
- * 
+ *
  * @todo maybe support string intervals @a hourly, @a daily, @a weekly and @a monthly
  * @todo support attribute @c run with at least three possible values:
  * 		* @a interval - this is the default
@@ -51,9 +50,8 @@ use Xinc\Core\Build\Scheduler\SchedulerInterface;
  */
 class Task extends Base implements SchedulerInterface
 {
-
     private $interval = 60;
-    
+
     public function process(BuildInterface $build)
     {
     }
@@ -62,32 +60,31 @@ class Task extends Base implements SchedulerInterface
     {
         $this->interval = $interval;
     }
-    
+
     public function getInterval()
     {
         return $this->interval;
     }
-        
+
     public function init(BuildInterface $build)
     {
         $build->setScheduler($this);
     }
-    
+
     public function getNextBuildTime(BuildInterface $build)
     {
         if ($build->getStatus() == BuildInterface::STOPPED) {
             return null;
         }
         $lastBuild = $build->getLastBuild()->getBuildTime();
-        
-        if ($lastBuild !== null ) {
+
+        if ($lastBuild !== null) {
             $nextBuild = $this->getInterval() + $lastBuild;
-            /**
+            /*
              * Make sure that we dont rerun every build if the daemon was paused
              */
             //echo time(). ' - ' . $lastBuild .'='.(time()-$lastBuild)."\n";
             if ($nextBuild + $this->getInterval() < time()) {
-                
                 $nextBuild = time();
             }
         } else {
@@ -95,10 +92,11 @@ class Task extends Base implements SchedulerInterface
             $nextBuild = time();
         }
         $this->log->debug('getNextBuildTime '
-                              . ': lastbuild: ' 
-                              . date('Y-m-d H:i:s', $lastBuild) 
-                              . ' nextbuild: ' 
-                              . date('Y-m-d H:i:s', $nextBuild).'');
+                              .': lastbuild: '
+                              .date('Y-m-d H:i:s', $lastBuild)
+                              .' nextbuild: '
+                              .date('Y-m-d H:i:s', $nextBuild).'');
+
         return $nextBuild;
     }
 
@@ -109,11 +107,12 @@ class Task extends Base implements SchedulerInterface
 
     public function validate(&$msg = null)
     {
-        if($this->interval > 0) {
-			return true;
-		}
-		$msg = "Invalid schedule interval value '{$this->interval}'";
-		return false;
+        if ($this->interval > 0) {
+            return true;
+        }
+        $msg = "Invalid schedule interval value '{$this->interval}'";
+
+        return false;
     }
 
     public function getName()

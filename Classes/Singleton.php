@@ -26,9 +26,10 @@
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
-/** 
+/**
  * A Singleton Pattern Implementation.
  */
+
 namespace Xinc\Core;
 
 use Xinc\Core\Exception\Mistake;
@@ -39,7 +40,7 @@ use Xinc\Core\Exception\Mistake;
 class Singleton
 {
     /**
-     * @var array<Singleton> Instance of the singleton class.
+     * @var array<Singleton> Instance of the singleton class
      */
     protected static $instances = array();
 

@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Traits;
 
 use Xinc\Core\Config\ConfigInterface;
@@ -31,13 +32,14 @@ use Xinc\Core\Config\ConfigInterface;
  */
 trait Config
 {
-	/**
-	 * Xinc::Core::Config::ConfigInterface
-	 */
+    /**
+     * Xinc::Core::Config::ConfigInterface.
+     */
     protected $config;
 
     /**
-     * the setter method
+     * the setter method.
+     *
      * @param Xinc::Core::Config::ConfigInterface
      */
     public function setConfig(ConfigInterface $conf)

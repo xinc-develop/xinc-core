@@ -20,6 +20,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
@@ -32,7 +33,7 @@ class BuildAlways extends BaseTask
     /**
      * Returns name of task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName()
     {
@@ -40,16 +41,16 @@ class BuildAlways extends BaseTask
     }
 
     /**
-     * Check if this modification set has been modified
+     * Check if this modification set has been modified.
      *
      * @return Xinc::Core::Plugin::ModificationSet::Result
      */
     public function checkModified(BuildInterface $build)
     {
-		
         $result = new Result();
         $result->setSource('build always task');
         $result->setStatus(Result::CHANGED);
+
         return $result;
     }
 }

@@ -25,18 +25,20 @@
  *
  * @link  @rel team https://github.com/xinc-develop
  */
+
 namespace Xinc\Core\Build;
 
 use Xinc\Core\Properties;
 
 class BuildProperties extends Properties
 {
-	public function __construct()
-	{
-		$this->set('cctimestamp',function () {
-			$ts = $this->get('build.timestamp');
-			return $ts === null ? null : 
-			    date('YmdHis',$this->get('build.timestamp'));
-	    });
-	 }
+    public function __construct()
+    {
+        $this->set('cctimestamp', function () {
+            $ts = $this->get('build.timestamp');
+
+            return $ts === null ? null :
+                date('YmdHis', $this->get('build.timestamp'));
+        });
+    }
 }

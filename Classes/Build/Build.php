@@ -23,6 +23,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build;
 
 use Exception;
@@ -30,7 +31,6 @@ use Xinc\Core\Build\TaskRegistry as BuildTaskRegistry;
 use Xinc\Core\Engine\EngineInterface;
 use Xinc\Core\Project\Project;
 use Xinc\Core\Project\Status as ProjectStatus;
-use Xinc\Core\Build\BuildProperties;
 use Xinc\Core\Task\Slot;
 use Xinc\Core\Traits\Logger;
 use Xinc\Core\Traits\TaskRegistry;
@@ -46,6 +46,7 @@ class Build implements BuildInterface
     use TaskRegistry;
     /**
      * Are we queued?
+     *
      * @var bool
      */
     private $isQueued = false;
@@ -87,6 +88,7 @@ class Build implements BuildInterface
 
     /**
      * Build status, as defined in Xinc_Build_Interface.
+     *
      * @var int
      */
     private $status;
@@ -98,18 +100,21 @@ class Build implements BuildInterface
 
     /**
      * The build no of this build.
+     *
      * @var int
      */
     private $no;
 
     /**
      * The label for this build.
+     *
      * @var string
      */
     private $label;
 
     /**
      * Build scheduler.
+     *
      * @var Xinc::Core::Build::Scheduler::SchedulerInterface
      */
     private $scheduler;
@@ -121,6 +126,7 @@ class Build implements BuildInterface
 
     /**
      * Holding config values for this build.
+     *
      * @var array
      */
     private $config = array();
@@ -137,7 +143,7 @@ class Build implements BuildInterface
                                 Project $project,
                                 $buildTimestamp = null
     ) {
-		$this->setStatus(BuildInterface::UNINITIALIZED);
+        $this->setStatus(BuildInterface::UNINITIALIZED);
         $this->engine = $engine;
         $this->setLogger($engine->getLogger());
         $this->project = $project;
@@ -152,8 +158,8 @@ class Build implements BuildInterface
         $this->statistics = new Statistics();
         $this->setLabeler(new Labeler\DefaultLabeler());
         $this->setScheduler(new Scheduler\DefaultScheduler());
-        
-        $taskRegistry = new BuildTaskRegistry;
+
+        $taskRegistry = new BuildTaskRegistry();
         $taskRegistry->setLogger($engine->getLogger());
         $this->setTaskRegistry($taskRegistry);
     }
@@ -183,11 +189,11 @@ class Build implements BuildInterface
     {
         return $this->properties->get($name);
     }
-    
+
     public function parseProperty($value)
     {
-		return $this->properties->parseString($value);
-	}
+        return $this->properties->parseString($value);
+    }
 
     /**
      * @param string $name
@@ -491,15 +497,17 @@ class Build implements BuildInterface
     {
         return $this->scheduler;
     }
-    
+
     public function getTasksForSlot($slot)
     {
-		return $this->taskRegistry->getTasksForSlot($slot);
-	}
+        return $this->taskRegistry->getTasksForSlot($slot);
+    }
 
     /**
      * processes the tasks that are registered for the slot.
+     *
      * @todo exception handling & maybe move to engine
+     *
      * @param mixed $slot
      */
     public function process($slot)
@@ -516,7 +524,7 @@ class Build implements BuildInterface
 
             /*
              * The Post-Process continues on failure
-             
+
             if ($slot != Slot::POST_PROCESS) {
                 if ($this->getStatus() != BuildInterface::PASSED) {
                     $tasks->rewind();

@@ -23,6 +23,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build\Scheduler;
 
 use Xinc\Core\Build\BuildInterface;
@@ -37,6 +38,7 @@ interface SchedulerInterface
      * Calculates the next build timestamp.
      *
      * @param Xinc::Core::Build::BuildInterface $build
+     *
      * @return int next build timestamp
      */
     public function getNextBuildTime(BuildInterface $build);

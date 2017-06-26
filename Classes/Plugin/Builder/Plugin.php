@@ -20,6 +20,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
@@ -37,6 +38,6 @@ class Plugin extends Base
     public function getTaskDefinitions()
     {
         return array(new Task($this),
-                     new Process($this));
+                     new Process($this), );
     }
 }

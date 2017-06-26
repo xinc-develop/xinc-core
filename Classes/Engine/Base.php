@@ -24,6 +24,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
@@ -41,6 +42,7 @@ use Xinc\Core\Traits\TaskRegistry;
  * Base class for engines with common functionality.
  *
  * An engine controls a build process.
+ *
  * @ingroup config
  * @ingroup logger
  */
@@ -52,25 +54,28 @@ abstract class Base implements EngineInterface
     use TaskRegistry;
 
     /**
-     * An engine shares the logger with the controled build
+     * An engine shares the logger with the controled build.
+     *
      * @return Xinc::Core::Logger
      */
     public function getLogger()
     {
         return $this->log;
     }
-    
-    /**
-     * The tasks which are performed during a slot.
-     * @param Xinc::Core::Task::Slot
-     */
-    protected final function getTasksForSlot($slot)
-    {
-		return $this->pluginRegistry->getTasksForSlot($slot);
-	}
 
     /**
-     * copies some basic informations to the build object
+     * The tasks which are performed during a slot.
+     *
+     * @param Xinc::Core::Task::Slot
+     */
+    final protected function getTasksForSlot($slot)
+    {
+        return $this->pluginRegistry->getTasksForSlot($slot);
+    }
+
+    /**
+     * copies some basic informations to the build object.
+     *
      * @param Xinc::Core::Build::BuildInterface
      */
     protected function setupBuildProperties(BuildInterface $build)
@@ -81,7 +86,6 @@ abstract class Base implements EngineInterface
         $build->setProperty('build.label', $build->getLabel());
     }
 
-
     protected function setupConfigProperties(BuildInterface $build)
     {
         $options = array('workingdir', 'projectdir', 'statusdir');
@@ -89,63 +93,66 @@ abstract class Base implements EngineInterface
             $build->setProperty($option, $this->config->get($option));
         }
     }
-    
-    protected function parseProjectConfig(BuildInterface $build, $xml, $parent=null)
+
+    protected function parseProjectConfig(BuildInterface $build, $xml, $parent = null)
     {
         $filtertasks = $this->getTasksForSlot(Slot::PROJECT_SET_VALUES);
 
-        foreach ($xml->children() as $taskName => $task) {            
-            try{
-                $taskObject = $this->taskRegistry->getTask($taskName, (string)$parent);
+        foreach ($xml->children() as $taskName => $task) {
+            try {
+                $taskObject = $this->taskRegistry->getTask($taskName, (string) $parent);
                 $taskObject = $taskObject->createTask($build);
                 $taskObject->setXml($task);
-            } 
-            catch(Exception $e){
+            } catch (Exception $e) {
                 $this->log->error('Task "'.$taskName.'" not found.');
                 $build->getProject()->setStatus(Status::MISCONFIGURED);
+
                 return;
             }
             foreach ($task->attributes() as $name => $value) {
                 $setter = 'set'.$name;
-                foreach($filtertasks as $filter) {
-					$value = $filter->set($build,$value);
-				}
-                $taskObject->$setter((string)$value, $build);
+                foreach ($filtertasks as $filter) {
+                    $value = $filter->set($build, $value);
+                }
+                $taskObject->$setter((string) $value, $build);
             }
 
             $this->parseProjectConfig($build, $task, $taskObject);
-            
-            if($parent instanceof TaskInterface) {
+
+            if ($parent instanceof TaskInterface) {
                 $taskObject->setFrame($parent);
             }
             $build->registerTask($taskObject);
-            
-            if(!$this->validateTask($taskObject)) {
-				$build->getProject()->setStatus(Status::MISCONFIGURED);
+
+            if (!$this->validateTask($taskObject)) {
+                $build->getProject()->setStatus(Status::MISCONFIGURED);
+
                 return;
             }
         }
     }
 
-	/**
-	 * Calls the validate method of a task.
-	 */
+    /**
+     * Calls the validate method of a task.
+     */
     protected function validateTask($taskObject)
     {
-		try {
-            if ( !$taskObject->validate($msg) ) {
-				$this->log->warn("Task {$taskObject->getName()} is invalid.".
-				    ($msg ? "\nError message: $msg" : '') 
-				);
-                return false;   
+        try {
+            if (!$taskObject->validate($msg)) {
+                $this->log->warn("Task {$taskObject->getName()} is invalid.".
+                    ($msg ? "\nError message: $msg" : '')
+                );
+
+                return false;
             }
+
             return true;
+        } catch (MalformedConfigException $e) {
+            $this->log->error("Error in task {$taskObject->getName()} configuration: ".
+                $e->getMessage()
+            );
+
+            return false;
         }
-        catch(MalformedConfigException $e) {
-			$this->log->error("Error in task {$taskObject->getName()} configuration: " .
-			    $e->getMessage()
-			);
-			return false;
-		}
-	}
+    }
 }

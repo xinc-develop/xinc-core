@@ -1,7 +1,7 @@
 <?php
 /*
  * Xinc - Continuous Integration.
- * 
+ *
  * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
@@ -23,33 +23,35 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin;
 
 /**
  * A group is a list of the available plugins.
- * 
+ *
  * Each xinc extension should define a group with all provided plugin classes.
  * This allows to load all plugins with a single configuration line.
- * 
+ *
  *      <plugins group="Xinc\Core\Plugin\Group"/>
  */
 class Group implements PluginGroupInterface
 {
-	/**
-	 * @return a list of plugin classes
-	 */
-	public function getPluginClasses()
-	{
-	    $base = __NAMESPACE__;
-	    $plugins = array(
-	        'Configuration',
-	        'Builder',
-	        'ModificationSet',
-	        'Property',
-	        'Schedule'
-	    );
-	    return array_map(function ($name) use ($base) { 
-			return join("\\",[$base,$name,'Plugin']); 
-		}, $plugins);	
-	}
+    /**
+     * @return a list of plugin classes
+     */
+    public function getPluginClasses()
+    {
+        $base = __NAMESPACE__;
+        $plugins = array(
+            'Configuration',
+            'Builder',
+            'ModificationSet',
+            'Property',
+            'Schedule',
+        );
+
+        return array_map(function ($name) use ($base) {
+            return implode('\\', [$base, $name, 'Plugin']);
+        }, $plugins);
+    }
 }

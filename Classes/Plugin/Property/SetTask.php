@@ -24,6 +24,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Property;
 
 use Xinc\Core\Build\BuildInterface;
@@ -94,7 +95,7 @@ class SetTask extends Base
     /**
      * Validates if a task can run by checking configs, directries and so on.
      *
-     * @return bool Is true if task can run.
+     * @return bool Is true if task can run
      */
     public function validate(&$msg = null)
     {
@@ -112,7 +113,7 @@ class SetTask extends Base
     /**
      * Returns name of Task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName()
     {
@@ -122,7 +123,7 @@ class SetTask extends Base
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return int The slot number.
+     * @return int The slot number
      */
     public function getPluginSlot()
     {

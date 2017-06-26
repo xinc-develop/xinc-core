@@ -24,6 +24,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Config;
 
 use Xinc\Getopt\Getopt;
@@ -47,36 +48,40 @@ class Xml extends Loader implements ConfigLoaderInterface
         $options['configfile']->setDescription('the config file to use');
         $options['configdir'] = new Option('d', 'config-dir', Getopt::REQUIRED_ARGUMENT);
         $options['configdir']->setDescription('the directory with main configuration(s)');
+
         return $options;
     }
     /**
      * Finds the configured configuration sources.
-     * 
+     *
      * The config needs at least a valid config-dir or config-file
      * option.
      *
      * @throw Xinc::Core::Exception::IOException
+     *
      * @return array with configured sources
      */
     public function getConfigurationSources(ConfigInterface $conf)
     {
-		if($conf->hasOption('config-file')) {
+        if ($conf->hasOption('config-file')) {
             $file = $conf->getOption('config-file');
             if (isset($file)) {
                 if (!strstr($file, '/')) {
                     $file = $conf->getOption('config-dir').$file;
                 }
+
                 return array($file);
             }
         }
         // load every xml file in config dir
         $dir = $conf->getOption('config-dir');
-        $list = glob("{$dir}*.xml",GLOB_ERR);
+        $list = glob("{$dir}*.xml", GLOB_ERR);
         if ($list === false) {
             throw new IOException($dir, null,
                  "config-dir '$dir' is not readable",
                  IOException::FAILURE_NOT_READABLE);
         }
+
         return $list;
     }
 
@@ -85,13 +90,13 @@ class Xml extends Loader implements ConfigLoaderInterface
      */
     public function load(ConfigInterface $conf, XincRegistryInterface $reg)
     {
-         $files = $this->getConfigurationSources($conf);
-         if(empty($files)) {
-			 throw new ConfigException("No configuration sources found.");
-	     }
-         foreach($files as $file) {
-            $this->loadFile($file,$conf,$reg);	
-         }
+        $files = $this->getConfigurationSources($conf);
+        if (empty($files)) {
+            throw new ConfigException('No configuration sources found.');
+        }
+        foreach ($files as $file) {
+            $this->loadFile($file, $conf, $reg);
+        }
     }
 
     public function loadFile($file, $conf, $reg)
@@ -124,22 +129,22 @@ class Xml extends Loader implements ConfigLoaderInterface
     protected function loadPlugins($xml, $reg)
     {
         foreach ($xml->xpath('/xinc/plugins') as $element) {
-			if(isset($element['group'])) {
-				$class = "{$element['group']}";
-				if(!class_exists($class,true)) {
-				    throw new ClassLoaderException($class);	
-				}
-				$this->log->verbose("Load plugin group from class $class");
-				$group = new $class();
-				if(!($group instanceof PluginGroupInterface)) {
-				    throw new TypeMismatch($class,'Xinc\Core\Plugin\PluginGroupInterface');	
-				}
-				foreach($group->getPluginClasses() as $class) {
-					$reg->registerPluginClass($class);
-				}
-				continue;
-			}
-			
+            if (isset($element['group'])) {
+                $class = "{$element['group']}";
+                if (!class_exists($class, true)) {
+                    throw new ClassLoaderException($class);
+                }
+                $this->log->verbose("Load plugin group from class $class");
+                $group = new $class();
+                if (!($group instanceof PluginGroupInterface)) {
+                    throw new TypeMismatch($class, 'Xinc\Core\Plugin\PluginGroupInterface');
+                }
+                foreach ($group->getPluginClasses() as $class) {
+                    $reg->registerPluginClass($class);
+                }
+                continue;
+            }
+
             $plugins = $element->xpath('plugin');
 
             if (isset($element['namespace'])) {

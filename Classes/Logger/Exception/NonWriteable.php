@@ -24,6 +24,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Logger\Exception;
 
 class NonWriteable extends \Exception
@@ -31,7 +32,7 @@ class NonWriteable extends \Exception
     /**
      * Constructor, generates an Exception Message.
      *
-     * @param string $strFileName Name of file which isn't writeable.
+     * @param string $strFileName Name of file which isn't writeable
      */
     public function __construct($strFileName)
     {

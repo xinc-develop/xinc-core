@@ -28,13 +28,11 @@
 namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Build\BuildInterface;
-use Xinc\Core\Build\Scheduler\SchedulerInterface;
 use Xinc\Core\Task\Base as BaseTask;
 use Xinc\Core\Task\Slot;
 
 class Base extends BaseTask
 {
-
     public function process(BuildInterface $build)
     {
     }

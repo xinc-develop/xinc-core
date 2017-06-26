@@ -24,6 +24,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Property;
 
 use Xinc\Core\Build\BuildInterface;
@@ -36,7 +37,7 @@ class SubstituteTask extends Base implements SetterInterface
     /**
      * Returns name of Task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName()
     {
@@ -46,7 +47,7 @@ class SubstituteTask extends Base implements SetterInterface
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return int The slot number.
+     * @return int The slot number
      */
     public function getPluginSlot()
     {

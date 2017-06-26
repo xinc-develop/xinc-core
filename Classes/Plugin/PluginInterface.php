@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin;
 
 use Xinc\Core\Config\UseConfigInterface;
@@ -49,7 +50,7 @@ interface PluginInterface extends UseConfigInterface
     /**
      * Validate if the plugin can run properly on this system.
      *
-     * @return bool True if plugin can run properly otherwise false.
+     * @return bool True if plugin can run properly otherwise false
      */
     public function validate(&$msg = true);
 }

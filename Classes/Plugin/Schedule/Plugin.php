@@ -24,22 +24,23 @@
  *
  * @homepage      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\Schedule;
 
 use Xinc\Core\Plugin\Base;
 
 /**
- * Plugin with core schedulers
+ * Plugin with core schedulers.
  */
 class Plugin extends Base
 {
     /**
-     * Returns the defined tasks of the plugin
+     * Returns the defined tasks of the plugin.
      */
     public function getTaskDefinitions()
     {
         return array(new Task($this),
                      new Cron($this),
-                     new Sensor($this));
+                     new Sensor($this), );
     }
 }

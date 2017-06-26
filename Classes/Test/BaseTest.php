@@ -1,7 +1,7 @@
 <?php
 /*
  * Base test.
- * 
+ *
  * @author Sebastian Knapp
  *
  * @version 3.0
@@ -12,7 +12,7 @@
  *    This file is part of Xinc.
  *    Xinc is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU Lesser General Public License as published
- *    by the Free Software Foundation; either version 2.1 of the License, or    
+ *    by the Free Software Foundation; either version 2.1 of the License, or
  *    (at your option) any later version.
  *
  *    Xinc is distributed in the hope that it will be useful,
@@ -24,6 +24,7 @@
  *    along with Xinc, write to the Free Software
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
 namespace Xinc\Core\Test;
 
 use Xinc\Core\Build\Build;
@@ -34,32 +35,34 @@ use Xinc\Core\Project\Config\Xml as ProjectXml;
 use Xinc\Core\Registry\Registry;
 
 /**
- * Base class for phpunit tests
+ * Base class for phpunit tests.
  */
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * setup a basic configuration for tests
-	 * @return Xinc::Core::Config::Config
-	 */
-	public function defaultConfig()
-	{
-		$conf = new Config();
-		$conf->setOption('once',false);
-		$conf->setOption('working-dir','./');
-		$conf->setOption('config-dir','./tests/etc/xinc/');
-        $conf->setOption('project-dir','./tests/etc/xinc/projects/');
-        $conf->setOption('status-dir','./tests/status/');
-        $conf->setOption('log-file','./tests/log/xinc.log');
-        return $conf;	
-	}
-	
-	/**
-	 * the loglevel affects the verbosity of a testrun
-	 * 
-	 * The environment variable @c XINC_LOGLEVEL changes the default which is
-	 * currently @a info.
-	 */
+    /**
+     * setup a basic configuration for tests.
+     *
+     * @return Xinc::Core::Config::Config
+     */
+    public function defaultConfig()
+    {
+        $conf = new Config();
+        $conf->setOption('once', false);
+        $conf->setOption('working-dir', './');
+        $conf->setOption('config-dir', './tests/etc/xinc/');
+        $conf->setOption('project-dir', './tests/etc/xinc/projects/');
+        $conf->setOption('status-dir', './tests/status/');
+        $conf->setOption('log-file', './tests/log/xinc.log');
+
+        return $conf;
+    }
+
+    /**
+     * the loglevel affects the verbosity of a testrun.
+     *
+     * The environment variable @c XINC_LOGLEVEL changes the default which is
+     * currently @a info.
+     */
     public function xincLoglevel()
     {
         $loglevel = getenv('XINC_LOGLEVEL');
@@ -71,12 +74,13 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Setup a project configuration object
-     * 
+     * Setup a project configuration object.
+     *
      * It registers the test engine class as the default engine.
-     * 
+     *
      * @param $conf Xinc::Core::Config::Config
      * @param $reg Xinc::Core::Registry::Registry
+     *
      * @return Xinc::Core::Project::Config::Xml
      */
     public function projectXml($conf, &$reg = null)
@@ -97,9 +101,10 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Setups a build object from a config
-     * 
+     * Setups a build object from a config.
+     *
      * @param Xinc::Core::Config::Config
+     *
      * @return Xinc::Core::Build::Build
      */
     public function aBuildWithConfig($conf)
@@ -110,7 +115,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         $project = $iterator->current();
         $engine = $reg->getEngine($project->getEngineName());
         $build = $engine->setupBuild($project);
-	    
+
         return $build;
     }
 }

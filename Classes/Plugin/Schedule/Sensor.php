@@ -5,7 +5,7 @@
  * PHP version 5
  *
  * @category   Development
- * @package    Xinc.Trigger
+ *
  * @author     Arno Schneider <username@example.org>
  * @copyright  2007 Arno Schneider, Barcelona
  * @license    http://www.gnu.org/copyleft/lgpl.html GNU/LGPL, see license.php
@@ -23,6 +23,7 @@
  *             You should have received a copy of the GNU Lesser General Public
  *             License along with Xinc, write to the Free Software Foundation,
  *             Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link       https://github.com/Xinc-org/Xinc.Trigger
  */
 
@@ -36,8 +37,8 @@ use Xinc\Core\Build\Scheduler\SchedulerInterface;
  *
  * @tag sensor
  * @attribute file - a filename
- * @slot INIT_PROCESS 
- * 
+ * @slot INIT_PROCESS
+ *
  * @ingroup scheduler
  */
 class Sensor extends Base implements SchedulerInterface
@@ -57,7 +58,7 @@ class Sensor extends Base implements SchedulerInterface
     private $filevalue = null;
 
     /**
-     * Tag name is sensor
+     * Tag name is sensor.
      */
     public function getName()
     {
@@ -65,11 +66,9 @@ class Sensor extends Base implements SchedulerInterface
     }
 
     /**
-     * Sets the sensor filename string
+     * Sets the sensor filename string.
      *
-     * @param string $file The sensor filename string.
-     *
-     * @return void
+     * @param string $file The sensor filename string
      */
     public function setFile($file)
     {
@@ -77,7 +76,7 @@ class Sensor extends Base implements SchedulerInterface
     }
 
     /**
-     * Gets the sensor filename string
+     * Gets the sensor filename string.
      *
      * @return string The sensor filename string
      */
@@ -89,11 +88,11 @@ class Sensor extends Base implements SchedulerInterface
     /**
      * Validates if a task can run by checking configs, directries and so on.
      *
-     * @return boolean Is true if task can run.
+     * @return bool Is true if task can run
      */
     public function validate(&$msg = null)
     {
-        return ($this->file !== null);
+        return $this->file !== null;
     }
 
     /**
@@ -101,12 +100,13 @@ class Sensor extends Base implements SchedulerInterface
      *
      * @param Xinc::Core::Build::BuildInterface $lastJob
      *
-     * @return integer next job runtime as timestamp
+     * @return int next job runtime as timestamp
      */
     public function getNextBuildTime(BuildInterface $lastJob = null)
     {
         if (file_exists($this->file)) {
             unlink($this->file);
+
             return time();
         }
 

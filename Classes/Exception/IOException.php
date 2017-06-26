@@ -23,6 +23,7 @@
  *
  * @link       https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Exception;
 
 /**
@@ -38,23 +39,23 @@ class IOException extends \Xinc\Core\Exception
     const FAILURE_NOT_FOUND = 4;
 
     /**
-     * @var string Path of directory/file/stream that failed.
+     * @var string Path of directory/file/stream that failed
      */
     private $strResourcePath = null;
 
     /**
-     * @var string Name of directory/file/stream that failed.
+     * @var string Name of directory/file/stream that failed
      */
     private $strResourceName = null;
 
     /**
      * Constructor, generates an Exception Message.
      *
-     * @param string    $strResourceName Name of directory/file/stream that failed.
-     * @param string    $strResourcePath Path of directory/file/stream that failed.
-     * @param string    $strMessage      Exception message.
-     * @param int       $nCode           Code of failure from this consts.
-     * @param Exception $previous        Exception if nested exception.
+     * @param string    $strResourceName Name of directory/file/stream that failed
+     * @param string    $strResourcePath Path of directory/file/stream that failed
+     * @param string    $strMessage      Exception message
+     * @param int       $nCode           Code of failure from this consts
+     * @param Exception $previous        Exception if nested exception
      */
     public function __construct(
         $strResourceName,
@@ -71,7 +72,7 @@ class IOException extends \Xinc\Core\Exception
     /**
      * Returns the name of the failed resource.
      *
-     * @return string The name of the resource that failed.
+     * @return string The name of the resource that failed
      */
     public function getResourceName()
     {
@@ -81,7 +82,7 @@ class IOException extends \Xinc\Core\Exception
     /**
      * Returns the path of the failed resource.
      *
-     * @return string The path of the resource that failed.
+     * @return string The path of the resource that failed
      */
     public function getResourcePath()
     {
@@ -91,10 +92,10 @@ class IOException extends \Xinc\Core\Exception
     /**
      * Builds and returns an error message for this exception.
      *
-     * @param int    $nCode      Code of failure from this consts.
-     * @param string $strMessage Exception message.
+     * @param int    $nCode      Code of failure from this consts
+     * @param string $strMessage Exception message
      *
-     * @return string A message for this error.
+     * @return string A message for this error
      */
     protected function getErrorMessage($nCode, $strMessage = null)
     {

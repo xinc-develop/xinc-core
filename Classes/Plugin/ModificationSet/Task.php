@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\ModificationSet;
 
 use Xinc\Core\Task\Base;
@@ -30,17 +31,17 @@ use Xinc\Core\Build\BuildInterface;
 
 class Task extends Base implements ModificationSetInterface
 {
-	protected $results = array();
-	
-	public function addResult(Result $result)
-	{
-	    $this->results[] = $result;	
-	}
+    protected $results = array();
+
+    public function addResult(Result $result)
+    {
+        $this->results[] = $result;
+    }
 
     /**
      * Returns name of Task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName()
     {
@@ -50,7 +51,7 @@ class Task extends Base implements ModificationSetInterface
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return int The slot number.
+     * @return int The slot number
      */
     public function getPluginSlot()
     {
@@ -59,26 +60,23 @@ class Task extends Base implements ModificationSetInterface
 
     public function process(BuildInterface $build)
     {
-		foreach($this->results as $result) {       
+        foreach ($this->results as $result) {
             $build->info($result);
-            if ( $result->getStatus() == Result::CHANGED ) {
+            if ($result->getStatus() == Result::CHANGED) {
                 $build->setStatus(BuildInterface::PASSED);
                 break;
-            }
-            else if ( $result->getStatus() === Result::STOPPED ) {
+            } elseif ($result->getStatus() === Result::STOPPED) {
                 $build->setStatus(BuildInterface::STOPPED);
-            }
-            else if ( $result->getStatus() === Result::FAILED ) {
+            } elseif ($result->getStatus() === Result::FAILED) {
                 $build->setStatus(BuildInterface::FAILED);
-            } 
-            else if ( $result->getStatus() === Result::ERROR ) {
+            } elseif ($result->getStatus() === Result::ERROR) {
                 $build->setStatus(BuildInterface::STOPPED);
                 break;
-            }
-            else {
+            } else {
                 $build->setStatus(BuildInterface::STOPPED);
             }
-		    return;
-		}
+
+            return;
+        }
     }
 }

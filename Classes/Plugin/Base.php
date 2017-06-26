@@ -1,7 +1,7 @@
 <?php
 /*
  * Xinc - Continuous Integration.
- * 
+ *
  * @author    Arno Schneider <username@example.org>
  * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -24,32 +24,35 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin;
 
 use Xinc\Core\Traits\Config;
 
 /**
- * Plugin base class
- * 
+ * Plugin base class.
+ *
  * @ingroup config
  */
 abstract class Base implements PluginInterface
 {
-	use Config;
-	
-	/**
-	 * acces to single values from the main configuration
-	 * @param $key - configuration value name
-	 * @return a configuration value
-	 */
-	public function getConfigValue($key)
-	{
-		return $this->config->get($key);
-	}
-	
-	/**
-	 * @return plugin name
-	 */
+    use Config;
+
+    /**
+     * acces to single values from the main configuration.
+     *
+     * @param $key - configuration value name
+     *
+     * @return a configuration value
+     */
+    public function getConfigValue($key)
+    {
+        return $this->config->get($key);
+    }
+
+    /**
+     * @return plugin name
+     */
     public function getName()
     {
         $class = get_class($this);
@@ -71,11 +74,13 @@ abstract class Base implements PluginInterface
 
     abstract public function getTaskDefinitions();
 
-	/**
-	 * Checks if task is able to run
-	 * @param $msg reference to get a message which explains why the task is not valid
-	 * @return boolean
-	 */ 
+    /**
+     * Checks if task is able to run.
+     *
+     * @param $msg reference to get a message which explains why the task is not valid
+     *
+     * @return bool
+     */
     public function validate(&$msg = null)
     {
         return true;

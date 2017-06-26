@@ -24,6 +24,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Engine;
 
 use Xinc\Core\Build\BuildInterface;
@@ -45,7 +46,7 @@ interface EngineInterface extends UseLoggerInterface,
     /**
      * get the name of the engine.
      *
-     * @return string Name of the engine.
+     * @return string Name of the engine
      */
     public function getName();
 

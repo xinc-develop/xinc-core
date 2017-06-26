@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * 
+ *
  * @author    Sebastian Knapp <news@young-workers.de>
  * @copyright 2007 Arno Schneider, Barcelona
  * @copyright 2015 Xinc Development Team, https://github.com/xinc-develop/
@@ -23,9 +23,10 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin;
 
 interface PluginGroupInterface
 {
-	public function getPluginClasses();
+    public function getPluginClasses();
 }

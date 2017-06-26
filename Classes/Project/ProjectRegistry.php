@@ -21,15 +21,16 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Project;
 
 class ProjectRegistry extends \Xinc\Core\Registry\RegistryAbstract
 {
     /**
-     * @var typeOf The Name of the class this elements should be.
+     * @var typeOf The Name of the class this elements should be
      */
     protected $typeOf = 'Xinc\Core\Project\Project';
 

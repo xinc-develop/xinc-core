@@ -22,13 +22,14 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\ModificationSet;
 
 use Xinc\Core\Gui\Gui;
 use Xinc\Core\Gui\WidgetInterface;
 
-#require_once 'Xinc/Plugin/Repos/Gui/ModificationSet/Extension/Summary.php';
-#require_once 'Xinc/Plugin/Repos/Gui/ModificationSet/Extension/ChangeLog.php';
+//require_once 'Xinc/Plugin/Repos/Gui/ModificationSet/Extension/Summary.php';
+//require_once 'Xinc/Plugin/Repos/Gui/ModificationSet/Extension/ChangeLog.php';
 
 class Widget extends Gui implements WidgetInterface
 {

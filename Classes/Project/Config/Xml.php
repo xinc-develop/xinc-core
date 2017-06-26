@@ -25,6 +25,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Project\Config;
 
 use Xinc\Core\Config\ConfigInterface;
@@ -54,6 +55,7 @@ class Xml extends Loader implements ConfigLoaderInterface
             if (!strstr($file, '/')) {
                 $file = $conf->getOption('project-dir').$file;
             }
+
             return array($file);
         }
         // load every xml file in project dir
@@ -66,6 +68,7 @@ class Xml extends Loader implements ConfigLoaderInterface
             if (empty($list)) {
                 throw new IOException($dir, null, null, IOException::FAILURE_NOT_FOUND);
             }
+
             return $list;
         }
     }
@@ -73,8 +76,8 @@ class Xml extends Loader implements ConfigLoaderInterface
     public function load(ConfigInterface $conf, XincRegistryInterface $reg)
     {
         $sources = $this->getConfigurationSources($conf);
-        foreach($sources as $file) {
-            $this->loadFile($file,$conf,$reg);
+        foreach ($sources as $file) {
+            $this->loadFile($file, $conf, $reg);
         }
     }
 

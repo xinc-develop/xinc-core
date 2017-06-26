@@ -1,7 +1,7 @@
 <?php
 /**
  * Xinc - Continuous Integration.
- * This interface represents a publishing mechanism to publish build results
+ * This interface represents a publishing mechanism to publish build results.
  *
  *
  * @author    Arno Schneider <username@example.org>
@@ -21,6 +21,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
@@ -33,17 +34,17 @@ use Xinc\Core\Task\Slot;
 class Email extends Base
 {
     private $defaultFrom = 'xinc@localhost';
-	
-	private $to;
+
+    private $to;
     private $from;
     private $subject;
     private $message;
-	
-    public final function process(BuildInterface $build)
+
+    final public function process(BuildInterface $build)
     {
-        if ( ($status = $this->publish($build)) === true ) {
+        if (($status = $this->publish($build)) === true) {
             $build->setStatus(Xinc_Build_Interface::PASSED);
-        } else if ( $status == -1 ) {
+        } elseif ($status == -1) {
             $build->setStatus(Xinc_Build_Interface::STOPPED);
         } else {
             $build->setStatus(Xinc_Build_Interface::FAILED);
@@ -53,7 +54,7 @@ class Email extends Base
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number
      */
     public function getPluginSlot()
     {
@@ -78,7 +79,7 @@ class Email extends Base
         $headers = array();
 
         if (isset($smtpSettings['localhost'])) {
-            $from = str_replace('@localhost', '@' . $smtpSettings['localhost'], $from);
+            $from = str_replace('@localhost', '@'.$smtpSettings['localhost'], $from);
         }
 
         $headers['From'] = $from;
@@ -97,13 +98,13 @@ class Email extends Base
         if (empty($from)) {
             $from = $this->_defaultFrom;
         }
-        $project->info('Executing email publisher with content ' 
-                      ."\nTo: " . $to
-                      ."\nSubject: " . $subject
-                      ."\nMessage: " . $message
-                      ."\nFrom: " . $from);
+        $project->info('Executing email publisher with content '
+                      ."\nTo: ".$to
+                      ."\nSubject: ".$subject
+                      ."\nMessage: ".$message
+                      ."\nFrom: ".$from);
 
-        /** send the email */
+        /* send the email */
         @include_once 'Mail.php';
 
         if (class_exists('Mail')) {
@@ -112,62 +113,64 @@ class Email extends Base
             $res = mail($to, $subject, $message, "From: $from\r\n");
             if ($res) {
                 $project->info('Email sent successfully');
+
                 return true;
             } else {
                 $project->error('Email could not be sent');
+
                 return false;
                 //$project->setStatus(Xinc_Build_Interface::FAILED);
             }
         }
     }
-	
+
     public function getName()
     {
         return 'email';
     }
 
     /**
-     * Set the email address to send to
+     * Set the email address to send to.
      *
      * @param string $subject
      */
     public function setTo($to)
     {
-        $this->_to = (string)$to;
+        $this->_to = (string) $to;
     }
     /**
-     * Set the email address to send to
+     * Set the email address to send to.
      *
      * @param string $subject
      */
     public function setFrom($from)
     {
-        $this->_from = (string)$from;
+        $this->_from = (string) $from;
     }
     /**
-     * Set the subject of the email
+     * Set the subject of the email.
      *
      * @param string $subject
      */
     public function setSubject($subject)
     {
-        $this->_subject = (string)$subject;
+        $this->_subject = (string) $subject;
     }
 
     /**
-     * Set the message of the email
+     * Set the message of the email.
      *
      * @param string $message
      */
     public function setMessage($message)
     {
-        $this->_message = (string)$message;
+        $this->_message = (string) $message;
     }
 
     public function validate(&$msg = null)
     {
         if (!isset($this->_to)) {
-              throw new Xinc_Exception_MalformedConfig(
+            throw new Xinc_Exception_MalformedConfig(
                 'Element publisher/email - required attribute "to" is not set'
             );
         }
@@ -181,6 +184,7 @@ class Email extends Base
                 'Element publisher/email - required attribute "message" is not set'
             );
         }
+
         return true;
     }
 

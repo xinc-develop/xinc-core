@@ -21,9 +21,10 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Registry;
 
 use Xinc\Core\Traits\Config;
@@ -68,8 +69,8 @@ class Registry implements XincRegistryInterface
         $this->pluginRegistry = new PluginRegistry();
         $this->taskRegistry = new TaskRegistry();
         $this->widgetRegistry = new WidgetRegistry();
-        #$this->apiRegistry = new ApiRegistry();
-        
+        //$this->apiRegistry = new ApiRegistry();
+
         $this->pluginRegistry->setTaskRegistry($this->taskRegistry);
     }
 
@@ -81,7 +82,7 @@ class Registry implements XincRegistryInterface
         $this->pluginRegistry->setLogger($log);
         $this->taskRegistry->setLogger($log);
         $this->widgetRegistry->setLogger($log);
-        #$this->apiRegistry->setLogger($log);
+        //$this->apiRegistry->setLogger($log);
     }
 
     public function registerPluginClass($class)
@@ -117,7 +118,7 @@ class Registry implements XincRegistryInterface
         if (!($engine instanceof EngineInterface)) {
             throw new TypeMismatch(get_class($engine),
                 '\Xinc\Core\Engine\EngineInterface');
-        }        
+        }
         $engine->setLogger($this->log);
         $engine->setConfig($this->config);
         $engine->setTaskRegistry($this->taskRegistry);

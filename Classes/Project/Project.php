@@ -23,6 +23,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Project;
 
 use SimpleXMLElement;
@@ -35,12 +36,12 @@ use SimpleXMLElement;
 class Project
 {
     /**
-     * @var string The name of the project.
+     * @var string The name of the project
      */
     private $name = '';
 
     /**
-     * @var string Name of the used engine.
+     * @var string Name of the used engine
      */
     private $engineName = '';
 
@@ -48,7 +49,7 @@ class Project
      * @var Xinc::Core::Project::Status
      */
     private $status;
-    
+
     /**
      * @var SimpleXMLElement
      */
@@ -103,6 +104,7 @@ class Project
      * sets the status of the project.
      *
      * @see Xinc::Core::Project::Status
+     *
      * @param int $status
      */
     public function setStatus($status)
@@ -114,6 +116,7 @@ class Project
      * Retrieves the status of the current project.
      *
      * @see Xinc::Core::Project::Status
+     *
      * @return int
      */
     public function getStatus()

@@ -29,7 +29,7 @@
 namespace Xinc\Core;
 
 /**
- * The Xinc log facility
+ * The Xinc log facility.
  */
 class Logger
 {
@@ -60,7 +60,7 @@ class Logger
     private $max = 50;
 
     /**
-     * Loglevel
+     * Loglevel.
      */
     private $logLevel = 2;
 
@@ -89,7 +89,7 @@ class Logger
 //! @}
 
     /**
-     * Setter for loglevel
+     * Setter for loglevel.
      */
     public function setLogLevel($level)
     {
@@ -101,7 +101,7 @@ class Logger
     }
 
     /**
-     * getter for the currently used loglevel
+     * getter for the currently used loglevel.
      */
     public function getLogLevel()
     {
@@ -289,7 +289,7 @@ class Logger
     }
 
     /**
-     * empties the log message queue
+     * empties the log message queue.
      */
     private function resetLogQueue()
     {

@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Task;
 
 /**
@@ -73,20 +74,20 @@ class Slot
     const POST_PROCESS = 30;
 
     const SUBTASK = 40;
-    
+
     public static function getSlots()
     {
-	    return array(
-	        self::GLOBAL_INIT,
-	        self::GLOBAL_LISTENER,
-	        self::PROJECT_LISTENER,
-	        self::PROJECT_INIT,
-	        self::PROJECT_SET_VALUES,
-	        self::INIT_PROCESS,
-	        self::PRE_PROCESS,
-	        self::PROCESS,
-	        self::POST_PROCESS,
-	        self::SUBTASK    
-	    );	
-	}
+        return array(
+            self::GLOBAL_INIT,
+            self::GLOBAL_LISTENER,
+            self::PROJECT_LISTENER,
+            self::PROJECT_INIT,
+            self::PROJECT_SET_VALUES,
+            self::INIT_PROCESS,
+            self::PRE_PROCESS,
+            self::PROCESS,
+            self::POST_PROCESS,
+            self::SUBTASK,
+        );
+    }
 }

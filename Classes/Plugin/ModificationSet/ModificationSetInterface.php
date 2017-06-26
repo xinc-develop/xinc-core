@@ -22,9 +22,10 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Plugin\ModificationSet;
 
 interface ModificationSetInterface
 {
-	public function addResult(Result $result);
+    public function addResult(Result $result);
 }

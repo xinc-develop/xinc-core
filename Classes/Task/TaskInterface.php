@@ -22,6 +22,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Task;
 
 use Xinc\Core\Plugin\PluginInterface;
@@ -48,35 +49,35 @@ interface TaskInterface extends UseLoggerInterface
     /**
      * Validates if a task can run by checking configs, directries and so on.
      *
-     * @return bool Is true if task can run.
+     * @return bool Is true if task can run
      */
     public function validate(&$msg = null);
 
     /**
      * Process the task.
      *
-     * @param Xinc\Core\Job\JobInterface $job Job to process this task for.
+     * @param Xinc\Core\Job\JobInterface $job Job to process this task for
      */
     public function process(BuildInterface $build);
 
     /**
      * Returns name of task.
      *
-     * @return string Name of task.
+     * @return string Name of task
      */
     public function getName();
 
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return int The slot number.
+     * @return int The slot number
      *
      * @see Xinc::Core::Plugin::Slot for available slots
      */
     public function getPluginSlot();
-    
+
     /**
-     * the parent frame
+     * the parent frame.
      */
     public function setFrame(TaskInterface $task);
 

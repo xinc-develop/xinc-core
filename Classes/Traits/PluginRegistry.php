@@ -22,6 +22,7 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Traits;
 
 use Xinc\Core\Plugin\PluginRegistry as PluginReg;

@@ -24,12 +24,14 @@
  *
  * @homepage  https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build\Scheduler;
 
 use Xinc\Core\Build\BuildInterface;
 
 /**
  * Build-Scheduler, will only build once if not built yet.
+ *
  * @ingroup scheduler
  */
 class DefaultScheduler implements SchedulerInterface

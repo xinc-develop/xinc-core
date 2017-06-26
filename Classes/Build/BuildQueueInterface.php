@@ -22,11 +22,12 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Build;
 
 /**
  * A Build queue holds all Build Jobs queued for execution.
- * 
+ *
  * Build Jobs are registered with the Build Queue to be
  * executed at a certain time
  */
@@ -34,7 +35,7 @@ interface BuildQueueInterface
 {
     /**
      * adds a build to the queue.
-     * 
+     *
      * Calls the getNextBuildTime() method to put
      * the builds into the right order in the queue
      *

@@ -24,6 +24,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Config;
 
 use Xinc\Core\Properties;
@@ -53,21 +54,24 @@ class Config implements ConfigInterface
 
     public function hasOption($key)
     {
-      return $this->options->has($key);
+        return $this->options->has($key);
     }
 
     public function has($key)
     {
-      if($this->hasOption($key)) return true;
-      return $this->settings->has($key);
+        if ($this->hasOption($key)) {
+            return true;
+        }
+
+        return $this->settings->has($key);
     }
 
     public function getOption($key)
     {
-	if($this->hasOption($key)) {
+        if ($this->hasOption($key)) {
             return $this->options[$key];
-	}
-	throw new ConfigException("Option '$key' is undefined.");
+        }
+        throw new ConfigException("Option '$key' is undefined.");
     }
 
     /**
@@ -80,9 +84,9 @@ class Config implements ConfigInterface
 
     public function setOptions($opts)
     {
-      foreach($opts as $opt => $val) {
-	$this->setOption($opt,$val);
-      }
+        foreach ($opts as $opt => $val) {
+            $this->setOption($opt, $val);
+        }
     }
 
     public function setOption($key, $value)

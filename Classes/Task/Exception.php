@@ -23,6 +23,7 @@
  *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
+
 namespace Xinc\Core\Task;
 
 class Exception extends \Exception

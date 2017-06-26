@@ -20,6 +20,7 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  * @link      https://github.com/xinc-develop/xinc-core/
  */
 
@@ -41,29 +42,27 @@ abstract class BaseTask extends Base
     const ERROR = 0;
 
     /**
-     * abstract process of a modification set
+     * abstract process of a modification set.
      *
-     * @param Xinc_Build_Interface $build The running build.
-     *
-     * @return void
+     * @param Xinc_Build_Interface $build The running build
      */
-    public final function process(BuildInterface $build)
+    final public function process(BuildInterface $build)
     {
         $result = $this->checkModified($build);
         $this->frame->addResult($result);
     }
 
     /**
-     * Check if this modification set has been modified
+     * Check if this modification set has been modified.
      *
      * @return Xinc_Plugin_Repos_ModificationSet_Result
      */
-    public abstract function checkModified(BuildInterface $build);
+    abstract public function checkModified(BuildInterface $build);
 
     /**
      * Returns the slot of this task inside a build.
      *
-     * @return integer The slot number.
+     * @return int The slot number
      */
     public function getPluginSlot()
     {
@@ -71,16 +70,16 @@ abstract class BaseTask extends Base
     }
 
     /**
-     * Check necessary variables are set
-     * 
+     * Check necessary variables are set.
+     *
      * @throws Xinc::Core::Exception::MalformedConfigException
      */
     public function validate(&$msg = null)
     {
-		if($this->frame instanceof ModificationSetInterface) {
-		    return true;
-		}
-		throw new MalformedConfigException($this->getName() .
-		    ' must be inside of a "modificationset".');
+        if ($this->frame instanceof ModificationSetInterface) {
+            return true;
+        }
+        throw new MalformedConfigException($this->getName().
+            ' must be inside of a "modificationset".');
     }
 }
