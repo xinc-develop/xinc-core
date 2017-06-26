@@ -6,15 +6,15 @@
     "license": "LGPL-3.0+",
     "authors": [
         { "name": "David Ellis" },
-	    { "name": "Alexander Opitz", "email": "opitz.alexander@googlemail.com" },
-	    { "name": "Arno Schneider" },
-	    { "name": "Gavin Foster" },
-            { "name": "Sebastian Knapp", "email": "news@young-workers.de" }
+        { "name": "Alexander Opitz", "email": "opitz.alexander@googlemail.com" },
+        { "name": "Arno Schneider" },
+        { "name": "Gavin Foster" },
+        { "name": "Sebastian Knapp", "email": "news@young-workers.de" }
     ],
     "require": {
         "php": ">=5.4.4",
-	    "xinc/getopt": "~3.0.0",
-	    "symfony/process": "~2.8",
+        "xinc/getopt": "~3.0.0",
+        "symfony/process": "~2.8",
         "swiftmailer/swiftmailer": "~5.0.0",
         "jrfnl/php-cast-to-type": "2.0"
     },
@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Xinc\\Core\\": "Classes"
+            "Xinc\\Core\\": "src/"
         }
     },
     "extra": {
