@@ -1,7 +1,6 @@
 <?php
-/**
+/*
  * Xinc - Continuous Integration.
- *
  *
  * @author    Arno Schneider <username@example.org>
  * @copyright 2007 Arno Schneider, Barcelona
@@ -20,7 +19,8 @@
  *            You should have received a copy of the GNU Lesser General Public
  *            License along with Xinc, write to the Free Software Foundation,
  *            Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * @link      https://github.com/xinc-develop/xinc-core/
+ *
+ * @homepage  https://github.com/xinc-develop/xinc-core/
  */
 
 namespace Xinc\Core\Plugin\ModificationSet;
@@ -35,7 +35,7 @@ class Result
     const CHANGED = 1;
 
     const ERROR = 0;
-    
+
     private $_previousRevision;
 
     private $_currentRevision;
@@ -64,11 +64,11 @@ class Result
     {
         $this->status = $status;
     }
-    
+
     public function setSource($source)
     {
-		$this->source = $source;
-	}
+        $this->source = $source;
+    }
 
     public function setBasePath($path)
     {
@@ -110,7 +110,7 @@ class Result
      */
     public function isChanged()
     {
-		return $this->status === Result::CHANGED;
+        return $this->status === Result::CHANGED;
     }
 
     private function _getRelativeFileName($fileName)

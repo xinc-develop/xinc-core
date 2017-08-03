@@ -60,12 +60,12 @@ namespace Xinc\Core;
 
 /**
  * @defgroup scheduler Project build scheduler
- * 
+ *
  * A scheduler must implement the Xinc::Core::Build::Scheduler::SchedulerInterface.
  * Currently a project build contains only one scheduler. When multiple schedulers
  * are defined the last one will be used.
- * 
+ *
  * @todo create a schedulers task which allows to contain multible subtasks. This
  * is most useful with cron entries, because not every senseful schedule scheme
- * could be expressed with single cron entry.
+ * could be expressed with a single cron entry.
  */
