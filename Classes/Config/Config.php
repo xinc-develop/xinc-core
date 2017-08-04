@@ -69,13 +69,14 @@ class Config implements ConfigInterface
 
     public function getOption($key)
     {
-    if($this->hasOption($key)) {
+        if($this->hasOption($key)) {
             return $this->options[$key];
-    }
-    throw new ConfigException("Option '$key' is undefined.");
+        }
+        throw new ConfigException("Option '$key' is undefined.");
     }
 
     /**
+     * @deprecated
      * @return array with all options
      */
     public function getOptions()
@@ -83,6 +84,9 @@ class Config implements ConfigInterface
         return $this->options->getAllProperties();
     }
 
+    /**
+     * @deprecated
+     */
     public function setOptions($opts)
     {
         foreach($opts as $opt => $val) {
@@ -99,6 +103,9 @@ class Config implements ConfigInterface
         $this->options->set($key, $value);
     }
 
+    /**
+     * @deprecated
+     */
     public function setSettings($opts)
     {
         $this->settings->set($opts);
