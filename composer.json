@@ -13,23 +13,18 @@
     ],
     "require": {
         "php": ">=5.4.4",
-	    "xinc/getopt": "~3.0.0",
-	    "symfony/process": "~2.8",
+        "xinc/getopt": "~3.0.0",
+        "symfony/process": "~2.8",
         "swiftmailer/swiftmailer": "~5.0.0",
         "jrfnl/php-cast-to-type": "2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
-        "fabpot/php-cs-fixer": "~1.11"
+        "friendsofphp/php-cs-fixer": "~1.11"
     },
     "autoload": {
         "psr-4": {
-            "Xinc\\Core\\": "Classes"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-	    "dev-master": "2.5.x-dev"
+            "Xinc\\Core\\": "src"
         }
     }
 }

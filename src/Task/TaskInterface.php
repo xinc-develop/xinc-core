@@ -43,7 +43,7 @@ interface TaskInterface extends UseLoggerInterface
     /**
      * Create a new task for a concrete build.
      */
-    public function createTask(BuildInterface $build = null);
+    public function createTask(BuildInterface $build);
 
     /**
      * Validates if a task can run by checking configs, directries and so on.

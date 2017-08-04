@@ -66,19 +66,19 @@ abstract class Base implements TaskInterface
         return $this->plugin;
     }
 
-    public function createTask(BuildInterface $build = null)
+    public function createTask(BuildInterface $build)
     {
         $new = new static($this->getPlugin());
         $new->init($build);
         return $new;
     }
 
-    public function setup(BuildInterface $build = null)
+    public function setup(BuildInterface $build)
     {
         //
     }
 
-    protected function init(BuildInterface $build = null)
+    protected function init(BuildInterface $build)
     {
         //
     }
